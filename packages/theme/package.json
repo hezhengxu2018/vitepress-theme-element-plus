@@ -1,0 +1,70 @@
+{
+  "name": "vitepress-theme-element-plus",
+  "version": "0.0.0",
+  "description": "A VitePress theme for Element Plus",
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "style": "./dist/esm/vitepress-theme-element-plus.css",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    },
+    "./index.css": "./dist/esm/vitepress-theme-element-plus.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "pnpm run clean && vite build && (vue-tsc --declaration --emitDeclarationOnly --outDir dist/types || true)",
+    "build:watch": "vite build --watch",
+    "prepublishOnly": "pnpm run build",
+    "release": "npm publish --access public"
+  },
+  "dependencies": {
+    "@vueuse/core": "^11.3.0",
+    "vue": "^3.5.18"
+  },
+  "devDependencies": {
+    "@iconify/vue": "^4.2.1",
+    "@types/glob": "^9.0.0",
+    "@types/node": "^22.17.0",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "element-plus": "^2.8.4",
+    "es-toolkit": "^1.14.0",
+    "glob": "^11.0.3",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.9.2",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.4",
+    "vitepress": "2.0.0-alpha.12",
+    "vue-tsc": "^3.0.5",
+    "nprogress": "^0.2.0",
+    "sass-embedded": "^1.80.3"
+  },
+  "peerDependencies": {
+    "vitepress": "2.0.0-alpha.12"
+  },
+  "keywords": [
+    "vitepress",
+    "theme",
+    "vue",
+    "documentation"
+  ],
+  "author": "Hezhengxu",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hezhengxu/vitepress-theme-element-plus"
+  }
+}

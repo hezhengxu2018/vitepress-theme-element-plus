@@ -1,0 +1,27 @@
+{
+  "name": "monorepo-vitepress-theme-element-plus",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A VitePress theme for Element Plus",
+  "scripts": {
+    "dev": "pnpm -C packages/docs dev",
+    "build": "pnpm -r build",
+    "build:theme": "pnpm -C packages/theme build",
+    "build:docs": "pnpm -C packages/docs build",
+    "preview": "pnpm -C packages/docs preview",
+    "release": "pnpm -C packages/theme release"
+  },
+  "devDependencies": {
+    "@types/node": "^22.17.1",
+    "typescript": "^5.9.2"
+  },
+  "packageManager": "pnpm@10.2.0",
+  "keywords": [
+    "vitepress",
+    "theme",
+    "element-plus",
+    "documentation"
+  ],
+  "author": "Hezhengxu",
+  "license": "MIT"
+}
