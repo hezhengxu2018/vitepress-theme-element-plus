@@ -1,10 +1,10 @@
-import type { DefaultTheme } from 'vitepress';
-import type { ComputedRef, Ref } from 'vue';
-import { useData } from 'vitepress';
-import { computed, onMounted, ref, watch, watchEffect, watchPostEffect } from 'vue';
-import { hasActiveLink as containsActiveLink } from '../utils/client/common';
+import type { DefaultTheme } from 'vitepress'
+import type { ComputedRef, Ref } from 'vue'
+import { useData } from 'vitepress'
+import { computed, onMounted, ref, watch, watchEffect, watchPostEffect } from 'vue'
+import { hasActiveLink as containsActiveLink } from '../utils/client/common'
 
-import { isActive } from '../utils/common';
+import { isActive } from '../utils/common'
 
 export interface SidebarControl {
   collapsed: Ref<boolean>
@@ -17,52 +17,52 @@ export interface SidebarControl {
 }
 
 export function useSidebarControl(
-  item: ComputedRef<DefaultTheme.SidebarItem>
+  item: ComputedRef<DefaultTheme.SidebarItem>,
 ): SidebarControl {
-  const { page, hash } = useData();
-  const collapsed = ref(false);
+  const { page, hash } = useData()
+  const collapsed = ref(false)
 
   const collapsible = computed(() => {
-    return item.value.collapsed !== undefined;
-  });
+    return item.value.collapsed !== undefined
+  })
 
   const isLink = computed(() => {
-    return !!item.value.link;
-  });
+    return !!item.value.link
+  })
 
-  const isActiveLink = ref(false);
+  const isActiveLink = ref(false)
   const updateIsActiveLink = () => {
-    isActiveLink.value = isActive(page.value.relativePath, item.value.link);
-  };
+    isActiveLink.value = isActive(page.value.relativePath, item.value.link)
+  }
 
-  watch([page, item, hash], updateIsActiveLink);
-  onMounted(updateIsActiveLink);
+  watch([page, item, hash], updateIsActiveLink)
+  onMounted(updateIsActiveLink)
 
   const hasActiveLink = computed(() => {
     if (isActiveLink.value) {
-      return true;
+      return true
     }
 
     return item.value.items
       ? containsActiveLink(page.value.relativePath, item.value.items)
-      : false;
-  });
+      : false
+  })
 
   const hasChildren = computed(() => {
-    return !!(item.value.items && item.value.items.length);
-  });
+    return !!(item.value.items && item.value.items.length)
+  })
 
   watchEffect(() => {
-    collapsed.value = !!(collapsible.value && item.value.collapsed);
-  });
+    collapsed.value = !!(collapsible.value && item.value.collapsed)
+  })
 
   watchPostEffect(() => {
-    ;(isActiveLink.value || hasActiveLink.value) && (collapsed.value = false);
-  });
+    ;(isActiveLink.value || hasActiveLink.value) && (collapsed.value = false)
+  })
 
   function toggle() {
     if (collapsible.value) {
-      collapsed.value = !collapsed.value;
+      collapsed.value = !collapsed.value
     }
   }
 
@@ -73,6 +73,6 @@ export function useSidebarControl(
     isActiveLink,
     hasActiveLink,
     hasChildren,
-    toggle
-  };
+    toggle,
+  }
 }

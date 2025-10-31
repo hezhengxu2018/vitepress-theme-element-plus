@@ -3,14 +3,14 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   vite: {
     ssr: {
-      noExternal: ['vitepress-theme-element-plus']
+      noExternal: ['vitepress-theme-element-plus'],
     },
     optimizeDeps: {
-      exclude: ['vitepress-theme-element-plus']
+      exclude: ['vitepress-theme-element-plus'],
     },
     build: {
-      cssMinify: false
-    }
+      cssMinify: false,
+    },
   },
 
   // 站点配置
@@ -32,8 +32,8 @@ export default defineConfig({
   markdown: {
     theme: {
       light: 'github-light',
-      dark: 'github-dark'
-    }
+      dark: 'github-dark',
+    },
   },
 
   // // 多语言配置
@@ -73,7 +73,7 @@ export default defineConfig({
 
     // 搜索配置
     search: {
-      provider: 'local'
+      provider: 'local',
     },
 
     sidebar: [
@@ -82,18 +82,18 @@ export default defineConfig({
         items: [
           { text: 'Introduction', link: '/introduction' },
           { text: 'Getting Started', link: '/getting-started' },
-        ]
-      }
+        ],
+      },
     ],
 
     // 社交链接
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/hezhengxu2018/vitepress-theme-element-plus' }
+      { icon: 'github', link: 'https://github.com/hezhengxu2018/vitepress-theme-element-plus' },
     ],
 
     // Footer 配置
     footer: {
-      copyright: 'Release under MIT License'
-    }
-  }
+      copyright: 'Release under MIT License',
+    },
+  },
 })

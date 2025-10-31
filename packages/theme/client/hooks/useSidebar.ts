@@ -1,67 +1,67 @@
-import { useMediaQuery } from '@vueuse/core';
-import { useData } from 'vitepress';
-import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue';
-import { NOT_ARTICLE_LAYOUTS } from '../../shared/constants';
+import { useMediaQuery } from '@vueuse/core'
+import { useData } from 'vitepress'
+import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
+import { NOT_ARTICLE_LAYOUTS } from '../../shared/constants'
 
 export function useSidebar() {
-  const { frontmatter, page, theme } = useData();
-  const is960 = useMediaQuery('(min-width: 960px)');
-  const isOpen = ref(false);
+  const { frontmatter, theme } = useData()
+  const is960 = useMediaQuery('(min-width: 960px)')
+  const isOpen = ref(false)
   const _sidebar = computed(() => {
-    const sidebarConfig = theme.value.sidebar;
-    return sidebarConfig ?? [];
-  });
+    const sidebarConfig = theme.value.sidebar
+    return sidebarConfig ?? []
+  })
 
-  const sidebar = ref(_sidebar.value);
+  const sidebar = ref(_sidebar.value)
 
   watch(_sidebar, (next, prev) => {
     if (JSON.stringify(next) !== JSON.stringify(prev))
-      sidebar.value = _sidebar.value;
-  });
+      sidebar.value = _sidebar.value
+  })
 
   const hasSidebar = computed(() => {
     return (
       frontmatter.value.sidebar !== false
       && sidebar.value.length > 0
       && frontmatter.value.layout !== 'home'
-    );
-  });
+    )
+  })
 
   const hasAside = computed(() => {
     if (NOT_ARTICLE_LAYOUTS.includes(frontmatter.value.layout)) {
-      return false;
+      return false
     }
     if (frontmatter.value.aside !== undefined && frontmatter.value.aside !== null)
-      return !!frontmatter.value.aside;
+      return !!frontmatter.value.aside
 
-    return theme.value.aside !== false;
-  });
+    return theme.value.aside !== false
+  })
 
   const leftAside = computed(() => {
     if (hasAside) {
       return frontmatter.value.aside === null
         ? theme.value.aside === 'left'
-        : frontmatter.value.aside === 'left';
+        : frontmatter.value.aside === 'left'
     }
-    return false;
-  });
+    return false
+  })
 
-  const isSidebarEnabled = computed(() => hasSidebar.value && is960.value);
+  const isSidebarEnabled = computed(() => hasSidebar.value && is960.value)
 
   const sidebarGroups = computed(() => {
-    return hasSidebar.value ?? [];
-  });
+    return hasSidebar.value ?? []
+  })
 
   function open() {
-    isOpen.value = true;
+    isOpen.value = true
   }
 
   function close() {
-    isOpen.value = false;
+    isOpen.value = false
   }
 
   function toggle() {
-    isOpen.value ? close() : open();
+    isOpen.value ? close() : open()
   }
 
   return {
@@ -74,33 +74,32 @@ export function useSidebar() {
     isSidebarEnabled,
     open,
     close,
-    toggle
-  };
+    toggle,
+  }
 }
 
 export function useCloseSidebarOnEscape() {
-  let triggerElement: HTMLButtonElement | undefined;
-  const { isOpen, close } = useSidebar();
+  let triggerElement: HTMLButtonElement | undefined
+  const { isOpen, close } = useSidebar()
 
   watchEffect(() => {
     triggerElement = isOpen.value
       ? (document.activeElement as HTMLButtonElement)
-      : undefined;
-  });
+      : undefined
+  })
 
   onMounted(() => {
-    window.addEventListener('keyup', onEscape);
-  });
+    window.addEventListener('keyup', onEscape)
+  })
 
   onUnmounted(() => {
-    window.removeEventListener('keyup', onEscape);
-  });
+    window.removeEventListener('keyup', onEscape)
+  })
 
   function onEscape(e: KeyboardEvent) {
     if (e.key === 'Escape' && isOpen.value) {
-      close();
-      triggerElement?.focus();
+      close()
+      triggerElement?.focus()
     }
   }
 }
-

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue';
 import { computed } from 'vue';
-import { normalizeLink } from "vitepress/dist/client/theme-default/support/util";
-import { EXTERNAL_URL_RE } from '../utils/shared';
+import { EXTERNAL_URL_RE, normalizeLink } from "vitepress/dist/client/theme-default/support/utils";
 
 interface Props {
   tag?: string

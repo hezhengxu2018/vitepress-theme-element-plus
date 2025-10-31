@@ -1,26 +1,26 @@
-import type { Theme } from 'vitepress';
-import VPTheme from 'vitepress/theme';
-import Bili from './client/components/Bili.vue';
-import ContentWrapper from './client/components/ContentWrapper.vue';
-import Layout from './client/components/Layout.vue';
-import { useProgress } from './client/hooks/useProgress';
-import './client/styles/index.scss';
+import type { Theme } from 'vitepress'
+import VPTheme from 'vitepress/theme'
+import Bili from './client/components/Bili.vue'
+import ContentWrapper from './client/components/ContentWrapper.vue'
+import Layout from './client/components/Layout.vue'
+import { useProgress } from './client/hooks/useProgress'
+import './client/styles/index.scss'
 
 const EPTheme: Theme = {
   extends: VPTheme,
   Layout,
   enhanceApp({ app, router, siteData }) {
-    const themeConfig = siteData.value.themeConfig;
+    const themeConfig = siteData.value.themeConfig
     if (!import.meta.env.SSR) {
       if (!themeConfig.scrollRestoration) {
         if ('scrollRestoration' in history) {
-          history.scrollRestoration = 'manual';
+          history.scrollRestoration = 'manual'
         }
       }
 
       else {
         if ('scrollRestoration' in history) {
-          history.scrollRestoration = 'auto';
+          history.scrollRestoration = 'auto'
         }
       }
 
@@ -29,36 +29,36 @@ const EPTheme: Theme = {
         // 监听热模块替换之前的事件
         (import.meta as any).hot.on('vite:beforeUpdate', () => {
           // 保存当前的滚动位置
-          scrollPosition = window.scrollY || document.documentElement.scrollTop;
+          scrollPosition = window.scrollY || document.documentElement.scrollTop
         });
 
         // 监听热模块替换之后的事件
         (import.meta as any).hot.on('vite:afterUpdate', () => {
           // 恢复保存的滚动位置
-          window.scrollTo(0, scrollPosition);
-        });
+          window.scrollTo(0, scrollPosition)
+        })
       }
 
       if (themeConfig.progressBar !== false) {
-        const { np } = useProgress(themeConfig.progressBar);
-        app.provide('progress', np.value);
+        const { np } = useProgress(themeConfig.progressBar)
+        app.provide('progress', np.value)
 
         router.onBeforePageLoad = () => {
-          np.value.start();
-          return true;
-        };
+          np.value.start()
+          return true
+        }
 
         router.onAfterPageLoad = () => {
-          np.value.done();
-        };
+          np.value.done()
+        }
       }
     }
-    app.component('Bili', Bili);
-    app.component('ContentWrapper', ContentWrapper);
+    app.component('Bili', Bili)
+    app.component('ContentWrapper', ContentWrapper)
   },
-};
-export { Layout };
-export default EPTheme;
+}
+export { Layout }
+export default EPTheme
 
 // export { default as NotFound } from './components/pages/NotFound.vue'
 // export { default as Home } from './components/pages/Home.vue'

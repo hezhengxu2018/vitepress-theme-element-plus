@@ -3,7 +3,7 @@ import { useData } from 'vitepress';
 import VPImage from 'vitepress/dist/client/theme-default/components/VPImage.vue';
 import { computed } from 'vue';
 import { useLangs } from '../hooks/useLangs';
-import { normalizeLink } from '../utils/shared';
+import { normalizeLink } from "vitepress/dist/client/theme-default/support/utils";
 
 const { site, theme } = useData();
 const { currentLang } = useLangs();

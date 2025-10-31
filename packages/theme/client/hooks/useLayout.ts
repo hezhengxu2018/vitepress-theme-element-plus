@@ -1,17 +1,17 @@
-import { inBrowser, onContentUpdated, useRoute } from 'vitepress'
 import type { DefaultTheme, useLayout as expected } from 'vitepress/theme'
+import type { ComputedRef, InjectionKey } from 'vue'
+
+import { inBrowser, onContentUpdated, useData, useRoute } from 'vitepress'
+import { getHeaders } from 'vitepress/dist/client/theme-default/composables/outline'
+
+import { getSidebar, getSidebarGroups, useCloseSidebarOnEscape } from 'vitepress/dist/client/theme-default/support/sidebar'
 import {
   computed,
+
   shallowReadonly,
   shallowRef,
   watch,
-  type ComputedRef,
-  type InjectionKey
 } from 'vue'
-import { getSidebar, getSidebarGroups } from 'vitepress/dist/client/theme-default/support/sidebar'
-import { useData } from 'vitepress'
-import { getHeaders } from 'vitepress/dist/client/theme-default/composables/outline'
-import { useCloseSidebarOnEscape } from 'vitepress/dist/client/theme-default/support/sidebar'
 
 const headers = shallowRef<DefaultTheme.OutlineItem[]>([])
 const sidebar = shallowRef<DefaultTheme.SidebarItem[]>([])
@@ -27,9 +27,9 @@ export function useLayout(): ReturnType<typeof expected> {
 
   const hasSidebar = computed(() => {
     return (
-      frontmatter.value.sidebar !== false &&
-      sidebar.value.length > 0 &&
-      !isHome.value
+      frontmatter.value.sidebar !== false
+      && sidebar.value.length > 0
+      && !isHome.value
     )
   })
 
@@ -40,13 +40,16 @@ export function useLayout(): ReturnType<typeof expected> {
   })
 
   const hasAside = computed(() => {
-    if (isHome.value) return false
-    if (frontmatter.value.aside != null) return !!frontmatter.value.aside
+    if (isHome.value)
+      return false
+    if (frontmatter.value.aside != null)
+      return !!frontmatter.value.aside
     return theme.value.aside !== false
   })
 
   const leftAside = computed(() => {
-    if (!hasAside.value) return false
+    if (!hasAside.value)
+      return false
     return frontmatter.value.aside == null
       ? theme.value.aside === 'left'
       : frontmatter.value.aside === 'left'
@@ -65,7 +68,7 @@ export function useLayout(): ReturnType<typeof expected> {
     hasAside,
     leftAside,
     headers: shallowReadonly(headers),
-    hasLocalNav
+    hasLocalNav,
   }
 }
 
@@ -86,7 +89,7 @@ export function registerWatchers({ closeSidebar }: RegisterWatchersOptions) {
         sidebar.value = newSidebar
       }
     },
-    { immediate: true, deep: true, flush: 'sync' }
+    { immediate: true, deep: true, flush: 'sync' },
   )
 
   onContentUpdated(() => {
@@ -100,7 +103,7 @@ export function registerWatchers({ closeSidebar }: RegisterWatchersOptions) {
       () => {
         is960.value = window.innerWidth >= 960
       },
-      { passive: true }
+      { passive: true },
     )
   }
 
@@ -114,5 +117,5 @@ export interface LayoutInfo {
   heroImageSlotExists: ComputedRef<boolean>
 }
 
-export const layoutInfoInjectionKey: InjectionKey<LayoutInfo> =
-  Symbol('layout-info')
+export const layoutInfoInjectionKey: InjectionKey<LayoutInfo>
+  = Symbol('layout-info')

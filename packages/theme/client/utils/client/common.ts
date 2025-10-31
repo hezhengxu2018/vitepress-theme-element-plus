@@ -1,5 +1,5 @@
-import type { DefaultTheme } from 'vitepress';
-import { isActive } from '../common';
+import type { DefaultTheme } from 'vitepress'
+import { isActive } from '../common'
 
 export interface SidebarLink {
   text: string
@@ -7,7 +7,7 @@ export interface SidebarLink {
   docFooterText?: string
 }
 export function getFlatSideBarLinks(sidebar: DefaultTheme.SidebarItem[]): SidebarLink[] {
-  const links: SidebarLink[] = [];
+  const links: SidebarLink[] = []
 
   function recursivelyExtractLinks(items: DefaultTheme.SidebarItem[]) {
     for (const item of items) {
@@ -15,19 +15,19 @@ export function getFlatSideBarLinks(sidebar: DefaultTheme.SidebarItem[]): Sideba
         links.push({
           text: item.text,
           link: item.link,
-          docFooterText: item.docFooterText
-        });
+          docFooterText: item.docFooterText,
+        })
       }
 
       if (item.items) {
-        recursivelyExtractLinks(item.items);
+        recursivelyExtractLinks(item.items)
       }
     }
   }
 
-  recursivelyExtractLinks(sidebar);
+  recursivelyExtractLinks(sidebar)
 
-  return links;
+  return links
 }
 
 /**
@@ -35,15 +35,15 @@ export function getFlatSideBarLinks(sidebar: DefaultTheme.SidebarItem[]): Sideba
  */
 export function hasActiveLink(
   path: string,
-  items: DefaultTheme.SidebarItem | DefaultTheme.SidebarItem[]
+  items: DefaultTheme.SidebarItem | DefaultTheme.SidebarItem[],
 ): boolean {
   if (Array.isArray(items)) {
-    return items.some(item => hasActiveLink(path, item));
+    return items.some(item => hasActiveLink(path, item))
   }
 
   return isActive(path, items.link)
     ? true
     : items.items
       ? hasActiveLink(path, items.items)
-      : false;
+      : false
 }

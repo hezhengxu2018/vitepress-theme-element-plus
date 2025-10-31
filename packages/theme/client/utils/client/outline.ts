@@ -1,15 +1,15 @@
-import type { Header } from 'vitepress';
-import type { DefaultTheme } from 'vitepress/theme';
+import type { Header } from 'vitepress'
+import type { DefaultTheme } from 'vitepress/theme'
 
-const ignoreRE = /\b(?:VPBadge|header-anchor|footnote-ref|ignore-header)\b/;
+const ignoreRE = /\b(?:VPBadge|header-anchor|footnote-ref|ignore-header)\b/
 
 // cached list of anchor elements from resolveHeaders
-const resolvedHeaders: { element: HTMLHeadElement, link: string }[] = [];
+const resolvedHeaders: { element: HTMLHeadElement, link: string }[] = []
 
 export type MenuItem = Omit<Header, 'slug' | 'children'> & {
   element: HTMLHeadElement
   children?: MenuItem[]
-};
+}
 
 export function resolveTitle(theme: DefaultTheme.Config): string {
   return (
@@ -18,96 +18,96 @@ export function resolveTitle(theme: DefaultTheme.Config): string {
       && theme.outline.label)
     || theme.outlineTitle
     || 'On this page'
-  );
+  )
 }
 
 export function getHeaders(range: DefaultTheme.Config['outline']): MenuItem[] {
   const headers = Array.from(document.querySelectorAll('.VPDoc :where(h1,h2,h3,h4,h5,h6)'))
     .filter(el => el.id && el.hasChildNodes())
-    .map(el => {
-      const level = Number(el.tagName[1]);
+    .map((el) => {
+      const level = Number(el.tagName[1])
       return {
         element: el as HTMLHeadElement,
         title: serializeHeader(el),
         link: `#${el.id}`,
-        level
-      };
-    });
+        level,
+      }
+    })
 
-  return resolveHeaders(headers, range);
+  return resolveHeaders(headers, range)
 }
 
 function serializeHeader(h: Element): string {
-  let ret = '';
+  let ret = ''
   for (const node of Array.from(h.childNodes)) {
     if (node.nodeType === 1) {
       if (ignoreRE.test((node as Element).className))
-        continue;
-      ret += node.textContent;
+        continue
+      ret += node.textContent
     }
     else if (node.nodeType === 3) {
-      ret += node.textContent;
+      ret += node.textContent
     }
   }
-  return ret.trim();
+  return ret.trim()
 }
 
 export function resolveHeaders(
   headers: MenuItem[],
-  range?: DefaultTheme.Config['outline']
+  range?: DefaultTheme.Config['outline'],
 ): MenuItem[] {
   if (range === false) {
-    return [];
+    return []
   }
 
   const levelsRange
     = (typeof range === 'object' && !Array.isArray(range)
       ? range.level
-      : range) || 2;
+      : range) || 2
 
   const [high, low]: [number, number]
     = typeof levelsRange === 'number'
       ? [levelsRange, levelsRange]
       : levelsRange === 'deep'
         ? [2, 6]
-        : levelsRange;
+        : levelsRange
 
-  return buildTree(headers, high, low);
+  return buildTree(headers, high, low)
 }
 
 function buildTree(data: MenuItem[], min: number, max: number): MenuItem[] {
-  resolvedHeaders.length = 0;
+  resolvedHeaders.length = 0
 
-  const result: MenuItem[] = [];
-  const stack: (MenuItem | { level: number, shouldIgnore: true })[] = [];
+  const result: MenuItem[] = []
+  const stack: (MenuItem | { level: number, shouldIgnore: true })[] = []
 
-  data.forEach(item => {
-    const node = { ...item, children: [] };
-    let parent = stack[stack.length - 1];
+  data.forEach((item) => {
+    const node = { ...item, children: [] }
+    let parent = stack[stack.length - 1]
 
     while (parent && parent.level >= node.level) {
-      stack.pop();
-      parent = stack[stack.length - 1];
+      stack.pop()
+      parent = stack[stack.length - 1]
     }
 
     if (
       node.element.classList.contains('ignore-header')
       || (parent && 'shouldIgnore' in parent)
     ) {
-      stack.push({ level: node.level, shouldIgnore: true });
-      return;
+      stack.push({ level: node.level, shouldIgnore: true })
+      return
     }
 
     if (node.level > max || node.level < min)
-      return;
-    resolvedHeaders.push({ element: node.element, link: node.link });
+      return
+    resolvedHeaders.push({ element: node.element, link: node.link })
 
     if (parent)
-      parent.children!.push(node);
-    else result.push(node);
+      parent.children!.push(node)
+    else result.push(node)
 
-    stack.push(node);
-  });
+    stack.push(node)
+  })
 
-  return result;
+  return result
 }

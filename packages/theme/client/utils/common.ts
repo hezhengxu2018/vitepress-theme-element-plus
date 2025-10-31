@@ -1,10 +1,10 @@
-const HASH_RE = /#.*$/;
-const HASH_OR_QUERY_RE = /[?#].*$/;
-const INDEX_OR_EXT_RE = /(?:(^|\/)index)?\.(?:md|html)$/;
+const HASH_RE = /#.*$/
+const HASH_OR_QUERY_RE = /[?#].*$/
+const INDEX_OR_EXT_RE = /(?:(^|\/)index)?\.(?:md|html)$/
 
 export function getTextDescription(text: string, count = 100) {
   if (!text)
-    return;
+    return
   const finalText = text
     // 首个标题
     ?.replace(/^(#+)(.*)/m, '')
@@ -23,90 +23,90 @@ export function getTextDescription(text: string, count = 100) {
     ?.replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     ?.trim()
-    ?.slice(0, count);
+    ?.slice(0, count)
 
-  return text.length > 100 ? `${finalText}...` : finalText;
+  return text.length > 100 ? `${finalText}...` : finalText
 }
 
-export const inBrowser = typeof document !== 'undefined';
+export const inBrowser = typeof document !== 'undefined'
 
 export function isActive(
   currentPath: string,
   matchPath?: string,
-  asRegex: boolean = false
+  asRegex: boolean = false,
 ): boolean {
   if (matchPath === undefined) {
-    return false;
+    return false
   }
 
-  currentPath = normalize(`/${currentPath}`);
+  currentPath = normalize(`/${currentPath}`)
 
   if (asRegex) {
-    return new RegExp(matchPath).test(currentPath);
+    return new RegExp(matchPath).test(currentPath)
   }
 
   if (normalize(matchPath) !== currentPath) {
-    return false;
+    return false
   }
 
-  const hashMatch = matchPath.match(HASH_RE);
+  const hashMatch = matchPath.match(HASH_RE)
 
   if (hashMatch) {
-    return (inBrowser ? location.hash : '') === hashMatch[0];
+    return (inBrowser ? location.hash : '') === hashMatch[0]
   }
 
-  return true;
+  return true
 }
 
 function normalize(path: string): string {
   return decodeURI(path)
     .replace(HASH_OR_QUERY_RE, '')
-    .replace(INDEX_OR_EXT_RE, '$1');
+    .replace(INDEX_OR_EXT_RE, '$1')
 }
 
 export function ensureStartingSlash(path: string): string {
-  return /^\//.test(path) ? path : `/${path}`;
+  return /^\//.test(path) ? path : `/${path}`
 }
 
 export function isPlainObject(obj: any) {
   // 首先排除 null 和非对象类型
   if (obj === null || typeof obj !== 'object') {
-    return false;
+    return false
   }
 
   // 检查对象的构造函数是否是 Object
   if (obj.constructor !== Object) {
-    return false;
+    return false
   }
 
   // 检查对象的原型是否是 Object.prototype
   if (Object.getPrototypeOf(obj) !== Object.prototype) {
-    return false;
+    return false
   }
 
-  return true;
+  return true
 }
 
 export function capitalizeFirstLetter(string: string) {
   if (!string)
-    return ''; // 如果字符串为空，返回空字符串
-  return string.charAt(0).toUpperCase() + string.slice(1);
+    return '' // 如果字符串为空，返回空字符串
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 export function throttleAndDebounce(fn: () => void, delay: number): () => void {
-  let timeoutId: NodeJS.Timeout;
-  let called = false;
+  let timeoutId: NodeJS.Timeout
+  let called = false
 
   return () => {
     if (timeoutId)
-      clearTimeout(timeoutId);
+      clearTimeout(timeoutId)
 
     if (!called) {
       fn()
-      ;(called = true) && setTimeout(() => (called = false), delay);
+      ;(called = true) && setTimeout(() => (called = false), delay)
     }
     else {
-      timeoutId = setTimeout(fn, delay);
+      timeoutId = setTimeout(fn, delay)
     }
-  };
+  }
 }

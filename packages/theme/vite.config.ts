@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
+import { resolve } from 'node:path'
 import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [
@@ -17,13 +17,13 @@ export default defineConfig({
     emptyOutDir: true,
     lib: {
       entry: resolve(__dirname, 'index.ts'),
-      formats: ['es', 'cjs']
+      formats: ['es', 'cjs'],
     },
     rollupOptions: {
       external: [
         'vue',
         'vitepress',
-        /^vitepress\/.*/
+        /^vitepress\/.*/,
       ],
       output: [
         {
@@ -32,7 +32,7 @@ export default defineConfig({
           entryFileNames: '[name].js',
           preserveModules: true,
           preserveModulesRoot: __dirname,
-          exports: 'named'
+          exports: 'named',
         },
         {
           format: 'cjs',
@@ -40,9 +40,9 @@ export default defineConfig({
           entryFileNames: '[name].cjs',
           preserveModules: true,
           preserveModulesRoot: __dirname,
-          exports: 'named'
-        }
-      ]
-    }
-  }
+          exports: 'named',
+        },
+      ],
+    },
+  },
 })

@@ -1,16 +1,16 @@
 {
   "name": "vitepress-theme-element-plus-docs",
+  "type": "module",
   "version": "1.0.0",
   "description": "Documentation site for VitePress Theme Element Plus",
-  "type": "module",
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
   "dependencies": {
-    "vitepress-theme-element-plus": "workspace:*",
-    "vitepress": "^2.0.0-alpha.12"
+    "vitepress": "^2.0.0-alpha.12",
+    "vitepress-theme-element-plus": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.7.2"
