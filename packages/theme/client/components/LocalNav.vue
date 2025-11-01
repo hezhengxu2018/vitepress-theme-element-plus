@@ -1,60 +1,49 @@
 <script lang="ts" setup>
-import { useWindowScroll } from '@vueuse/core';
-import { onContentUpdated, useData } from 'vitepress';
-import VPLocalNavOutlineDropdown from 'vitepress/dist/client/theme-default/components/VPLocalNavOutlineDropdown.vue';
-import { useLayout } from 'vitepress/theme';
-import { computed, onMounted, ref } from 'vue';
-import { useSidebar } from '../hooks/useSidebar';
-// import { getHeaders } from '../utils/client/outline';
+import { useWindowScroll } from '@vueuse/core'
+import { computed, onMounted, ref } from 'vue'
+import { useData } from 'vitepress'
+import { useLayout } from 'vitepress/theme'
+import { useBackTop } from "../hooks/useBackTop";
+import { ElButton } from "element-plus";
+import "element-plus/theme-chalk/el-button.css";
 
 defineProps<{
   open: boolean
-}>();
+}>()
 
 defineEmits<{
   (e: 'open-menu'): void
-}>();
+}>()
 
-const { hasSidebar } = useSidebar();
-const { theme, frontmatter } = useData();
-const { headers } = useLayout();
-const { y } = useWindowScroll();
+const { theme } = useData()
+const { isHome, hasSidebar, headers, hasLocalNav } = useLayout()
+const { y } = useWindowScroll()
 
-const navHeight = ref(0);
+const navHeight = ref(0)
 
 onMounted(() => {
-  navHeight.value = Number.parseInt(
+  navHeight.value = parseInt(
     getComputedStyle(document.documentElement).getPropertyValue(
       '--vp-nav-height'
     )
-  );
-});
-
-onContentUpdated(() => {
-  // headers = getHeaders(frontmatter.value.outline ?? theme.value.outline);
-});
-
-const empty = computed(() => {
-  return headers.value.length === 0;
-});
-
-const emptyAndNoSidebar = computed(() => {
-  return empty.value && !hasSidebar.value;
-});
+  )
+})
 
 const classes = computed(() => {
   return {
-    'VPLocalNav': true,
+    VPLocalNav: true,
     'has-sidebar': hasSidebar.value,
-    'empty': empty.value,
-    'fixed': emptyAndNoSidebar.value
-  };
-});
+    empty: !hasLocalNav.value,
+    fixed: !hasLocalNav.value && !hasSidebar.value
+  }
+})
+
+const { shouldShow, scrollToTop } = useBackTop()
 </script>
 
 <template>
   <div
-    v-if="frontmatter.layout !== 'home' && (!emptyAndNoSidebar || y >= navHeight)"
+    v-if="!isHome && (hasLocalNav || hasSidebar || y >= navHeight)"
     :class="classes"
   >
     <div class="container">
@@ -65,18 +54,26 @@ const classes = computed(() => {
         aria-controls="VPSidebarNav"
         @click="$emit('open-menu')"
       >
-        <span class="vpi-align-left menu-icon" />
+        <span class="vpi-align-left menu-icon"></span>
         <span class="menu-text">
           {{ theme.sidebarMenuLabel || 'Menu' }}
         </span>
       </button>
-
-      <VPLocalNavOutlineDropdown :headers="headers" :nav-height="navHeight" />
+      <Transition name="shifting">
+        <ElButton
+          :class="{ 'go-back-top': true, show: shouldShow }"
+          link
+          class="height-5"
+          @click.prevent.stop="scrollToTop"
+        >
+          Back to top
+        </ElButton>
+      </Transition>
     </div>
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .VPLocalNav {
   position: sticky;
   top: 0;
@@ -87,6 +84,7 @@ const classes = computed(() => {
   padding-top: var(--vp-layout-top-height, 0px);
   width: 100%;
   background-color: var(--vp-local-nav-bg-color);
+  overflow: hidden;
 }
 
 .VPLocalNav.fixed {
@@ -95,14 +93,6 @@ const classes = computed(() => {
 
 @media (min-width: 960px) {
   .VPLocalNav {
-    top: var(--vp-nav-height);
-  }
-
-  .VPLocalNav.has-sidebar {
-    padding-left: var(--vp-sidebar-width);
-  }
-
-  .VPLocalNav.empty {
     display: none;
   }
 }
@@ -128,9 +118,8 @@ const classes = computed(() => {
 .menu {
   display: flex;
   align-items: center;
-  padding: 12px 24px 11px;
   line-height: 24px;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--vp-c-text-2);
   transition: color 0.5s;
@@ -141,12 +130,6 @@ const classes = computed(() => {
   transition: color 0.25s;
 }
 
-@media (min-width: 768px) {
-  .menu {
-    padding: 0 32px;
-  }
-}
-
 @media (min-width: 960px) {
   .menu {
     display: none;
@@ -155,16 +138,29 @@ const classes = computed(() => {
 
 .menu-icon {
   margin-right: 8px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
-.VPOutlineDropdown {
+.menu,
+:deep(.VPLocalNavOutlineDropdown > button) {
   padding: 12px 24px 11px;
 }
 
 @media (min-width: 768px) {
-  .VPOutlineDropdown {
+  .menu,
+  :deep(.VPLocalNavOutlineDropdown > button) {
     padding: 12px 32px 11px;
+  }
+}
+
+.go-back-top {
+  transform: translateY(100%);
+  opacity: 0;
+  padding: 12px 32px 11px;
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 </style>

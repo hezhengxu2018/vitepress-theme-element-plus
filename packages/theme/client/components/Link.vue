@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { EXTERNAL_URL_RE,normalizeLink } from "vitepress/dist/client/theme-default/support/utils";
+import { EXTERNAL_URL_RE } from "vitepress/dist/client/shared";
+import { normalizeLink } from "vitepress/dist/client/theme-default/support/utils";
 
 const props = defineProps<{
   tag?: string

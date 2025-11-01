@@ -4,8 +4,7 @@ import VPBackdrop from 'vitepress/dist/client/theme-default/components/VPBackdro
 import VPSkipLink from 'vitepress/dist/client/theme-default/components/VPSkipLink.vue';
 import { layoutInfoInjectionKey, registerWatchers } from 'vitepress/dist/client/theme-default/composables/layout'
 import { useSidebarControl } from 'vitepress/dist/client/theme-default/composables/sidebar'
-import { computed, onMounted, provide, useSlots, watch } from 'vue';
-import { useInitData } from '../hooks/useInitData';
+import { computed, provide, useSlots, watch } from 'vue';
 import { useCloseSidebarOnEscape } from '../hooks/useSidebar';
 import Content from './Content.vue';
 import VMFooter from './Footer.vue';
@@ -13,12 +12,7 @@ import LocalNav from './LocalNav.vue';
 import Sidebar from './Sidebar.vue';
 import Nav from './Nav.vue';
 
-// import('virtual:group-icons.css');
-
-// Init data 不要在其他任何地方调用这个hook 否则会存在性能浪费问题
-const { np } = useInitData();
-
-const { frontmatter, isDark, page } = useData();
+const { frontmatter } = useData();
 
 useCloseSidebarOnEscape();
 const {
@@ -29,18 +23,6 @@ const {
 
 const route = useRoute();
 watch(() => route.path, close);
-
-// Handle not found nprogress.
-onMounted(() => {
-  if (page.value.isNotFound) {
-    np?.done();
-  }
-});
-watch(page, () => {
-  if (page.value.isNotFound) {
-    np?.done();
-  }
-});
 
 registerWatchers({ closeSidebar })
 

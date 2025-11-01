@@ -3,13 +3,12 @@ import VPTheme from 'vitepress/theme'
 import Bili from './client/components/Bili.vue'
 import ContentWrapper from './client/components/ContentWrapper.vue'
 import Layout from './client/components/Layout.vue'
-import { useProgress } from './client/hooks/useProgress'
 import './client/styles/index.scss'
 
 const EPTheme: Theme = {
   extends: VPTheme,
   Layout,
-  enhanceApp({ app, router, siteData }) {
+  enhanceApp({ app, siteData }) {
     const themeConfig = siteData.value.themeConfig
     if (!import.meta.env.SSR) {
       if (!themeConfig.scrollRestoration) {
@@ -37,20 +36,6 @@ const EPTheme: Theme = {
           // 恢复保存的滚动位置
           window.scrollTo(0, scrollPosition)
         })
-      }
-
-      if (themeConfig.progressBar !== false) {
-        const { np } = useProgress(themeConfig.progressBar)
-        app.provide('progress', np.value)
-
-        router.onBeforePageLoad = () => {
-          np.value.start()
-          return true
-        }
-
-        router.onAfterPageLoad = () => {
-          np.value.done()
-        }
       }
     }
     app.component('Bili', Bili)
