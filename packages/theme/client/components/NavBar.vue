@@ -116,6 +116,12 @@ watchPostEffect(() => {
   }
 }
 
+@media screen and (min-width: var(--vp-layout-max-width)) {
+  .wrapper {
+      padding: 0px 48px;
+  }
+}
+
 .container {
   display: flex;
   justify-content: space-between;
