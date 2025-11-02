@@ -1,6 +1,7 @@
+import type { EPThemeConfig } from 'vitepress-theme-element-plus'
 import { defineConfig } from 'vitepress'
 
-export default defineConfig({
+export default defineConfig<EPThemeConfig>({
   vite: {
     ssr: {
       noExternal: ['vitepress-theme-element-plus'],
@@ -16,7 +17,6 @@ export default defineConfig({
   // 站点配置
   title: 'VitePress Theme Element Plus',
   description: 'A modern and elegant VitePress theme',
-
   head: [
     ['link', { rel: 'icon', href: '/favicon.svg' }],
     ['meta', { name: 'theme-color', content: '#3b82f6' }],
@@ -75,7 +75,8 @@ export default defineConfig({
     search: {
       provider: 'local',
     },
-
+    version: '1.0.0',
+    siteTitle: '',
     sidebar: [
       {
         text: 'Guide',

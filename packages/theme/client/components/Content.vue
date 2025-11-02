@@ -84,11 +84,4 @@ const { isHome, hasSidebar } = useLayout()
     padding-left: var(--vp-sidebar-width);
   }
 }
-
-@media (min-width: var(--vp-layout-max-width)) {
-  .VPContent.has-sidebar {
-    padding-right: calc((100vw - var(--vp-layout-max-width)) / 2);
-    padding-left: calc((100vw - var(--vp-layout-max-width)) / 2 + var(--vp-sidebar-width));
-  }
-}
 </style>

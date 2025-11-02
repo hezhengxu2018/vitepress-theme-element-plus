@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useData } from 'vitepress';
+import { ElTag } from "element-plus";
 import VPImage from 'vitepress/dist/client/theme-default/components/VPImage.vue';
 import { computed } from 'vue';
 import { useLangs } from '../hooks/useLangs';
@@ -38,6 +39,7 @@ const target = computed(() =>
       <VPImage v-if="theme.logo" class="logo" :image="theme.logo" />
       <span v-if="theme.siteTitle" v-html="theme.siteTitle" />
       <span v-else-if="theme.siteTitle === undefined">{{ site.title }}</span>
+      <ElTag v-if="theme.version" type="primary" round>{{ theme.version }}</ElTag>
       <slot name="nav-bar-title-after" />
     </a>
   </div>
@@ -56,6 +58,10 @@ const target = computed(() =>
   transition: opacity 0.25s;
 }
 
+.title .el-tag {
+  font-weight: normal;
+}
+
 @media (min-width: 960px) {
   .title {
     flex-shrink: 0;
@@ -63,7 +69,7 @@ const target = computed(() =>
 }
 
 :deep(.logo) {
-  margin-right: 8px;
+  margin-right: 14px;
   height: var(--vp-nav-logo-height);
 }
 </style>

@@ -47,7 +47,6 @@ const { hasSidebar } = useSidebar();
 
 .container {
   margin: 0 auto;
-  max-width: var(--vp-layout-max-width);
   text-align: center;
 }
 

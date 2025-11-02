@@ -118,13 +118,6 @@ watch(
   }
 }
 
-@media (min-width: var(--vp-layout-max-width)) {
-  .VPSidebar {
-    padding-left: max(32px, calc((100% - (var(--vp-layout-max-width) - 64px)) / 2));
-    width: calc((100% - (var(--vp-layout-max-width) - 64px)) / 2 + var(--vp-sidebar-width) - 32px);
-  }
-}
-
 .nav {
   outline: 0;
 }

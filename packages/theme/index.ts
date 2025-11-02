@@ -1,9 +1,10 @@
-import type { Theme } from 'vitepress'
+import type { DefaultTheme, Theme } from 'vitepress'
 import VPTheme from 'vitepress/theme'
 import Bili from './client/components/Bili.vue'
-import ContentWrapper from './client/components/ContentWrapper.vue'
 import Layout from './client/components/Layout.vue'
 import './client/styles/index.scss'
+import 'element-plus/theme-chalk/base.css'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 const EPTheme: Theme = {
   extends: VPTheme,
@@ -39,9 +40,16 @@ const EPTheme: Theme = {
       }
     }
     app.component('Bili', Bili)
-    app.component('ContentWrapper', ContentWrapper)
   },
 }
+
+export interface EPThemeConfig extends DefaultTheme.Config {
+  /**
+   * 文档版本号
+   */
+  version?: string
+}
+
 export { Layout }
 export default EPTheme
 

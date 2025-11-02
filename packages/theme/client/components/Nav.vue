@@ -3,7 +3,7 @@ import { inBrowser } from 'vitepress'
 import { computed, provide, watchEffect } from 'vue'
 import { useData } from 'vitepress/client'
 import { navInjectionKey, useNav } from 'vitepress/dist/client/theme-default/composables/nav';
-import VPNavScreen from 'vitepress/dist/client/theme-default/components/VPSkipLink.vue';
+import VPNavScreen from 'vitepress/dist/client/theme-default/components/VPNavScreen.vue';
 import NavBar from './NavBar.vue'
 
 const { isScreenOpen, closeScreen, toggleScreen } = useNav()

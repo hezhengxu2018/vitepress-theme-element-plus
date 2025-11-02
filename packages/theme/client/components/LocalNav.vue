@@ -103,12 +103,6 @@ const { shouldShow, scrollToTop } = useBackTop()
   }
 }
 
-@media (min-width: 1440px) {
-  .VPLocalNav.has-sidebar {
-    padding-left: calc((100vw - var(--vp-layout-max-width)) / 2 + var(--vp-sidebar-width));
-  }
-}
-
 .container {
   display: flex;
   justify-content: space-between;

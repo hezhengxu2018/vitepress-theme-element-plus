@@ -76,7 +76,6 @@ watchPostEffect(() => {
   pointer-events: none;
   white-space: nowrap;
   transition: background-color 0.25s;
-  padding: 0 12px 0 24px;
   background-image: radial-gradient(transparent 1px, var(--vp-c-bg) 1px);
   background-size: 4px 4px;
   backdrop-filter: saturate(50%) blur(4px);
@@ -121,7 +120,6 @@ watchPostEffect(() => {
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  max-width: calc(var(--vp-layout-max-width) - 64px);
   height: var(--vp-nav-height);
   pointer-events: none;
 }
@@ -194,15 +192,6 @@ watchPostEffect(() => {
   width: 100%;
   height: 1px;
   transition: background-color 0.5s;
-}
-
-.VPNavBar:not(.home) .divider-line {
   background-color: var(--vp-c-gutter);
-}
-
-@media (min-width: 960px) {
-  .VPNavBar:not(.home.top) .divider-line {
-    background-color: var(--vp-c-gutter);
-  }
 }
 </style>
