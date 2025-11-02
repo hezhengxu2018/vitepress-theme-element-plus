@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useData } from 'vitepress'
+import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
+import { ElIcon } from "element-plus";
 import { useEditLink } from 'vitepress/dist/client/theme-default/composables/edit-link'
 import { usePrevNext } from 'vitepress/dist/client/theme-default/composables/prev-next'
 import VPLink from 'vitepress/dist/client/theme-default/components/VPLink.vue';
@@ -48,31 +50,21 @@ const showFooter = computed(
     >
       <span class="visually-hidden" id="doc-footer-aria-label">Pager</span>
 
-      <div class="pager">
-        <VPLink
-          v-if="control.prev?.link"
-          class="pager-link prev"
-          :href="control.prev.link"
-        >
-          <span
-            class="desc"
-            v-html="theme.docFooter?.prev || 'Previous page'"
-          ></span>
+      <div class="pager prev">
+        <a v-if="control.prev?.link" :href="control.prev.link">
+          <ElIcon>
+            <ArrowLeft />
+          </ElIcon>
           <span class="title" v-html="control.prev.text"></span>
-        </VPLink>
+        </a>
       </div>
-      <div class="pager">
-        <VPLink
-          v-if="control.next?.link"
-          class="pager-link next"
-          :href="control.next.link"
-        >
-          <span
-            class="desc"
-            v-html="theme.docFooter?.next || 'Next page'"
-          ></span>
+      <div class="pager next">
+        <a v-if="control.next?.link" :href="control.next.link">          
           <span class="title" v-html="control.next.text"></span>
-        </VPLink>
+          <ElIcon>
+            <ArrowRight />
+          </ElIcon>
+        </a>
       </div>
     </nav>
   </footer>
@@ -116,44 +108,44 @@ const showFooter = computed(
 }
 
 .prev-next {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 16px;
   border-top: 1px solid var(--vp-c-divider);
-  padding-top: 24px;
-  display: grid;
-  grid-row-gap: 8px;
 }
 
-@media (min-width: 640px) {
-  .prev-next {
-    grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 16px;
-  }
+.pager {
+  display: flex;
+  flex-shrink: 0;
+  width: 50%;
 }
 
-.pager-link {
-  display: block;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  padding: 11px 16px 13px;
-  width: 100%;
-  height: 100%;
-  transition: border-color 0.25s;
-}
-
-.pager-link:hover {
-  border-color: var(--vp-c-brand-1);
-}
-
-.pager-link.next {
-  margin-left: auto;
-  text-align: right;
-}
-
-.desc {
-  display: block;
-  line-height: 20px;
-  font-size: 12px;
+.pager a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  height: 24px;
+  font-size: 14px;
   font-weight: 500;
-  color: var(--vp-c-text-2);
+}
+
+.pager.next {
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+.next .el-icon {
+  margin-left: 4px;
+}
+
+.pager.prev {
+  justify-content: flex-start;
+  padding-left: 12px;
+}
+
+.prev .el-icon {
+  margin-right: 4px;
 }
 
 .title {
