@@ -83,13 +83,13 @@ const pageName = computed(() =>
 
 @media (min-width: 768px) {
   .VPDoc {
-    padding: 48px 32px 128px;
+    padding: 48px 32px;
   }
 }
 
 @media (min-width: 960px) {
   .VPDoc {
-    padding: 48px 32px 0;
+    padding: 48px 32px;
   }
 
   .VPDoc:not(.has-sidebar) .container {
@@ -103,7 +103,11 @@ const pageName = computed(() =>
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1440px) {
+  .VPDoc {
+    padding: 64px 0 48px 64px;
+  }
+
   .VPDoc .container {
     display: flex;
     justify-content: center;
@@ -182,7 +186,7 @@ const pageName = computed(() =>
   width: 100%;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1440px) {
   .content {
     order: 1;
     margin: 0;

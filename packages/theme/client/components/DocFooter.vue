@@ -6,7 +6,7 @@ import { ElIcon } from "element-plus";
 import { useEditLink } from 'vitepress/dist/client/theme-default/composables/edit-link'
 import { usePrevNext } from 'vitepress/dist/client/theme-default/composables/prev-next'
 import VPLink from 'vitepress/dist/client/theme-default/components/VPLink.vue';
-import VPDocFooterLastUpdated from './DocFooterLastUpdated.vue'
+import VPDocFooterLastUpdated from 'vitepress/dist/client/theme-default/components/VPDocFooterLastUpdated.vue';
 
 const { theme, page, frontmatter } = useData()
 

@@ -6,14 +6,14 @@ export function useAside() {
   // const sidebarStore = useSidebarStore();
   const { hasSidebar } = useSidebar()
   const is960 = useMediaQuery('(min-width: 960px)')
-  const is1280 = useMediaQuery('(min-width: 1280px)')
+  const is1440 = useMediaQuery('(min-width: 1440px)')
 
   const isAsideEnabled = computed(() => {
-    if (!is1280.value && !is960.value) {
+    if (!is1440.value && !is960.value) {
       return false
     }
 
-    return hasSidebar ? is1280.value : is960.value
+    return hasSidebar ? is1440.value : is960.value
   })
 
   return {

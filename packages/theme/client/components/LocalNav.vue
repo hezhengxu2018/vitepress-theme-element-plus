@@ -97,7 +97,7 @@ const { shouldShow, scrollToTop } = useBackTop()
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1440px) {
   .VPLocalNav {
     display: none;
   }

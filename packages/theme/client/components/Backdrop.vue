@@ -33,7 +33,7 @@ const { isOpen, close } = useSidebar();
   transition-duration: 0.25s;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1440px) {
   .VPBackdrop {
     display: none;
   }
