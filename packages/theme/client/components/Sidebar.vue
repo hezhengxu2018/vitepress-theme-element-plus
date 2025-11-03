@@ -39,19 +39,8 @@ watch(
 </script>
 
 <template>
-  <aside
-    v-if="hasSidebar"
-    ref="navEl"
-    class="VPSidebar"
-    :class="{ open: open && hasSidebar }"
-    @click.stop
-  >
-    <nav
-      id="VPSidebarNav"
-      class="nav"
-      aria-labelledby="sidebar-aria-label"
-      tabindex="-1"
-    >
+  <aside v-if="hasSidebar" ref="navEl" class="VPSidebar" :class="{ open: open && hasSidebar }" @click.stop>
+    <nav id="VPSidebarNav" class="nav" aria-labelledby="sidebar-aria-label" tabindex="-1">
       <span id="sidebar-aria-label" class="visually-hidden">
         Sidebar Navigation
       </span>
@@ -66,12 +55,11 @@ watch(
 <style lang="scss" scoped>
 .VPSidebar {
   position: fixed;
-  top: var(--vp-nav-height);
+  top: 0;
   bottom: 0;
   left: 0;
   z-index: var(--vp-z-index-sidebar);
   padding: 32px 32px 96px;
-  width: calc(100vw - 64px);
   max-width: 320px;
   background-color: var(--vp-c-bg);
   opacity: 0;
@@ -86,9 +74,7 @@ watch(
 }
 
 .VPSidebar.open {
-  top: 0;
   opacity: 1;
-  visibility: visible;
   transform: translateX(0);
   transition:
     opacity 0.25s,
@@ -99,11 +85,23 @@ watch(
   box-shadow: var(--vp-shadow-1);
 }
 
-@media (min-width: 960px) {
+@media (max-width: 767px) {
   .VPSidebar {
-    padding-top: 0;
-    width: var(--vp-sidebar-width);
-    max-width: 100%;
+    width: calc(var(--vp-sidebar-width-mobile) - 14px);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .VPSidebar {
+    width: calc(var(--vp-sidebar-width-small));
+    top: 0;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .VPSidebar {
+    top: var(--vp-nav-height);
+    padding: 48px 32px;
     background-color: var(--vp-c-bg);
     opacity: 1;
     visibility: visible;
@@ -112,9 +110,17 @@ watch(
   }
 }
 
-@media (max-width: 960px) {
+@media screen and (min-width: 1440px) {
   .VPSidebar {
-    top: 0;
+    padding: 48px 32px;
+    width: calc(var(--vp-sidebar-width-small) + 39px)
+  }
+}
+
+@media screen and (min-width: 1680px) {
+  .VPSidebar {
+    padding: 48px;
+    width: calc(var(--vp-sidebar-width-small) + 48px)
   }
 }
 
