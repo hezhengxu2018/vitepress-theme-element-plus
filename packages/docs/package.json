@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "vitepress": "^2.0.0-alpha.12",
+    "vitepress-plugin-group-icons": "^1.0.0",
     "vitepress-theme-element-plus": "workspace:*"
   },
   "devDependencies": {

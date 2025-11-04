@@ -1,8 +1,12 @@
 import type { EPThemeConfig } from 'vitepress-theme-element-plus'
 import { defineConfig } from 'vitepress'
+import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
 
 export default defineConfig<EPThemeConfig>({
   vite: {
+    plugins: [
+      groupIconVitePlugin(),
+    ],
     ssr: {
       noExternal: ['vitepress-theme-element-plus'],
     },
@@ -13,7 +17,6 @@ export default defineConfig<EPThemeConfig>({
       cssMinify: false,
     },
   },
-
   // 站点配置
   title: 'VitePress Theme Element Plus',
   description: 'A modern and elegant VitePress theme',
@@ -21,51 +24,18 @@ export default defineConfig<EPThemeConfig>({
     ['link', { rel: 'icon', href: '/favicon.svg' }],
     ['meta', { name: 'theme-color', content: '#3b82f6' }],
   ],
-
-  // 启用暗色模式
   appearance: true,
-
-  // 启用最后更新时间
-  lastUpdated: true,
-
+  lastUpdated: false,
   // Markdown 配置
   markdown: {
     theme: {
       light: 'github-light',
       dark: 'github-dark',
     },
+    config(md) {
+      md.use(groupIconMdPlugin)
+    },
   },
-
-  // // 多语言配置
-  // locales: {
-  //   root: {
-  //     label: '简体中文',
-  //     lang: 'zh-CN',
-  //     title: '',
-  //     description: '现代优雅的 VitePress 文档主题',
-  //     link: '/zh-CN/',
-  //     themeConfig: {
-  //       // 中文导航
-  //       nav: [
-  //         { text: '指南', link: '/zh-CN/guide/' },
-  //         { text: '参考', link: '/zh-CN/reference/' },
-  //         { text: '关于', link: '/zh-CN/about' },
-  //         { text: '捐赠', link: '/zh-CN/sponsor' }
-  //       ],
-  //       // 中文侧边栏
-  //       sidebar: [
-  //         {
-  //           text: 'Guide',
-  //           items: [
-  //             { text: 'Introduction', link: '/introduction' },
-  //             { text: 'Getting Started', link: '/getting-started' },
-  //           ]
-  //         }
-  //       ]
-  //     }
-  //   }
-  // },
-
   // 全局主题配置
   themeConfig: {
     // Logo 配置
@@ -86,7 +56,7 @@ export default defineConfig<EPThemeConfig>({
         ],
       },
     ],
-
+    externalLinkIcon: true,
     // 社交链接
     socialLinks: [
       { icon: 'github', link: 'https://github.com/hezhengxu2018/vitepress-theme-element-plus' },

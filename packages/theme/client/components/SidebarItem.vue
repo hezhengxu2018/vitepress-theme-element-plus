@@ -250,7 +250,7 @@ function onLinkAreaClick(e: MouseEvent) {
 .VPSidebarItem.level-3.is-active > .item,
 .VPSidebarItem.level-4.is-active > .item,
 .VPSidebarItem.level-5.is-active > .item {
-  background-color: var(--vp-c-indigo-soft);
+  background-color: var(--el-color-primary-light-9);
 }
 
 .caret {

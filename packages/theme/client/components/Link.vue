@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { ElIcon } from 'element-plus';
 import { computed } from 'vue';
 import { EXTERNAL_URL_RE } from "vitepress/dist/client/shared";
 import { normalizeLink } from "vitepress/dist/client/theme-default/support/utils";
@@ -33,5 +34,8 @@ const isExternal = computed(
     :rel="rel ?? (isExternal ? 'noreferrer' : undefined)"
   >
     <slot />
+    <ElIcon v-if="href && isExternal && !noIcon">
+      <i-ri-external-link-line class="link-icon" />
+    </ElIcon>
   </component>
 </template>

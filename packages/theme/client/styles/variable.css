@@ -13,10 +13,10 @@
 }
 
 :root:root {
-  --el-color-primary: #3451b2;
   --vp-nav-height: 55px;
   --vp-nav-logo-height: 28px;
   --vp-c-brand: var(--el-color-primary);
+  --vp-c-brand-1: var(--el-color-primary);
   --el-bg-color: var(--vp-c-bg);
 }
 
