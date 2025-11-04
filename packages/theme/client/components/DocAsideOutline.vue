@@ -65,7 +65,6 @@ onContentUpdated(() => {
 
 .content {
   position: relative;
-  padding-left: 16px;
   font-size: 13px;
   font-weight: 500;
 }

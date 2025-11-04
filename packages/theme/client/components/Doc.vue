@@ -16,14 +16,10 @@ const pageName = computed(() =>
 </script>
 
 <template>
-  <div
-    class="VPDoc"
-    :class="{ 'has-sidebar': hasSidebar, 'has-aside': hasAside }"
-  >
+  <div class="VPDoc" :class="{ 'has-sidebar': hasSidebar, 'has-aside': hasAside }">
     <slot name="doc-top" />
     <div class="container">
       <div v-if="hasAside" class="aside" :class="{ 'left-aside': leftAside }">
-        <div class="aside-curtain" />
         <div class="aside-container">
           <div class="aside-content">
             <VPDocAside>
@@ -54,13 +50,10 @@ const pageName = computed(() =>
         <div class="content-container">
           <slot name="doc-before" />
           <main class="main">
-            <Content
-              class="vp-doc"
-              :class="[
-                pageName,
-                theme.externalLinkIcon && 'external-link-icon-enabled',
-              ]"
-            />
+            <Content class="vp-doc" :class="[
+              pageName,
+              theme.externalLinkIcon && 'external-link-icon-enabled',
+            ]" />
           </main>
           <VPDocFooter>
             <template #doc-footer-before>
@@ -138,45 +131,31 @@ const pageName = computed(() =>
   display: none;
   order: 2;
   flex-grow: 1;
-  padding-left: 32px;
-  width: 100%;
-  max-width: 256px;
+  padding-left: 64px;
+  padding-right: 32px;
 }
 
 .left-aside {
   order: 1;
   padding-left: unset;
   padding-right: 32px;
+  padding-left: 16px;
 }
 
 .aside-container {
-  position: fixed;
-  top: 0;
-  padding-top: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + var(--vp-doc-top-height, 0px) + 48px);
-  width: 224px;
-  height: 100vh;
-  overflow-x: hidden;
+  position: sticky;
+  top: calc(var(--vp-nav-height) + 32px);
+  margin-top: 0;
+  margin-bottom: 32px;
+  width: 200px;
+  height: calc(100vh - var(--vp-nav-height) - 32px);
   overflow-y: auto;
   scrollbar-width: none;
-}
-
-.aside-container::-webkit-scrollbar {
-  display: none;
-}
-
-.aside-curtain {
-  position: fixed;
-  bottom: 0;
-  z-index: 10;
-  width: 224px;
-  height: 32px;
-  background: linear-gradient(transparent, var(--vp-c-bg) 70%);
 }
 
 .aside-content {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - (var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 48px));
   padding-bottom: 32px;
 }
 

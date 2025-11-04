@@ -4,6 +4,8 @@ import VPHome from 'vitepress/dist/client/theme-default/components/VPHome.vue';
 import VPPage from 'vitepress/dist/client/theme-default/components/VPPage.vue';
 import NotFound from 'vitepress/dist/client/theme-default/NotFound.vue';
 import VPDoc from './Doc.vue';
+import Footer from './Footer.vue';
+import FooterCopyright from './FooterCopyright.vue';
 import { useLayout } from 'vitepress/theme';
 const { page, frontmatter } = useData();
 const { isHome, hasSidebar } = useLayout()
@@ -93,6 +95,8 @@ const { isHome, hasSidebar } = useLayout()
         <slot name="aside-bottom" />
       </template>
     </VPDoc>
+    <Footer />
+    <FooterCopyright v-if="isHome" />
   </div>
 </template>
 

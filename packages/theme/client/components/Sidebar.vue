@@ -60,7 +60,6 @@ watch(
   left: 0;
   z-index: var(--vp-z-index-sidebar);
   padding: 32px 32px 96px;
-  max-width: 320px;
   background-color: var(--vp-c-bg);
   opacity: 0;
   box-shadow: var(--vp-c-shadow-3);

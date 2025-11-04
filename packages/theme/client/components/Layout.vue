@@ -7,7 +7,6 @@ import { useSidebarControl } from 'vitepress/dist/client/theme-default/composabl
 import { computed, provide, useSlots, watch } from 'vue';
 import { useCloseSidebarOnEscape } from '../hooks/useSidebar';
 import Content from './Content.vue';
-import VMFooter from './Footer.vue';
 import LocalNav from './LocalNav.vue';
 import Sidebar from './Sidebar.vue';
 import Nav from './Nav.vue';
@@ -143,7 +142,6 @@ provide(layoutInfoInjectionKey, heroImageSlotExists);
       </template>
     </Content>
 
-    <VMFooter />
     <slot name="layout-bottom" />
   </div>
   <Content v-else />
