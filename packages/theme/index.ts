@@ -56,7 +56,6 @@ export interface EPThemeConfig extends DefaultTheme.Config {
 export { Layout }
 export default EPTheme
 
-// export { default as NotFound } from './components/pages/NotFound.vue'
 // export { default as Home } from './components/pages/Home.vue'
 // export { default as Doc } from './components/pages/Doc.vue'
 // export { default as SinglePage } from './components/pages/SinglePage.vue'

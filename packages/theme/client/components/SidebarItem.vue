@@ -3,7 +3,7 @@ import type { DefaultTheme } from 'vitepress';
 import { Icon } from '@iconify/vue';
 import { computed } from 'vue';
 import { useSidebarControl } from '../hooks/useSidebarControl';
-import VPLink from './Link.vue';
+import Link from './Link.vue';
 import VersionTag from './VersionTag.vue';
 
 const props = defineProps<{
@@ -83,7 +83,7 @@ function onLinkAreaClick(e: MouseEvent) {
         style="margin-right: 5px;"
         ssr
       />
-      <VPLink
+      <Link
         v-if="item.link"
         :tag="linkTag"
         class="link"
@@ -99,7 +99,7 @@ function onLinkAreaClick(e: MouseEvent) {
         />
         <component :is="textTag" class="text" v-html="item.text" />
         <VersionTag v-if="item.promotion" class="version-tag" :version="item.promotion" />
-      </VPLink>
+      </Link>
       <component
         :is="textTag"
         v-else
@@ -201,45 +201,45 @@ function onLinkAreaClick(e: MouseEvent) {
   color: var(--vp-c-text-1);
 }
 
-.VPSidebarItem.level-1 .text,
-.VPSidebarItem.level-2 .text,
-.VPSidebarItem.level-3 .text,
-.VPSidebarItem.level-4 .text,
-.VPSidebarItem.level-5 .text {
+.VPSidebarItem.level-1,
+.VPSidebarItem.level-2,
+.VPSidebarItem.level-3,
+.VPSidebarItem.level-4,
+.VPSidebarItem.level-5 {
   font-weight: 500;
   color: var(--vp-c-text-2);
 }
 
-.VPSidebarItem.level-0.is-link > .item > .link:hover .text,
-.VPSidebarItem.level-1.is-link > .item > .link:hover .text,
-.VPSidebarItem.level-2.is-link > .item > .link:hover .text,
-.VPSidebarItem.level-3.is-link > .item > .link:hover .text,
-.VPSidebarItem.level-4.is-link > .item > .link:hover .text,
-.VPSidebarItem.level-5.is-link > .item > .link:hover .text {
+.VPSidebarItem.level-0.is-link > .item > .link:hover,
+.VPSidebarItem.level-1.is-link > .item > .link:hover,
+.VPSidebarItem.level-2.is-link > .item > .link:hover,
+.VPSidebarItem.level-3.is-link > .item > .link:hover,
+.VPSidebarItem.level-4.is-link > .item > .link:hover,
+.VPSidebarItem.level-5.is-link > .item > .link:hover {
   color: var(--vp-c-brand-1);
 }
 
-.VPSidebarItem.level-0.has-active > .item > .text,
-.VPSidebarItem.level-1.has-active > .item > .text,
-.VPSidebarItem.level-2.has-active > .item > .text,
-.VPSidebarItem.level-3.has-active > .item > .text,
-.VPSidebarItem.level-4.has-active > .item > .text,
-.VPSidebarItem.level-5.has-active > .item > .text,
-.VPSidebarItem.level-0.has-active > .item > .link > .text,
-.VPSidebarItem.level-1.has-active > .item > .link > .text,
-.VPSidebarItem.level-2.has-active > .item > .link > .text,
-.VPSidebarItem.level-3.has-active > .item > .link > .text,
-.VPSidebarItem.level-4.has-active > .item > .link > .text,
-.VPSidebarItem.level-5.has-active > .item > .link > .text {
+.VPSidebarItem.level-0.has-active > .item,
+.VPSidebarItem.level-1.has-active > .item,
+.VPSidebarItem.level-2.has-active > .item,
+.VPSidebarItem.level-3.has-active > .item,
+.VPSidebarItem.level-4.has-active > .item,
+.VPSidebarItem.level-5.has-active > .item,
+.VPSidebarItem.level-0.has-active > .item > .link,
+.VPSidebarItem.level-1.has-active > .item > .link,
+.VPSidebarItem.level-2.has-active > .item > .link,
+.VPSidebarItem.level-3.has-active > .item > .link,
+.VPSidebarItem.level-4.has-active > .item > .link,
+.VPSidebarItem.level-5.has-active > .item > .link {
   color: var(--vp-c-text-1);
 }
 
-.VPSidebarItem.level-0.is-active > .item .link > .text,
-.VPSidebarItem.level-1.is-active > .item .link > .text,
-.VPSidebarItem.level-2.is-active > .item .link > .text,
-.VPSidebarItem.level-3.is-active > .item .link > .text,
-.VPSidebarItem.level-4.is-active > .item .link > .text,
-.VPSidebarItem.level-5.is-active > .item .link > .text {
+.VPSidebarItem.level-0.is-active > .item .link,
+.VPSidebarItem.level-1.is-active > .item .link,
+.VPSidebarItem.level-2.is-active > .item .link,
+.VPSidebarItem.level-3.is-active > .item .link,
+.VPSidebarItem.level-4.is-active > .item .link,
+.VPSidebarItem.level-5.is-active > .item .link {
   color: var(--vp-c-brand-1);
   font-weight: 600;
 }

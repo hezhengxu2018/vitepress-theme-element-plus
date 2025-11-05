@@ -3,8 +3,9 @@
     "target": "ES2020",
     "jsx": "preserve",
     "lib": ["ES2020", "DOM"],
+    "rootDir": "./",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "types": ["vite/client"],
     "strict": false,
@@ -22,9 +23,9 @@
   },
   "include": [
     "index.ts",
-    "types/**/*",
-    "components/**/*",
-    "composables/**/*"
+    "client/**/*",
+    "node/**/*",
+    "vue-shim.d.ts"
   ],
   "exclude": [
     "node_modules/**/*",

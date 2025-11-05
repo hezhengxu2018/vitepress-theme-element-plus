@@ -18,23 +18,27 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.cjs"
+      "import": "./index.js"
     },
-    "./index.css": "./dist/esm/vitepress-theme-element-plus.css"
+    "./node": {
+      "types": "./dist/types/node.d.ts",
+      "import": "./node/index.js"
+    },
+
+    "./index.css": "./client/styles/variable.css"
   },
-  "main": "./dist/cjs/index.cjs",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/types/index.d.ts",
-  "style": "./dist/esm/vitepress-theme-element-plus.css",
+  "module": "./index.js",
+  "style": "./client/styles/index.css",
   "files": [
     "LICENSE",
     "README.md",
-    "dist"
+    "client",
+    "index.js",
+    "node"
   ],
   "scripts": {
     "clean": "rimraf dist",
-    "build": "pnpm run clean && vite build && (vue-tsc --declaration --emitDeclarationOnly --outDir dist/types || true)",
+    "build": "tsdown",
     "build:watch": "vite build --watch",
     "prepublishOnly": "pnpm run build",
     "release": "npm publish --access public"
@@ -42,15 +46,13 @@
   "peerDependencies": {
     "vitepress": "2.0.0-alpha.12"
   },
-  "dependencies": {
-    "@vueuse/core": "^11.3.0",
-    "vue": "^3.5.18"
-  },
   "devDependencies": {
     "@iconify/vue": "^4.2.1",
     "@types/glob": "^9.0.0",
+    "@types/markdown-it": "^14.1.0",
     "@types/node": "^22.17.0",
     "@vitejs/plugin-vue": "^5.2.4",
+    "@vueuse/core": "^11.3.0",
     "element-plus": "^2.11.7",
     "es-toolkit": "^1.14.0",
     "glob": "^11.0.3",
@@ -61,6 +63,7 @@
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4",
     "vitepress": "2.0.0-alpha.12",
+    "vue": "^3.5.18",
     "vue-tsc": "^3.0.5"
   },
   "publishConfig": {
