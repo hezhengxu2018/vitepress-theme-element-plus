@@ -1,7 +1,7 @@
 import type { EPThemeConfig } from 'vitepress-theme-element-plus'
 import { defineConfig } from 'vitepress'
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
-import { mdExternalLinkIcon, mdTag, mdTooltip } from 'vitepress-theme-element-plus/node'
+import { mdExternalLinkIcon, mdTableWrapper, mdTag, mdTooltip } from 'vitepress-theme-element-plus/node'
 
 export default defineConfig<EPThemeConfig>({
   vite: {
@@ -38,6 +38,7 @@ export default defineConfig<EPThemeConfig>({
       md.use(mdExternalLinkIcon)
       md.use(mdTag)
       md.use(mdTooltip)
+      md.use(mdTableWrapper)
     },
   },
   // 全局主题配置

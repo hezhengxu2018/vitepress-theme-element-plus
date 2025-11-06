@@ -3,7 +3,6 @@ import type MarkdownIt from 'markdown-it'
 export default function mdTooltip(md: MarkdownIt): void {
   md.renderer.rules.tooltip = (tokens, idx) => {
     const token = tokens[idx]
-
     return `<api-typing type="${token.content}" details="${token.info}" />`
   }
 

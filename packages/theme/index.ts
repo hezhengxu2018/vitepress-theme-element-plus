@@ -1,6 +1,7 @@
 import type { DefaultTheme, Theme } from 'vitepress'
 import { ElTag } from 'element-plus'
 import VPTheme from 'vitepress/theme'
+import ApiTyping from './client/components/ApiTyping.vue'
 import Bili from './client/components/Bili.vue'
 import Layout from './client/components/Layout.vue'
 import 'element-plus/theme-chalk/base.css'
@@ -42,6 +43,7 @@ const EPTheme: Theme = {
     }
     app.component('Bili', Bili)
     app.component('ElTag', ElTag)
+    app.component('ApiTyping', ApiTyping)
   },
 }
 
