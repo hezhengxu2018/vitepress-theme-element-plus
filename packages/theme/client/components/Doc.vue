@@ -50,7 +50,7 @@ const pageName = computed(() =>
         <div class="content-container">
           <slot name="doc-before" />
           <main class="main">
-            <Content class="vp-doc" :class="[
+            <Content class="doc-content" :class="[
               pageName,
               theme.externalLinkIcon && 'external-link-icon-enabled',
             ]" />

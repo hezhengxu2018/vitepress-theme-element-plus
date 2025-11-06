@@ -1,0 +1,137 @@
+.doc-content h1 {
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+.doc-content h2 {
+  margin-top: 2.25rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.3rem;
+  line-height: 1.25;
+  font-size: 1.65rem;
+  font-weight: 600;
+}
+.doc-content h3 {
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+.doc-content h4 {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+.doc-content h5 {
+  font-weight: 600;
+}
+.doc-content h2 + h3 {
+  margin-top: 1.5rem;
+}
+.doc-content p {
+  margin: 1rem 0;
+  line-height: 1.7;
+}
+.doc-content a {
+  font-weight: 500;
+  text-decoration: inherit;
+  color: var(--brand-color);
+  display: inline-flex;
+  align-items: center;
+}
+.doc-content a .link-icon {
+  margin-left: 0.25rem;
+  height: 1em;
+  width: 1em;
+}
+.doc-content h1,
+.doc-content h2,
+.doc-content h3,
+.doc-content h4,
+.doc-content h5,
+.doc-content h6 {
+  display: flex;
+  align-items: center;
+  color: var(--el-text-color-regular);
+}
+.doc-content h1 .el-tag,
+.doc-content h1 .vp-tag,
+.doc-content h2 .el-tag,
+.doc-content h2 .vp-tag,
+.doc-content h3 .el-tag,
+.doc-content h3 .vp-tag,
+.doc-content h4 .el-tag,
+.doc-content h4 .vp-tag,
+.doc-content h5 .el-tag,
+.doc-content h5 .vp-tag,
+.doc-content h6 .el-tag,
+.doc-content h6 .vp-tag {
+  margin-left: 8px;
+}
+@media screen and (min-width: 480px) {
+  .doc-content h1 {
+    font-size: 2.2rem;
+  }
+}
+.doc-content div .vp-table {
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  margin-bottom: 45px;
+}
+.doc-content div .vp-table > table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: var(--bg-color);
+  font-size: 14px;
+  line-height: 1.5em;
+}
+.doc-content div .vp-table > table tr td:nth-child(2) {
+  font-family: var(--font-family);
+}
+.doc-content div .vp-table > table th,
+.doc-content div .vp-table > table td {
+  white-space: nowrap;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.6em 1em;
+  text-align: left;
+  max-width: 250px;
+  white-space: pre-wrap;
+}
+.doc-content div .vp-table > table thead tr:first-child th {
+  border-top: none;
+}
+.doc-content div .vp-table > table tbody tr td:first-child {
+  font-family: var(--font-family-mono);
+}
+.doc-content .header-anchor:before {
+  content: "#";
+}
+.doc-content a.header-anchor {
+  position: absolute;
+  margin-top: 0.125em;
+  margin-left: -0.87em;
+  padding-right: 0.23em;
+  font-size: 0.85em;
+  opacity: 0;
+}
+.doc-content h1:hover .header-anchor, .doc-content h1:focus .header-anchor, .doc-content h2:hover .header-anchor, .doc-content h2:focus .header-anchor, .doc-content h3:hover .header-anchor, .doc-content h3:focus .header-anchor, .doc-content h4:hover .header-anchor, .doc-content h4:focus .header-anchor, .doc-content h5:hover .header-anchor, .doc-content h5:focus .header-anchor, .doc-content h6:hover .header-anchor, .doc-content h6:focus .header-anchor {
+  opacity: 1;
+}
+.doc-content .custom-block .custom-block-title {
+  font-weight: 700;
+}
+.doc-content .custom-block p:not(.custom-block-title) {
+  font-size: 0.9rem;
+}
+.doc-content .custom-block.tip {
+  padding: 8px 16px;
+  background-color: var(--block-tip-bg-color);
+  border-radius: 4px;
+  border-left: 5px solid var(--el-color-primary);
+  margin: 20px 0;
+}
+.doc-content .custom-block.warning {
+  padding: 8px 16px;
+  background-color: var(--block-warning-bg-color);
+  border-radius: 4px;
+  border-left: 5px solid var(--el-color-danger);
+  margin: 20px 0;
+}

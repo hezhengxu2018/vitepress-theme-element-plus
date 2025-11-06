@@ -3,7 +3,7 @@ title: Quick Start
 lang: en-US
 ---
 
-# Quick Start
+# Quick Start ^(beta)
 
 This section describes how to use Element Plus in your project.
 
@@ -230,3 +230,31 @@ We can also use [Nuxt.js](https://nuxt.com). Please refer to [Element Plus Nuxt.
 
 You can bootstrap your project from now on. For each components usage, please
 refer to [the individual component documentation](https://element-plus.org/en-US/component/button.html).
+
+## SortHandle
+
+> 拖拽手柄
+
+参考 [https://cn.element-plus.org/zh-CN/component/button.html](https://cn.element-plus.org/zh-CN/component/button.html)
+
+## Addition
+
+> 添加按钮
+
+扩展属性
+
+| 属性名       | 类型                  | 描述     | 默认值   |
+| ------------ | --------------------- | -------- | -------- |
+| title        | string                | 文案     |          |
+| method       | `'push' \| 'unshift'` | 添加方式 | `'push'` |
+| defaultValue | any                   | 默认值   |          |
+
+其余参考 [https://cn.element-plus.org/zh-CN/component/button.html](https://cn.element-plus.org/zh-CN/component/button.html)
+
+::: warning 注意
+Array类的控件有一个已知的bug，即设置了initialValue后删除再次新增会恢复initialValue的值，可以通过设置Addition组件的defaultValue的方式解决。目前官方没有提供修复方案，[issue](https://github.com/alibaba/formily/issues/4235)。
+:::
+
+::: tip 提示
+title 属性可以接收 Field 模型中的 title 映射，也就是在 Field 上传 title 也是生效的
+:::

@@ -197,8 +197,11 @@ function onLinkAreaClick(e: MouseEvent) {
   line-height: 24px;
 }
 .VPSidebarItem.level-0 > .item h2 {
-  font-weight: 700;
   color: var(--vp-c-text-1);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 24px;
 }
 
 .VPSidebarItem.level-1,

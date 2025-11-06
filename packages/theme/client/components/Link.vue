@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ElIcon } from 'element-plus';
 import { computed } from 'vue';
-import { EXTERNAL_URL_RE } from "vitepress/dist/client/shared";
-import { normalizeLink } from "vitepress/dist/client/theme-default/support/utils";
+import { EXTERNAL_URL_RE } from "vitepress/dist/client/shared.js";
+import { normalizeLink } from "vitepress/dist/client/theme-default/support/utils.js";
 
 const props = defineProps<{
   tag?: string

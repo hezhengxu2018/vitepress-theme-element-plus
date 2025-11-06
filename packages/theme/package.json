@@ -16,15 +16,15 @@
     "documentation"
   ],
   "exports": {
-    "./index.css": "./index.css",
     ".": {
       "types": "./types/index.d.ts",
       "default": "./index.ts"
     },
-    "./config": {
-      "types": "./config/index.d.ts",
-      "default": "./config/index.js"
-    }
+    "./node": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
+    },
+    "./styles/*": "./styles/*"
   },
   "module": "./index.ts",
   "types": "./types/index.d.ts",
@@ -38,7 +38,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "tsdown",
-    "build:watch": "vite build --watch",
+    "build:watch": "tsdown --watch",
     "prepublishOnly": "pnpm run build",
     "release": "npm publish --access public"
   },
@@ -54,10 +54,9 @@
     "@vueuse/core": "^11.3.0",
     "element-plus": "^2.11.7",
     "es-toolkit": "^1.14.0",
-    "glob": "^11.0.3",
-    "nprogress": "^0.2.0",
     "rimraf": "^6.0.1",
     "sass-embedded": "^1.80.3",
+    "tsdown": "0.16.0",
     "typescript": "^5.9.2",
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4",

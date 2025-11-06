@@ -1,0 +1,140 @@
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+html {
+  line-height: 1.4;
+  font-size: 16px;
+  text-size-adjust: 100%;
+  font-family: var(--font-family);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  line-height: 1.4;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  direction: ltr;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--el-transition-duration-fast);
+}
+
+main {
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  line-height: 1.25;
+}
+
+.doc-content h1,
+.doc-content h2,
+.doc-content h3,
+.doc-content h4,
+.doc-content h5,
+.doc-content h6 {
+  display: flex;
+  align-items: center;
+  position: relative;
+  color: var(--el-text-color-regular);
+}
+.doc-content h1 .el-tag,
+.doc-content h1 .vp-tag,
+.doc-content h2 .el-tag,
+.doc-content h2 .vp-tag,
+.doc-content h3 .el-tag,
+.doc-content h3 .vp-tag,
+.doc-content h4 .el-tag,
+.doc-content h4 .vp-tag,
+.doc-content h5 .el-tag,
+.doc-content h5 .vp-tag,
+.doc-content h6 .el-tag,
+.doc-content h6 .vp-tag {
+  margin-left: 8px;
+}
+
+@media screen and (min-width: 480px) {
+  .doc-content h1 {
+    font-size: 2.2rem;
+  }
+}
+
+.doc-content > div .vp-table {
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: auto;
+  margin-bottom: 45px;
+}
+.doc-content > div .vp-table > table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: var(--bg-color);
+  font-size: 14px;
+  line-height: 1.5em;
+}
+.doc-content > div .vp-table > table tr td:nth-child(2) {
+  font-family: var(--font-family);
+}
+.doc-content > div .vp-table > table th,
+.doc-content > div .vp-table > table td {
+  white-space: nowrap;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.6em 1em;
+  text-align: left;
+  max-width: 250px;
+  white-space: pre-wrap;
+}
+.doc-content > div .vp-table > table thead tr:first-child th {
+  border-top: none;
+}
+.doc-content > div .vp-table > table tbody tr td:first-child {
+  font-family: var(--font-family-mono);
+}
+
+blockquote {
+  margin: 1rem 0;
+  border-left: 0.2rem solid var(--el-border-color);
+  padding: 0.25rem 0 0.25rem 1rem;
+  font-size: 1rem;
+  color: var(--text-color-lighter);
+}
+
+.custom-block .custom-block-title {
+  font-weight: 700;
+}
+.custom-block p:not(.custom-block-title) {
+  font-size: 0.9rem;
+}
+.custom-block.tip {
+  padding: 8px 16px;
+  background-color: var(--block-tip-bg-color);
+  border-radius: 4px;
+  border-left: 5px solid var(--el-color-primary);
+  margin: 20px 0;
+}
+.custom-block.warning {
+  padding: 8px 16px;
+  background-color: var(--block-warning-bg-color);
+  border-radius: 4px;
+  border-left: 5px solid var(--el-color-danger);
+  margin: 20px 0;
+}
