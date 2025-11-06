@@ -16,25 +16,24 @@
     "documentation"
   ],
   "exports": {
+    "./index.css": "./index.css",
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./index.js"
+      "types": "./types/index.d.ts",
+      "default": "./index.ts"
     },
-    "./node": {
-      "types": "./dist/types/node.d.ts",
-      "import": "./node/index.js"
-    },
-
-    "./index.css": "./client/styles/variable.css"
+    "./config": {
+      "types": "./config/index.d.ts",
+      "default": "./config/index.js"
+    }
   },
-  "module": "./index.js",
-  "style": "./client/styles/index.css",
+  "module": "./index.ts",
+  "types": "./types/index.d.ts",
+  "style": "./index.scss",
   "files": [
-    "LICENSE",
-    "README.md",
-    "client",
-    "index.js",
-    "node"
+    "config",
+    "index.ts",
+    "src",
+    "types"
   ],
   "scripts": {
     "clean": "rimraf dist",

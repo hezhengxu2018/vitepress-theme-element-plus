@@ -3,8 +3,8 @@ import { computed } from 'vue'
 import { useData } from 'vitepress'
 import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
 import { ElIcon } from "element-plus";
-import { useEditLink } from 'vitepress/dist/client/theme-default/composables/edit-link'
-import { usePrevNext } from 'vitepress/dist/client/theme-default/composables/prev-next'
+import { useEditLink } from 'vitepress/dist/client/theme-default/composables/edit-link.js'
+import { usePrevNext } from 'vitepress/dist/client/theme-default/composables/prev-next.js'
 import VPLink from 'vitepress/dist/client/theme-default/components/VPLink.vue';
 import VPDocFooterLastUpdated from 'vitepress/dist/client/theme-default/components/VPDocFooterLastUpdated.vue';
 

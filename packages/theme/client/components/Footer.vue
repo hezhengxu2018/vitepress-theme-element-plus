@@ -9,8 +9,8 @@ const blogroll = theme.value.footer?.blogroll
 </script>
 
 <template>
-  <footer class="footer" :class="{ 'is-home': isHome }">
-    <div v-if="blogroll && blogroll.length" class="footer-main" v-for="item of blogroll" :key="item.title">
+  <footer v-if="blogroll && blogroll.length" class="footer" :class="{ 'is-home': isHome }">
+    <div class="footer-main" v-for="item of blogroll" :key="item.title">
       <h4>{{ item.title }}</h4>
       <ElLink
         v-for="child of item.children"
