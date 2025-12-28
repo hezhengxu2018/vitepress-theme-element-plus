@@ -1,0 +1,61 @@
+:root {
+  --vp-layout-max-width: 1680px;
+  --vp-sidebar-width-small: 266px;
+  --vp-sidebar-width-mobile: 320px;
+  --text-color: var(--el-text-color-primary);
+  --text-color-light: var(--el-text-color-regular);
+  --text-color-lighter: var(--el-text-color-secondary);
+  --brand-color: var(--el-color-primary);
+  --brand-color-light: var(--el-color-primary-light-1);
+  --bg-brand-color: var(--el-color-primary-light-9);
+  --bg-color: var(--el-bg-color);
+  --bg-color-rgb: 255, 255, 255;
+  --bg-color-soft: #fafafa;
+  --bg-color-mute: #f2f2f2;
+  --border-color: var(--el-border-color);
+  --border-color-light: var(--el-border-color-lighter);
+  --font-family: var(--el-font-family);
+  --font-family-mono: "JetBrains Mono", source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  --success-color: var(--el-color-success);
+  --warning-color: var(--el-color-warning);
+  --danger-color: var(--el-color-danger);
+  --vp-screen-max-width: 1362px;
+  --vp-sidebar-width-mobile: 320px;
+  --vp-sidebar-width-small: 266px;
+  --code-font-family: var(--font-family-mono);
+
+  &:root {
+    --vp-nav-height: 55px;
+    --vp-nav-logo-height: 28px;
+    --vp-c-brand: var(--el-color-primary);
+    --vp-c-brand-1: var(--el-color-primary);
+    --el-bg-color: var(--vp-c-bg);
+  }
+
+  &.dark {
+    --el-color-primary: #a8b1ff;
+  }
+}
+// fix "vitepress-plugin-group-icons" 
+.vp-code-block-title-bar.vp-code-block-title-bar {
+    margin: 16px 0px 0px;
+}
+
+.vp-code-group .tabs.tabs {
+  margin-right: 0px;
+  margin-left: 0px;
+  border-radius: 8px 8px 0px 0px;
+}
+
+@media screen and (min-width: 1440px) {
+  :root {
+    --vp-sidebar-width-small: 234px;
+  }
+}
+
+@media screen and (min-width: 1680px) {
+  :root {
+    --vp-screen-max-width: 1482px;
+    --vp-sidebar-width-small: 290px;
+  }
+}

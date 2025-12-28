@@ -23,8 +23,7 @@
     "./node": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.mjs"
-    },
-    "./styles/*": "./styles/*"
+    }
   },
   "module": "./index.ts",
   "types": "./types/index.d.ts",
