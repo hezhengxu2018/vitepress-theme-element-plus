@@ -7,6 +7,11 @@ import Layout from './client/components/Layout.vue'
 import 'element-plus/theme-chalk/base.css'
 import 'element-plus/theme-chalk/el-tag.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+import './styles/index.css'
+import './styles/base.css'
+import './styles/code.css'
+import './styles/doc-content.css'
+import './styles/tag-content.css'
 
 const EPTheme: Theme = {
   extends: VPTheme,
