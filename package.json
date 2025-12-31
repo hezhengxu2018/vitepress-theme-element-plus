@@ -19,7 +19,7 @@
     "build:docs": "pnpm -C packages/docs build",
     "commit": "czg",
     "lint-staged": "lint-staged",
-    "prepare": "husky"
+    "prepare": "husky && pnpm run build:theme"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.2.0",
