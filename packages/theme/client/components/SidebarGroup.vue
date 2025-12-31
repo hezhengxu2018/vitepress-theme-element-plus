@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import type { DefaultTheme } from 'vitepress/theme';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
-import VPSidebarItem from './SidebarItem.vue';
+import type { DefaultTheme } from 'vitepress/theme'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import VPSidebarItem from './SidebarItem.vue'
 
 defineProps<{
   items: (DefaultTheme.SidebarItem & { hide?: boolean })[]
-}>();
+}>()
 
-const disableTransition = ref(true);
-let timer: ReturnType<typeof setTimeout> | null = null;
+const disableTransition = ref(true)
+let timer: ReturnType<typeof setTimeout> | null = null
 
 onMounted(() => {
   timer = setTimeout(() => {
-    timer = null;
-    disableTransition.value = false;
-  }, 300);
-});
+    timer = null
+    disableTransition.value = false
+  }, 300)
+})
 
 onBeforeUnmount(() => {
   if (timer !== null) {
-    clearTimeout(timer);
-    timer = null;
+    clearTimeout(timer)
+    timer = null
   }
-});
+})
 </script>
 
 <template>

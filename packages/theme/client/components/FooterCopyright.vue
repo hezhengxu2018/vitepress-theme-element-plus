@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { useData } from 'vitepress'
 import { ElDivider } from 'element-plus'
+import { useData } from 'vitepress'
 
 const { theme } = useData()
 </script>

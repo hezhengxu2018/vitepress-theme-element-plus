@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useSidebar } from '../hooks/useSidebar';
+import { useSidebar } from '../hooks/useSidebar'
 
-const { isOpen, close } = useSidebar();
+const { isOpen, close } = useSidebar()
 </script>
 
 <template>

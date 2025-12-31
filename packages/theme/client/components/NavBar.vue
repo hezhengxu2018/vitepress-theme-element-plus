@@ -1,35 +1,35 @@
 <script lang="ts" setup>
-import { useWindowScroll } from '@vueuse/core';
-import { useData } from 'vitepress';
-import VPNavBarAppearance from 'vitepress/dist/client/theme-default/components/VPNavBarAppearance.vue';
-import VPNavBarExtra from 'vitepress/dist/client/theme-default/components/VPNavBarExtra.vue';
-import VPNavBarHamburger from 'vitepress/dist/client/theme-default/components/VPNavBarHamburger.vue';
-import VPNavBarMenu from 'vitepress/dist/client/theme-default/components/VPNavBarMenu.vue';
-import VPNavBarSocialLinks from 'vitepress/dist/client/theme-default/components/VPNavBarSocialLinks.vue';
-import VPNavBarTranslations from 'vitepress/dist/client/theme-default/components/VPNavBarTranslations.vue';
-import { ref, watchPostEffect } from 'vue';
-import VPNavBarTitle from './NavBarTitle.vue';
-import VPNavBarSearch from './VPNavBarSearch.vue';
+import { useWindowScroll } from '@vueuse/core'
+import { useData } from 'vitepress'
+import VPNavBarAppearance from 'vitepress/dist/client/theme-default/components/VPNavBarAppearance.vue'
+import VPNavBarExtra from 'vitepress/dist/client/theme-default/components/VPNavBarExtra.vue'
+import VPNavBarHamburger from 'vitepress/dist/client/theme-default/components/VPNavBarHamburger.vue'
+import VPNavBarMenu from 'vitepress/dist/client/theme-default/components/VPNavBarMenu.vue'
+import VPNavBarSocialLinks from 'vitepress/dist/client/theme-default/components/VPNavBarSocialLinks.vue'
+import VPNavBarTranslations from 'vitepress/dist/client/theme-default/components/VPNavBarTranslations.vue'
+import { ref, watchPostEffect } from 'vue'
+import VPNavBarTitle from './NavBarTitle.vue'
+import VPNavBarSearch from './VPNavBarSearch.vue'
 
 const props = defineProps<{
   isScreenOpen: boolean
-}>();
+}>()
 
 defineEmits<{
-  (e: 'toggle-screen'): void
-}>();
+  (e: 'toggleScreen'): void
+}>()
 
-const { y } = useWindowScroll();
-const { frontmatter } = useData();
-const classes = ref<Record<string, boolean>>({});
+const { y } = useWindowScroll()
+const { frontmatter } = useData()
+const classes = ref<Record<string, boolean>>({})
 
 watchPostEffect(() => {
   classes.value = {
     'home': frontmatter.value.layout === 'home',
     'top': y.value === 0,
     'screen-open': props.isScreenOpen,
-  };
-});
+  }
+})
 </script>
 
 <template>
@@ -57,7 +57,7 @@ watchPostEffect(() => {
             <VPNavBarSocialLinks class="social-links" />
             <VPNavBarExtra class="extra" />
             <slot name="nav-bar-content-after" />
-            <VPNavBarHamburger class="hamburger" :active="isScreenOpen" @click="$emit('toggle-screen')" />
+            <VPNavBarHamburger class="hamburger" :active="isScreenOpen" @click="$emit('toggleScreen')" />
           </div>
         </div>
       </div>

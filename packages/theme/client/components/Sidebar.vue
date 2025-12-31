@@ -1,41 +1,41 @@
 <script lang="ts" setup>
-import { useScrollLock } from '@vueuse/core';
-import { inBrowser, useData } from 'vitepress';
-import { ref, watch } from 'vue';
-import VPSidebarGroup from './SidebarGroup.vue';
-import { useLayout } from 'vitepress/theme';
+import { useScrollLock } from '@vueuse/core'
+import { inBrowser } from 'vitepress'
+import { useLayout } from 'vitepress/theme'
+import { ref, watch } from 'vue'
+import VPSidebarGroup from './SidebarGroup.vue'
 
 const props = defineProps<{
   open: boolean
-}>();
+}>()
 
-const { sidebarGroups, hasSidebar } = useLayout();
+const { sidebarGroups, hasSidebar } = useLayout()
 
 // a11y: focus Nav element when menu has opened
-const navEl = ref<HTMLElement | null>(null);
-const isLocked = useScrollLock(inBrowser ? document.body : null);
+const navEl = ref<HTMLElement | null>(null)
+const isLocked = useScrollLock(inBrowser ? document.body : null)
 watch(
   [props, navEl],
   () => {
     if (props.open) {
-      isLocked.value = true;
-      navEl.value?.focus();
+      isLocked.value = true
+      navEl.value?.focus()
     }
     else {
-      isLocked.value = false;
+      isLocked.value = false
     }
   },
-  { immediate: true, flush: 'post' }
-);
+  { immediate: true, flush: 'post' },
+)
 
-const key = ref(0);
+const key = ref(0)
 watch(
   sidebarGroups,
   () => {
-    key.value += 1;
+    key.value += 1
   },
-  { deep: true }
-);
+  { deep: true },
+)
 </script>
 
 <template>

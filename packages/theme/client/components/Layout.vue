@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import { useData, useRoute } from 'vitepress';
-import VPBackdrop from 'vitepress/dist/client/theme-default/components/VPBackdrop.vue';
-import VPSkipLink from 'vitepress/dist/client/theme-default/components/VPSkipLink.vue';
+import { useData, useRoute } from 'vitepress'
+import VPBackdrop from 'vitepress/dist/client/theme-default/components/VPBackdrop.vue'
+import VPSkipLink from 'vitepress/dist/client/theme-default/components/VPSkipLink.vue'
 import { layoutInfoInjectionKey, registerWatchers } from 'vitepress/dist/client/theme-default/composables/layout'
 import { useSidebarControl } from 'vitepress/dist/client/theme-default/composables/sidebar'
-import { computed, provide, useSlots, watch } from 'vue';
-import { useCloseSidebarOnEscape } from '../hooks/useSidebar';
-import Content from './Content.vue';
-import LocalNav from './LocalNav.vue';
-import Sidebar from './Sidebar.vue';
-import Nav from './Nav.vue';
+import { computed, provide, useSlots, watch } from 'vue'
+import { useCloseSidebarOnEscape } from '../hooks/useSidebar'
+import Content from './Content.vue'
+import LocalNav from './LocalNav.vue'
+import Nav from './Nav.vue'
+import Sidebar from './Sidebar.vue'
 
-const { frontmatter } = useData();
+const { frontmatter } = useData()
 
-useCloseSidebarOnEscape();
+useCloseSidebarOnEscape()
 const {
   isOpen: isSidebarOpen,
   open: openSidebar,
-  close: closeSidebar
+  close: closeSidebar,
 } = useSidebarControl()
 
-const route = useRoute();
-watch(() => route.path, close);
+const route = useRoute()
+watch(() => route.path, close)
 
 registerWatchers({ closeSidebar })
 
-const slots = useSlots();
-const heroImageSlotExists = computed(() => !!slots['home-hero-image']);
+const slots = useSlots()
+const heroImageSlotExists = computed(() => !!slots['home-hero-image'])
 
-provide(layoutInfoInjectionKey, heroImageSlotExists);
+provide(layoutInfoInjectionKey, heroImageSlotExists)
 </script>
 
 <template>

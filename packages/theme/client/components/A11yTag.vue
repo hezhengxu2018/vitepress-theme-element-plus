@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ElTag } from 'element-plus';
+import { ElTag } from 'element-plus'
 </script>
 
 <template>

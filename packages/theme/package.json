@@ -38,6 +38,7 @@
     "clean": "rimraf dist",
     "build": "tsdown",
     "build:watch": "tsdown --watch",
+    "lint": "eslint ./ --fix",
     "prepublishOnly": "pnpm run build",
     "release": "release-it"
   },

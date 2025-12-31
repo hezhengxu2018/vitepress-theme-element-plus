@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Warning } from '@element-plus/icons-vue'
-import { ElTooltip, ElButton } from 'element-plus'
+import { ElButton, ElTooltip } from 'element-plus'
 
 defineProps({
   type: String,

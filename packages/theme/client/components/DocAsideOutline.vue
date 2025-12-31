@@ -1,21 +1,22 @@
 <script setup lang="ts">
-import { ElAnchor, ElAnchorLink } from 'element-plus';
-import { onContentUpdated, useData } from 'vitepress';
-import { shallowRef } from 'vue';
+import type { MenuItem } from '../utils/client/outline'
+import { ElAnchor, ElAnchorLink } from 'element-plus'
+import { onContentUpdated, useData } from 'vitepress'
+import { shallowRef } from 'vue'
 import {
   getHeaders,
-  type MenuItem,
-  resolveTitle
-} from '../utils/client/outline';
+
+  resolveTitle,
+} from '../utils/client/outline'
 import 'element-plus/dist/index.css'
 
-const { frontmatter, theme } = useData();
+const { frontmatter, theme } = useData()
 
-const headers = shallowRef<MenuItem[]>([]);
+const headers = shallowRef<MenuItem[]>([])
 
 onContentUpdated(() => {
-  headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline);
-});
+  headers.value = getHeaders(frontmatter.value.outline ?? theme.value.outline)
+})
 </script>
 
 <template>

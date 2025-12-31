@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
-import { useSize } from '../hooks/useSize';
+import { computed, ref } from 'vue'
+import { useSize } from '../hooks/useSize'
 
 interface Props {
   /**
@@ -48,15 +48,15 @@ interface Props {
 }
 const props = withDefaults(defineProps<Props>(), {
   ratio: 16 / 9,
-  poster: true
-});
+  poster: true,
+})
 
-const VIDEO_LINK = 'https://player.bilibili.com/player.html';
-const { el, width, height, resize } = useSize<HTMLIFrameElement>(props);
-const loaded = ref(false);
+const VIDEO_LINK = 'https://player.bilibili.com/player.html'
+const { el, width, height, resize } = useSize<HTMLIFrameElement>(props)
+const loaded = ref(false)
 
 const videoLink = computed(() => {
-  const { aid, bvid, cid, autoplay, time, page, poster } = props;
+  const { aid, bvid, cid, autoplay, time, page, poster } = props
 
   return aid && cid
     ? `${VIDEO_LINK}?aid=${aid}&cid=${cid}&t=${time}&autoplay=${
@@ -64,12 +64,12 @@ const videoLink = computed(() => {
     }&p=${page}&poster=${poster ? 1 : 0}`
     : bvid
       ? `${VIDEO_LINK}?bvid=${bvid}&t=${time}&autoplay=${autoplay ? 1 : 0}&poster=${poster ? 1 : 0}`
-      : '';
-});
+      : ''
+})
 
 function handleLoad() {
-  loaded.value = true;
-  resize();
+  loaded.value = true
+  resize()
 }
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import { ElLink } from 'element-plus'
 import { useData } from 'vitepress'
 import { useLayout } from 'vitepress/theme'
-import { ElLink } from 'element-plus'
 
 const { isHome } = useLayout()
 const { theme } = useData()
@@ -10,10 +10,11 @@ const blogroll = theme.value.footer?.blogroll
 
 <template>
   <footer v-if="blogroll && blogroll.length" class="footer" :class="{ 'is-home': isHome }">
-    <div class="footer-main" v-for="item of blogroll" :key="item.title">
+    <div v-for="item of blogroll" :key="item.title" class="footer-main">
       <h4>{{ item.title }}</h4>
       <ElLink
         v-for="child of item.children"
+        :key="child.title"
         class="footer-main-link"
         target="_blank"
         type="info"

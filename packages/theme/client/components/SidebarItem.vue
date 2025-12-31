@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { DefaultTheme } from 'vitepress';
-import { Icon } from '@iconify/vue';
-import { computed } from 'vue';
-import { useSidebarControl } from '../hooks/useSidebarControl';
-import Link from './Link.vue';
-import VersionTag from './VersionTag.vue';
+import type { DefaultTheme } from 'vitepress'
+import { Icon } from '@iconify/vue'
+import { computed } from 'vue'
+import { useSidebarControl } from '../hooks/useSidebarControl'
+import Link from './Link.vue'
+import VersionTag from './VersionTag.vue'
 
 const props = defineProps<{
   item: DefaultTheme.SidebarItem & {
@@ -13,7 +13,7 @@ const props = defineProps<{
     promotion?: string
   }
   depth: number
-}>();
+}>()
 const {
   collapsed,
   collapsible,
@@ -21,22 +21,22 @@ const {
   isActiveLink,
   hasActiveLink,
   hasChildren,
-  toggle
-} = useSidebarControl(computed(() => props.item));
+  toggle,
+} = useSidebarControl(computed(() => props.item))
 
-const sectionTag = computed(() => (hasChildren.value ? 'section' : 'div'));
+const sectionTag = computed(() => (hasChildren.value ? 'section' : 'div'))
 
-const linkTag = computed(() => (isLink.value ? 'a' : 'div'));
+const linkTag = computed(() => (isLink.value ? 'a' : 'div'))
 
 const textTag = computed(() => {
   return !hasChildren.value
     ? 'p'
     : props.depth + 2 === 7
       ? 'p'
-      : `h${props.depth + 2}`;
-});
+      : `h${props.depth + 2}`
+})
 
-const itemRole = computed(() => (isLink.value ? undefined : 'button'));
+const itemRole = computed(() => (isLink.value ? undefined : 'button'))
 
 const classes = computed(() => [
   [`level-${props.depth}`],
@@ -44,22 +44,22 @@ const classes = computed(() => [
   { collapsed: collapsed.value },
   { 'is-link': isLink.value },
   { 'is-active': isActiveLink.value },
-  { 'has-active': hasActiveLink.value }
-]);
+  { 'has-active': hasActiveLink.value },
+])
 
 function onItemInteraction(e: MouseEvent | Event) {
   if ('key' in e && e.key !== 'Enter') {
-    return;
+    return
   }
-  !props.item.link && toggle();
+  !props.item.link && toggle()
 }
 function onCaretClick() {
-  props.item.link && toggle();
+  props.item.link && toggle()
 }
 
 function onLinkAreaClick(e: MouseEvent) {
-  const elA = (e.target as HTMLElement).querySelector('a');
-  elA && elA.click();
+  const elA = (e.target as HTMLElement).querySelector('a')
+  elA && elA.click()
 }
 </script>
 

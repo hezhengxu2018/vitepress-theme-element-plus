@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { useData } from 'vitepress';
-import { ElTag } from "element-plus";
-import VPImage from 'vitepress/dist/client/theme-default/components/VPImage.vue';
-import { computed } from 'vue';
-import { useLangs } from '../hooks/useLangs';
-import { normalizeLink } from "vitepress/dist/client/theme-default/support/utils";
+import { ElTag } from 'element-plus'
+import { useData } from 'vitepress'
+import VPImage from 'vitepress/dist/client/theme-default/components/VPImage.vue'
+import { normalizeLink } from 'vitepress/dist/client/theme-default/support/utils'
+import { computed } from 'vue'
+import { useLangs } from '../hooks/useLangs'
 
-const { site, theme } = useData();
-const { currentLang } = useLangs();
+const { site, theme } = useData()
+const { currentLang } = useLangs()
 const link = computed(() =>
   typeof theme.value.logoLink === 'string'
     ? theme.value.logoLink
-    : theme.value.logoLink?.link
-);
+    : theme.value.logoLink?.link,
+)
 
 const rel = computed(() =>
   typeof theme.value.logoLink === 'string'
     ? undefined
-    : theme.value.logoLink?.rel
-);
+    : theme.value.logoLink?.rel,
+)
 
 const target = computed(() =>
   typeof theme.value.logoLink === 'string'
     ? undefined
-    : theme.value.logoLink?.target
-);
+    : theme.value.logoLink?.target,
+)
 </script>
 
 <template>

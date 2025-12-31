@@ -2,7 +2,7 @@
 interface Props {
   text: string
 }
-defineProps<Props>();
+defineProps<Props>()
 </script>
 
 <template>

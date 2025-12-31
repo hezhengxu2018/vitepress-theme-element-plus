@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { inBrowser } from 'vitepress'
-import { computed, provide, watchEffect } from 'vue'
 import { useData } from 'vitepress/client'
-import { navInjectionKey, useNav } from 'vitepress/dist/client/theme-default/composables/nav';
-import VPNavScreen from 'vitepress/dist/client/theme-default/components/VPNavScreen.vue';
+import VPNavScreen from 'vitepress/dist/client/theme-default/components/VPNavScreen.vue'
+import { navInjectionKey, useNav } from 'vitepress/dist/client/theme-default/composables/nav'
+import { computed, provide, watchEffect } from 'vue'
 import NavBar from './NavBar.vue'
 
 const { isScreenOpen, closeScreen, toggleScreen } = useNav()
@@ -25,14 +25,26 @@ watchEffect(() => {
 <template>
   <header v-if="hasNavbar" class="VPNav">
     <NavBar :is-screen-open="isScreenOpen" @toggle-screen="toggleScreen">
-      <template #nav-bar-title-before><slot name="nav-bar-title-before" /></template>
-      <template #nav-bar-title-after><slot name="nav-bar-title-after" /></template>
-      <template #nav-bar-content-before><slot name="nav-bar-content-before" /></template>
-      <template #nav-bar-content-after><slot name="nav-bar-content-after" /></template>
+      <template #nav-bar-title-before>
+        <slot name="nav-bar-title-before" />
+      </template>
+      <template #nav-bar-title-after>
+        <slot name="nav-bar-title-after" />
+      </template>
+      <template #nav-bar-content-before>
+        <slot name="nav-bar-content-before" />
+      </template>
+      <template #nav-bar-content-after>
+        <slot name="nav-bar-content-after" />
+      </template>
     </NavBar>
     <VPNavScreen :open="isScreenOpen">
-      <template #nav-screen-content-before><slot name="nav-screen-content-before" /></template>
-      <template #nav-screen-content-after><slot name="nav-screen-content-after" /></template>
+      <template #nav-screen-content-before>
+        <slot name="nav-screen-content-before" />
+      </template>
+      <template #nav-screen-content-after>
+        <slot name="nav-screen-content-after" />
+      </template>
     </VPNavScreen>
   </header>
 </template>

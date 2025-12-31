@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useData } from 'vitepress'
 import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
-import { ElIcon } from "element-plus";
+import { ElIcon } from 'element-plus'
+import { useData } from 'vitepress'
+import VPDocFooterLastUpdated from 'vitepress/dist/client/theme-default/components/VPDocFooterLastUpdated.vue'
+import VPLink from 'vitepress/dist/client/theme-default/components/VPLink.vue'
 import { useEditLink } from 'vitepress/dist/client/theme-default/composables/edit-link.js'
 import { usePrevNext } from 'vitepress/dist/client/theme-default/composables/prev-next.js'
-import VPLink from 'vitepress/dist/client/theme-default/components/VPLink.vue';
-import VPDocFooterLastUpdated from 'vitepress/dist/client/theme-default/components/VPDocFooterLastUpdated.vue';
+import { computed } from 'vue'
 
 const { theme, page, frontmatter } = useData()
 
@@ -14,15 +14,15 @@ const editLink = useEditLink()
 const control = usePrevNext()
 
 const hasEditLink = computed(
-  () => theme.value.editLink && frontmatter.value.editLink !== false
+  () => theme.value.editLink && frontmatter.value.editLink !== false,
 )
 const hasLastUpdated = computed(() => page.value.lastUpdated)
 const showFooter = computed(
   () =>
-    hasEditLink.value ||
-    hasLastUpdated.value ||
-    control.value.prev ||
-    control.value.next
+    hasEditLink.value
+    || hasLastUpdated.value
+    || control.value.prev
+    || control.value.next,
 )
 </script>
 
@@ -48,19 +48,19 @@ const showFooter = computed(
       class="prev-next"
       aria-labelledby="doc-footer-aria-label"
     >
-      <span class="visually-hidden" id="doc-footer-aria-label">Pager</span>
+      <span id="doc-footer-aria-label" class="visually-hidden">Pager</span>
 
       <div class="pager prev">
         <a v-if="control.prev?.link" :href="control.prev.link">
           <ElIcon>
             <ArrowLeft />
           </ElIcon>
-          <span class="title" v-html="control.prev.text"></span>
+          <span class="title" v-html="control.prev.text" />
         </a>
       </div>
       <div class="pager next">
-        <a v-if="control.next?.link" :href="control.next.link">          
-          <span class="title" v-html="control.next.text"></span>
+        <a v-if="control.next?.link" :href="control.next.link">
+          <span class="title" v-html="control.next.text" />
           <ElIcon>
             <ArrowRight />
           </ElIcon>

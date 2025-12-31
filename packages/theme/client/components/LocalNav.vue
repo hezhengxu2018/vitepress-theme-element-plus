@@ -1,40 +1,40 @@
 <script lang="ts" setup>
 import { useWindowScroll } from '@vueuse/core'
-import { computed, onMounted, ref } from 'vue'
+import { ElButton } from 'element-plus'
 import { useData } from 'vitepress'
 import { useLayout } from 'vitepress/theme'
-import { useBackTop } from "../hooks/useBackTop";
-import { ElButton } from "element-plus";
-import "element-plus/theme-chalk/el-button.css";
+import { computed, onMounted, ref } from 'vue'
+import { useBackTop } from '../hooks/useBackTop'
+import 'element-plus/theme-chalk/el-button.css'
 
 defineProps<{
   open: boolean
 }>()
 
 defineEmits<{
-  (e: 'open-menu'): void
+  (e: 'openMenu'): void
 }>()
 
 const { theme } = useData()
-const { isHome, hasSidebar, headers, hasLocalNav } = useLayout()
+const { isHome, hasSidebar, hasLocalNav } = useLayout()
 const { y } = useWindowScroll()
 
 const navHeight = ref(0)
 
 onMounted(() => {
-  navHeight.value = parseInt(
+  navHeight.value = Number.parseInt(
     getComputedStyle(document.documentElement).getPropertyValue(
-      '--vp-nav-height'
-    )
+      '--vp-nav-height',
+    ),
   )
 })
 
 const classes = computed(() => {
   return {
-    VPLocalNav: true,
+    'VPLocalNav': true,
     'has-sidebar': hasSidebar.value,
-    empty: !hasLocalNav.value,
-    fixed: !hasLocalNav.value && !hasSidebar.value
+    'empty': !hasLocalNav.value,
+    'fixed': !hasLocalNav.value && !hasSidebar.value,
   }
 })
 
@@ -52,18 +52,18 @@ const { shouldShow, scrollToTop } = useBackTop()
         class="menu"
         :aria-expanded="open"
         aria-controls="VPSidebarNav"
-        @click="$emit('open-menu')"
+        @click="$emit('openMenu')"
       >
-        <span class="vpi-align-left menu-icon"></span>
+        <span class="vpi-align-left menu-icon" />
         <span class="menu-text">
           {{ theme.sidebarMenuLabel || 'Menu' }}
         </span>
       </button>
       <Transition name="shifting">
         <ElButton
-          :class="{ 'go-back-top': true, show: shouldShow }"
+          :class="{ show: shouldShow }"
           link
-          class="height-5"
+          class="height-5 go-back-top"
           @click.prevent.stop="scrollToTop"
         >
           Back to top

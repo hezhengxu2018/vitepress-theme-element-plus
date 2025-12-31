@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { useData, useRoute } from 'vitepress';
-import { computed } from 'vue';
-import { useSidebar } from '../hooks/useSidebar';
-import VPDocAside from './DocAside.vue';
-import VPDocFooter from './DocFooter.vue';
+import { useData, useRoute } from 'vitepress'
+import { computed } from 'vue'
+import { useSidebar } from '../hooks/useSidebar'
+import VPDocAside from './DocAside.vue'
+import VPDocFooter from './DocFooter.vue'
 
-const { theme } = useData();
+const { theme } = useData()
 
-const route = useRoute();
-const { hasAside, leftAside, hasSidebar } = useSidebar();
+const route = useRoute()
+const { hasAside, leftAside, hasSidebar } = useSidebar()
 
 const pageName = computed(() =>
-  route.path.replace(/[./]+/g, '_').replace(/_html$/, '')
-);
+  route.path.replace(/[./]+/g, '_').replace(/_html$/, ''),
+)
 </script>
 
 <template>
@@ -50,10 +50,12 @@ const pageName = computed(() =>
         <div class="content-container">
           <slot name="doc-before" />
           <main class="main">
-            <Content class="doc-content" :class="[
-              pageName,
-              theme.externalLinkIcon && 'external-link-icon-enabled',
-            ]" />
+            <Content
+              class="doc-content" :class="[
+                pageName,
+                theme.externalLinkIcon && 'external-link-icon-enabled',
+              ]"
+            />
           </main>
           <VPDocFooter>
             <template #doc-footer-before>
