@@ -13,7 +13,10 @@ export default defineConfig<EPThemeConfig>({
       groupIconVitePlugin(),
     ],
     ssr: {
-      noExternal: ['vitepress-theme-element-plus'],
+      noExternal: [
+        'vitepress-theme-element-plus',
+        'vitepress-better-demo-plugin',
+      ],
     },
     optimizeDeps: {
       exclude: ['vitepress-theme-element-plus'],
