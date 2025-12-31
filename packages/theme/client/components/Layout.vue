@@ -21,7 +21,7 @@ const {
 } = useSidebarControl()
 
 const route = useRoute()
-watch(() => route.path, close)
+watch(() => route.path, closeSidebar)
 
 registerWatchers({ closeSidebar })
 
