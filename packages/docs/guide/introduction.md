@@ -32,7 +32,12 @@ import { mdExternalLinkIcon, mdTableWrapper, mdTag, mdTooltip } from 'vitepress-
 export default defineConfig<EPThemeConfig>({
   vite: {
     plugins: [groupIconVitePlugin()],
-    ssr: { noExternal: ['vitepress-theme-element-plus'] },
+    ssr: {
+      noExternal: [
+        'vitepress-theme-element-plus',
+        'vitepress-better-demo-plugin',
+      ],
+    },
     optimizeDeps: { exclude: ['vitepress-theme-element-plus'] },
   },
   markdown: {

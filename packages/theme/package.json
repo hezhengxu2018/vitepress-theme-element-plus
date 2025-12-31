@@ -17,7 +17,6 @@
   ],
   "exports": {
     ".": {
-      "types": "./types/index.d.ts",
       "default": "./index.ts"
     },
     "./node": {
@@ -29,10 +28,11 @@
   "types": "./types/index.d.ts",
   "style": "./index.scss",
   "files": [
-    "config",
+    "client",
+    "dist",
     "index.ts",
-    "src",
-    "types"
+    "shared",
+    "styles"
   ],
   "scripts": {
     "clean": "rimraf dist",
