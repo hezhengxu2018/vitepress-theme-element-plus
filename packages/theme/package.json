@@ -53,6 +53,7 @@
     "@vueuse/core": "^11.3.0",
     "element-plus": "^2.11.7",
     "es-toolkit": "^1.14.0",
+    "release-it": "^19",
     "rimraf": "^6.0.1",
     "sass-embedded": "^1.80.3",
     "tsdown": "0.16.0",
