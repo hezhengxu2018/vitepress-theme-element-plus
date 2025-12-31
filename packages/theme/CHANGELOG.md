@@ -2,6 +2,15 @@
 
 
 
+## [0.0.2](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.1...v0.0.2) (2025-12-31)
+
+
+### Bug Fixes
+
+* **docs:** 修复文档编译失败的问题 ([23c96d6](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/23c96d6235fb6c654552b4b13d538eee08534383))
+* **docs:** 添加ssr例外 ([5b86ef5](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/5b86ef5cb6126cf64aa677a11c9cbdb94a1e1e41))
+* **package.json:** 修复依赖files属性错误 ([6155921](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/61559215f33a07a3a1fb365ecb99059ed3ec528d))
+
 ## 0.0.1 (2025-12-31)
 
 
