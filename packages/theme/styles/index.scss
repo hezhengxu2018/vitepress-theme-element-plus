@@ -23,18 +23,26 @@
   --vp-sidebar-width-mobile: 320px;
   --vp-sidebar-width-small: 266px;
   --code-font-family: var(--font-family-mono);
-
-  &:root {
-    --vp-nav-height: 55px;
-    --vp-nav-logo-height: 28px;
-    --vp-c-brand: var(--el-color-primary);
-    --vp-c-brand-1: var(--el-color-primary);
-    --el-bg-color: var(--vp-c-bg);
-  }
+  --code-font-size: var(--el-font-size-base);
+  --code-bg-color: var(--el-fill-color-light);
+  --code-text-color: var(--text-color);
+  --code-tooltip-bg-color: var(--code-bg-color);
+  --code-tooltip-color: #0c61c9;
+  --block-tip-bg-color: rgba(var(--el-color-primary-rgb), .1);
+  --block-warning-bg-color: rgba(var(--el-color-danger-rgb), .1);
+  --link-active-bg-color: rgba(var(--el-color-primary-rgb), .1)
 
   &.dark {
     --el-color-primary: #a8b1ff;
   }
+}
+
+:root:root {
+  --vp-nav-height: 55px;
+  --vp-nav-logo-height: 28px;
+  --vp-c-brand: var(--el-color-primary);
+  --vp-c-brand-1: var(--el-color-primary);
+  --el-bg-color: var(--vp-c-bg);
 }
 // fix "vitepress-plugin-group-icons" 
 .vp-code-block-title-bar.vp-code-block-title-bar {

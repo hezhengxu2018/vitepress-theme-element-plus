@@ -13,8 +13,8 @@ hero:
       text: 指南
       link: ./guide/introduction
     - theme: brand
-      text: 组件总览
-      link: ./component/overview
+      text: 渲染测试页
+      link: ./guide/demo-page
 
 features:
   - title: 💡 融合的组件风格

@@ -3,12 +3,20 @@ import { useData } from 'vitepress';
 import VPHome from 'vitepress/dist/client/theme-default/components/VPHome.vue';
 import VPPage from 'vitepress/dist/client/theme-default/components/VPPage.vue';
 import NotFound from 'vitepress/dist/client/theme-default/NotFound.vue';
+import ApiTyping from './ApiTyping.vue';
 import VPDoc from './Doc.vue';
 import Footer from './Footer.vue';
 import FooterCopyright from './FooterCopyright.vue';
 import { useLayout } from 'vitepress/theme';
+import { getCurrentInstance } from 'vue';
+import { ElTag } from 'element-plus';
+
 const { page, frontmatter } = useData();
 const { isHome, hasSidebar } = useLayout()
+const { appContext } =getCurrentInstance()
+
+appContext.app.component('ApiTyping', ApiTyping)
+appContext.app.component('ElTag', ElTag)
 </script>
 
 <template>

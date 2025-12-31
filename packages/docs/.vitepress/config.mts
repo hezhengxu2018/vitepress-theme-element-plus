@@ -1,5 +1,9 @@
 import type { EPThemeConfig } from 'vitepress-theme-element-plus'
+import path, { dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import mdContainer from 'markdown-it-container'
 import { defineConfig } from 'vitepress'
+import { createDemoContainer } from 'vitepress-better-demo-plugin'
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
 import { mdExternalLinkIcon, mdTableWrapper, mdTag, mdTooltip } from 'vitepress-theme-element-plus/node'
 
@@ -39,6 +43,13 @@ export default defineConfig<EPThemeConfig>({
       md.use(mdTag)
       md.use(mdTooltip)
       md.use(mdTableWrapper)
+      md.use(mdContainer, 'demo', createDemoContainer(md, {
+        demoDir: path.resolve(
+          dirname(fileURLToPath(import.meta.url)),
+          '../demo',
+        ),
+        autoImportWrapper: false,
+      }))
     },
   },
   // 全局主题配置
@@ -56,8 +67,8 @@ export default defineConfig<EPThemeConfig>({
       {
         text: 'Guide',
         items: [
-          { text: 'Introduction', link: '/introduction' },
-          { text: 'Getting Started', link: '/getting-started' },
+          { text: 'Introduction', link: '/guide/introduction' },
+          { text: 'Demo Page', link: '/guide/demo-page' },
         ],
       },
     ],
