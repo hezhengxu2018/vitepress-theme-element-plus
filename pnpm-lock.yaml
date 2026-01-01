@@ -68,10 +68,11 @@ importers:
         version: 5.9.3
 
   packages/theme:
-    devDependencies:
+    dependencies:
       '@iconify/vue':
-        specifier: ^4.2.1
+        specifier: ^4
         version: 4.3.0(vue@3.5.22(typescript@5.9.3))
+    devDependencies:
       '@release-it/conventional-changelog':
         specifier: ^10
         version: 10.0.4(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.2.1)(release-it@19.2.2(@types/node@22.18.13))
@@ -93,9 +94,6 @@ importers:
       element-plus:
         specifier: ^2.11.7
         version: 2.11.7(vue@3.5.22(typescript@5.9.3))
-      es-toolkit:
-        specifier: ^1.14.0
-        version: 1.41.0
       release-it:
         specifier: ^19
         version: 19.2.2(@types/node@22.18.13)
@@ -2320,9 +2318,6 @@ packages:
   es-object-atoms@1.1.1:
     resolution: {integrity: sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA==}
     engines: {node: '>= 0.4'}
-
-  es-toolkit@1.41.0:
-    resolution: {integrity: sha512-bDd3oRmbVgqZCJS6WmeQieOrzpl3URcWBUVDXxOELlUW2FuW+0glPOz1n0KnRie+PdyvUZcXz2sOn00c6pPRIA==}
 
   es6-promise@4.2.8:
     resolution: {integrity: sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==}
@@ -7345,8 +7340,6 @@ snapshots:
   es-object-atoms@1.1.1:
     dependencies:
       es-errors: 1.3.0
-
-  es-toolkit@1.41.0: {}
 
   es6-promise@4.2.8: {}
 
