@@ -1,8 +1,8 @@
 import type { MaybeRef } from '@vueuse/core'
 import type { Ref, ShallowRef } from 'vue'
 import { useEventListener } from '@vueuse/core'
-import { isString } from 'es-toolkit'
 import { computed, isRef, onMounted, ref, shallowRef, unref, watch } from 'vue'
+import { isString } from '../utils/common'
 
 function getValue(value: string | number): string {
   return isString(value) ? value : `${value}px`

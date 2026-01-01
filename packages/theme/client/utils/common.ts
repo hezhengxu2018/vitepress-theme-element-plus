@@ -61,6 +61,10 @@ export function isPlainObject(obj: any) {
   return true
 }
 
+export function isString(value) {
+  return typeof value === 'string'
+}
+
 export function capitalizeFirstLetter(string: string) {
   if (!string)
     return '' // 如果字符串为空，返回空字符串
