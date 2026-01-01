@@ -2,6 +2,13 @@
 
 
 
+## [0.0.3](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.2...v0.0.3) (2026-01-01)
+
+
+### Bug Fixes
+
+* 精简依赖，调整@iconify/vue的依赖类型 ([f9c1b94](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/f9c1b940d585f70bccc916dd128fbb1327d3fb77))
+
 ## [0.0.2](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.1...v0.0.2) (2025-12-31)
 
 

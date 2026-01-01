@@ -1,7 +1,7 @@
 {
   "name": "vitepress-theme-element-plus",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A VitePress theme for Element Plus",
   "author": "Hezhengxu",
   "license": "MIT",
