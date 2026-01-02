@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ElTag } from 'element-plus'
 import { useData } from 'vitepress'
 import VPHome from 'vitepress/dist/client/theme-default/components/VPHome.vue'
 import VPPage from 'vitepress/dist/client/theme-default/components/VPPage.vue'
@@ -16,7 +15,6 @@ const { isHome, hasSidebar } = useLayout()
 const { appContext } = getCurrentInstance()
 
 appContext.app.component('ApiTyping', ApiTyping)
-appContext.app.component('ElTag', ElTag)
 </script>
 
 <template>

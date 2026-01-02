@@ -1,23 +1,30 @@
+import type { DefaultTheme } from 'vitepress'
 import { useMediaQuery } from '@vueuse/core'
 import { useData } from 'vitepress'
 import { computed, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
 import { NOT_ARTICLE_LAYOUTS } from '../../shared/constants'
+import { ensureStartingSlash } from '../utils/common'
 
 export function useSidebar() {
-  const { frontmatter, theme } = useData()
+  const { frontmatter, theme, page } = useData()
   const is960 = useMediaQuery('(min-width: 960px)')
   const isOpen = ref(false)
-  const _sidebar = computed(() => {
+  const sidebar = ref<DefaultTheme.SidebarItem[]>([])
+
+  function updateSidebar() {
     const sidebarConfig = theme.value.sidebar
-    return sidebarConfig ?? []
-  })
+    const relativePath = page.value?.relativePath ?? '/'
+    const nextSidebar = resolveSidebar(sidebarConfig, relativePath)
 
-  const sidebar = ref(_sidebar.value)
+    if (JSON.stringify(nextSidebar) !== JSON.stringify(sidebar.value))
+      sidebar.value = nextSidebar
+  }
 
-  watch(_sidebar, (next, prev) => {
-    if (JSON.stringify(next) !== JSON.stringify(prev))
-      sidebar.value = _sidebar.value
-  })
+  watch(
+    () => [page.value?.relativePath, theme.value.sidebar],
+    () => updateSidebar(),
+    { immediate: true, deep: true, flush: 'sync' },
+  )
 
   const hasSidebar = computed(() => {
     return (
@@ -28,9 +35,9 @@ export function useSidebar() {
   })
 
   const hasAside = computed(() => {
-    if (NOT_ARTICLE_LAYOUTS.includes(frontmatter.value.layout)) {
+    if (NOT_ARTICLE_LAYOUTS.includes(frontmatter.value.layout))
       return false
-    }
+
     if (frontmatter.value.aside !== undefined && frontmatter.value.aside !== null)
       return !!frontmatter.value.aside
 
@@ -38,18 +45,18 @@ export function useSidebar() {
   })
 
   const leftAside = computed(() => {
-    if (hasAside) {
-      return frontmatter.value.aside === null
-        ? theme.value.aside === 'left'
-        : frontmatter.value.aside === 'left'
-    }
-    return false
+    if (!hasAside.value)
+      return false
+
+    return frontmatter.value.aside === null
+      ? theme.value.aside === 'left'
+      : frontmatter.value.aside === 'left'
   })
 
   const isSidebarEnabled = computed(() => hasSidebar.value && is960.value)
 
   const sidebarGroups = computed(() => {
-    return hasSidebar.value ?? []
+    return hasSidebar.value ? groupSidebarItems(sidebar.value) : []
   })
 
   function open() {
@@ -102,4 +109,72 @@ export function useCloseSidebarOnEscape() {
       triggerElement?.focus()
     }
   }
+}
+
+function resolveSidebar(
+  sidebarConfig: DefaultTheme.Sidebar | undefined,
+  relativePath: string,
+): DefaultTheme.SidebarItem[] {
+  if (!sidebarConfig)
+    return []
+
+  if (Array.isArray(sidebarConfig))
+    return withBase(sidebarConfig)
+
+  const normalizedPath = ensureStartingSlash(relativePath)
+  const matchingDir = Object.keys(sidebarConfig)
+    .sort((a, b) => b.split('/').length - a.split('/').length)
+    .find(dir => normalizedPath.startsWith(ensureStartingSlash(dir)))
+
+  const matched = matchingDir ? sidebarConfig[matchingDir] : []
+
+  if (Array.isArray(matched))
+    return withBase(matched)
+
+  return withBase(matched?.items ?? [], matched?.base)
+}
+
+function withBase(
+  items: DefaultTheme.SidebarItem[],
+  base?: string,
+): DefaultTheme.SidebarItem[] {
+  return items.map((_item) => {
+    const item: DefaultTheme.SidebarItem = { ..._item }
+    const resolvedBase = item.base || base
+
+    if (resolvedBase && item.link) {
+      item.link = resolvedBase
+        + item.link.replace(/^\//, resolvedBase.endsWith('/') ? '' : '/')
+    }
+
+    if (item.items)
+      item.items = withBase(item.items, resolvedBase)
+
+    return item
+  })
+}
+
+function groupSidebarItems(
+  sidebarItems: DefaultTheme.SidebarItem[],
+): DefaultTheme.SidebarItem[] {
+  const groups: DefaultTheme.SidebarItem[] = []
+  let lastGroupIndex = 0
+
+  sidebarItems.forEach((item) => {
+    if (item.items && item.items.length) {
+      lastGroupIndex = groups.push(item)
+      return
+    }
+
+    if (!groups[lastGroupIndex])
+      groups.push({ items: [] })
+
+    const group = groups[lastGroupIndex]
+    if (!group.items)
+      group.items = []
+
+    group.items.push(item)
+  })
+
+  return groups
 }
