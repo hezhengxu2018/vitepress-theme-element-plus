@@ -2,6 +2,13 @@
 
 
 
+## [0.0.4](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.3...v0.0.4) (2026-01-02)
+
+
+### Bug Fixes
+
+* **sidebar:** 修复has-sidebar判断问题 ([35844a8](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/35844a84c272ca64f6d339cf90008df67acf0aca))
+
 ## [0.0.3](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.2...v0.0.3) (2026-01-01)
 
 
