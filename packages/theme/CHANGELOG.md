@@ -2,6 +2,13 @@
 
 
 
+## [0.0.7](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.6...v0.0.7) (2026-01-03)
+
+
+### Features
+
+* **markdown:** 添加todolist的功能 ([82cae2b](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/82cae2b9606fcb7f83e1413c7de4f3788b0e0b31))
+
 ## [0.0.6](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.5...v0.0.6) (2026-01-03)
 
 
