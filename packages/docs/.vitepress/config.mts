@@ -5,7 +5,7 @@ import mdContainer from 'markdown-it-container'
 import { defineConfig } from 'vitepress'
 import { createDemoContainer } from 'vitepress-better-demo-plugin'
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
-import { mdExternalLinkIcon, mdTableWrapper, mdTag, mdTooltip } from 'vitepress-theme-element-plus/node'
+import { mdExternalLinkIcon, mdTableWrapper, mdTag, mdTaskList, mdTooltip } from 'vitepress-theme-element-plus/node'
 
 export default defineConfig<EPThemeConfig>({
   vite: {
@@ -47,6 +47,9 @@ export default defineConfig<EPThemeConfig>({
       md.use(mdTag)
       md.use(mdTooltip)
       md.use(mdTableWrapper)
+      md.use(mdTaskList, {
+        disabled: false,
+      })
       md.use(mdContainer, 'demo', createDemoContainer(md, {
         demoDir: path.resolve(
           dirname(fileURLToPath(import.meta.url)),

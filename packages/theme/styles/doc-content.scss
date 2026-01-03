@@ -213,6 +213,14 @@
     list-style: auto
   }
 
+  .ep-task-list {
+    padding-left: 0;
+
+    &>li {
+      list-style: none;
+    }
+  }
+
   hr {
     margin-top: 20px;
     margin-bottom: 20px;
