@@ -2,6 +2,14 @@
 
 
 
+## [0.0.5](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.3...v0.0.5) (2026-01-03)
+
+
+### Bug Fixes
+
+* **css variables:** 修复部分css变量无法生效的问题 ([e47021d](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/e47021d6fb5fcf9dc60711308fd0e1c9de4507a7))
+* **sidebar:** 修复has-sidebar判断问题 ([35844a8](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/35844a84c272ca64f6d339cf90008df67acf0aca))
+
 ## [0.0.4](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.3...v0.0.4) (2026-01-02)
 
 
