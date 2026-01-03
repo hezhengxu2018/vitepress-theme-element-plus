@@ -2,6 +2,13 @@
 
 
 
+## [0.0.6](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.5...v0.0.6) (2026-01-03)
+
+
+### Bug Fixes
+
+* **markdown style:** 修复部分markdown渲染样式 ([d95f59c](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/d95f59c3f31c4c9d62d892aeeb964e75c9861063))
+
 ## [0.0.5](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.3...v0.0.5) (2026-01-03)
 
 
