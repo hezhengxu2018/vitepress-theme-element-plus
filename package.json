@@ -14,7 +14,6 @@
   ],
   "scripts": {
     "dev": "pnpm -C packages/docs dev",
-    "build": "pnpm -r build",
     "build:theme": "pnpm -C packages/theme build",
     "build:docs": "pnpm -C packages/docs build",
     "commit": "czg",

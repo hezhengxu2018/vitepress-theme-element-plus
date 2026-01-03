@@ -41,7 +41,7 @@
   a {
     font-weight: 500;
     text-decoration: inherit;
-    color: var(--brand-color);
+    color: var(--vp-c-brand);
     display: inline-flex;
     align-items: center;
   }
@@ -215,6 +215,9 @@
 
   .ep-task-list {
     padding-left: 0;
+    .el-checkbox {
+      --el-checkbox-checked-text-color: var(--vp-c-brand);
+    }
 
     &>li {
       list-style: none;

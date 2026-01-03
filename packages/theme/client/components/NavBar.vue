@@ -97,7 +97,7 @@ watchPostEffect(() => {
 }
 
 :deep(.VPNavBarMenuLink.active) {
-  border-bottom-color: var(--vp-c-brand-1);
+  border-bottom-color: var(--vp-c-brand);
 }
 
 @media (min-width: 960px) {

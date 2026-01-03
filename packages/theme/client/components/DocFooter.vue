@@ -95,7 +95,7 @@ const showFooter = computed(
   line-height: 32px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand);
   transition: color 0.25s;
 }
 
@@ -153,7 +153,7 @@ const showFooter = computed(
   line-height: 20px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand);
   transition: color 0.25s;
 }
 </style>

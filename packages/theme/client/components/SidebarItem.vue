@@ -4,7 +4,6 @@ import { Icon } from '@iconify/vue'
 import { computed } from 'vue'
 import { useSidebarControl } from '../hooks/useSidebarControl'
 import Link from './Link.vue'
-import VersionTag from './VersionTag.vue'
 
 const props = defineProps<{
   item: DefaultTheme.SidebarItem & {
@@ -98,7 +97,9 @@ function onLinkAreaClick(e: MouseEvent) {
           ssr
         />
         <component :is="textTag" class="text" v-html="item.text" />
-        <VersionTag v-if="item.promotion" class="version-tag" :version="item.promotion" />
+        <span v-if="item.promotion" class="version-tag vp-tag">
+          {{ item.promotion }}
+        </span>
       </Link>
       <component
         :is="textTag"
@@ -167,7 +168,7 @@ function onLinkAreaClick(e: MouseEvent) {
 .VPSidebarItem.level-3.is-active > .item > .indicator,
 .VPSidebarItem.level-4.is-active > .item > .indicator,
 .VPSidebarItem.level-5.is-active > .item > .indicator {
-  background-color: var(--vp-c-brand-1);
+  background-color: var(--vp-c-brand);
 }
 
 .link {
@@ -219,7 +220,7 @@ function onLinkAreaClick(e: MouseEvent) {
 .VPSidebarItem.level-3.is-link > .item > .link:hover,
 .VPSidebarItem.level-4.is-link > .item > .link:hover,
 .VPSidebarItem.level-5.is-link > .item > .link:hover {
-  color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand);
 }
 
 .VPSidebarItem.level-0.has-active > .item,
@@ -243,7 +244,7 @@ function onLinkAreaClick(e: MouseEvent) {
 .VPSidebarItem.level-3.is-active > .item .link,
 .VPSidebarItem.level-4.is-active > .item .link,
 .VPSidebarItem.level-5.is-active > .item .link {
-  color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand);
   font-weight: 600;
 }
 
@@ -253,7 +254,7 @@ function onLinkAreaClick(e: MouseEvent) {
 .VPSidebarItem.level-3.is-active > .item,
 .VPSidebarItem.level-4.is-active > .item,
 .VPSidebarItem.level-5.is-active > .item {
-  background-color: var(--el-color-primary-light-9);
+  background-color: var(--bg-brand-color);
 }
 
 .caret {
