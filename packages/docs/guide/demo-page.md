@@ -43,7 +43,7 @@ pnpm -C packages/docs dev
 ## 3. 标签、Tooltip 与外部链接
 
 - `^(beta)` `^(deprecated)` 等语法应渲染为彩色徽标。
-- `^[prop-name](`string | number`)` 应生成 `<api-typing>` 组件以展示类型信息。
+- \^[prop-name]\`string\` 应生成 `<api-typing>` 组件以展示类型信息。
 - 外部链接会自动带有图标并套用 `vp-link` 样式，比如 [Element Plus 官网](https://element-plus.org)。
 
 示例段落：

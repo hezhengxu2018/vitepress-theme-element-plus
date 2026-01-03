@@ -27,7 +27,7 @@ import mdContainer from 'markdown-it-container'
 import { defineConfig } from 'vitepress'
 import { createDemoContainer } from 'vitepress-better-demo-plugin'
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
-import { mdExternalLinkIcon, mdTableWrapper, mdTag, mdTooltip } from 'vitepress-theme-element-plus/node'
+import { mdExternalLinkIcon, mdTableWrapper, mdTag, mdTaskList, mdTooltip } from 'vitepress-theme-element-plus/node'
 
 export default defineConfig<EPThemeConfig>({
   vite: {
@@ -47,6 +47,9 @@ export default defineConfig<EPThemeConfig>({
       md.use(mdTag)
       md.use(mdTooltip)
       md.use(mdTableWrapper)
+      md.use(mdTaskList, {
+        disabled: false,
+      })
       md.use(mdContainer, 'demo', createDemoContainer(md, {
         demoDir: path.resolve(__dirname, '../demo'),
         autoImportWrapper: false,
@@ -87,22 +90,55 @@ export default {
 
 ## Markdown 增强
 
-### 代码配色
-`markdown.theme.light/dark` 分别对接 `github-light` 与 `github-dark`，保证与 Element Plus 官方文档一致。
+以下插件可根据需要安装，如果全部安装可直接复制上方的配置项
 
 ### 链接与表格
+
+``` ts
+import { mdExternalLinkIcon, mdTableWrapper } from 'vitepress-theme-element-plus/node'
+```
+
 `mdExternalLinkIcon` 为外链附加图标且统一 `vp-link` 样式；`mdTableWrapper` 会把表格包裹在 `.vp-table` 中以获得横向滚动与统一线条。
 
 ### 标签语法
+
+``` ts
+import { mdTag } from 'vitepress-theme-element-plus/node'
+```
+
 `mdTag` 允许在文本中写 `^(Beta)`、`^(deprecated)` 等标签，渲染为彩色圆角徽标；对于 `beta`、`deprecated`、`a11y`、`required` 等特殊值会自动附带语义类名。
 
 ### API Tooltip
 
-`mdTooltip` 解析 `^[属性名](`string | number`)` 这样的语法，生成 `<api-typing>` 组件，常用于 API 表格里说明类型或补充信息。
+``` ts
+import { mdTooltip } from 'vitepress-theme-element-plus/node'
+```
 
-### Demo 容器
+`mdTooltip` 解析
+``` md
+^[属性类型]`描述`
+```
+这样的语法，生成 `<api-typing>` 组件，常用于 API 表格里说明类型或补充信息。
 
-通过 `mdContainer` + `createDemoContainer` 注册 `:::demo` 容器，实现文档内的即时示例、代码展示和在线沙箱跳转。
+### 任务列表
+
+``` ts
+import { mdTaskList } from 'vitepress-theme-element-plus/node'
+```
+
+element-plus风格的任务列表。完整的配置类型声明如下：
+
+``` ts
+export interface ElementPlusTaskListOptions {
+  disabled?: boolean
+  itemClass?: string
+  listClass?: string
+  checkboxClass?: string
+  labelClass?: string
+}
+```
+
+大部分情况下只需要配置disabled属性即可。
 
 ## 插件特性
 
