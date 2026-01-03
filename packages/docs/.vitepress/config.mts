@@ -36,6 +36,7 @@ export default defineConfig<EPThemeConfig>({
   lastUpdated: false,
   // Markdown 配置
   markdown: {
+    math: true,
     theme: {
       light: 'github-light',
       dark: 'github-dark',

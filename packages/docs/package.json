@@ -8,15 +8,14 @@
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
-  "dependencies": {
+  "devDependencies": {
     "@types/markdown-it-container": "^2",
     "markdown-it-container": "^4.0.0",
+    "markdown-it-mathjax3": "^4.0.0",
+    "typescript": "^5.7.2",
     "vitepress": "^2.0.0-alpha.12",
     "vitepress-better-demo-plugin": "^0.3.1",
     "vitepress-plugin-group-icons": "^1.0.0",
     "vitepress-theme-element-plus": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.7.2"
   }
 }
