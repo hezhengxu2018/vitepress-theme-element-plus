@@ -42,7 +42,7 @@
   --vp-nav-logo-height: 28px;
   --vp-c-brand: var(--el-color-primary);
   --vp-c-brand-1: var(--el-color-primary);
-  --el-bg-color: var(--vp-c-bg);
+  --vp-c-bg: var(--el-bg-color);
 }
 // fix "vitepress-plugin-group-icons" 
 .vp-code-block-title-bar.vp-code-block-title-bar {

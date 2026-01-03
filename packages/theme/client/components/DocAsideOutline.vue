@@ -62,6 +62,11 @@ onContentUpdated(() => {
 
 .VPDocAsideOutline.has-outline {
   display: block;
+
+  & :deep(.el-anchor) {
+    --el-anchor-active-color: var(--vp-c-brand);
+    --el-anchor-marker-bg-color: var(--vp-c-brand);
+  }
 }
 
 .content {
