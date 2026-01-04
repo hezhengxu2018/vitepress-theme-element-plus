@@ -217,6 +217,14 @@
     padding-left: 0;
     .el-checkbox {
       --el-checkbox-checked-text-color: var(--vp-c-brand);
+      cursor: unset;
+    }
+    .el-checkbox__input {
+      cursor: unset;
+    }
+
+    .el-checkbox__inner:hover {
+      border: var(--el-checkbox-input-border);
     }
 
     &>li {
