@@ -2,6 +2,14 @@
 
 
 
+## [0.0.9](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.8...v0.0.9) (2026-01-04)
+
+
+### Bug Fixes
+
+* **css variables:** 修复version的css变量错误 ([94b704d](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/94b704d70163d6c2d3e47d8ecae67620c29c4174))
+* **css variables:** 修复配色 ([2e7e158](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/2e7e158742ab375ce6dd492b27526084db6bbf98))
+
 ## [0.0.8](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.7...v0.0.8) (2026-01-04)
 
 
