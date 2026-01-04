@@ -1,3 +1,4 @@
+// #region snippet
 :root {
   --vp-layout-max-width: 1680px;
   --vp-screen-max-width: 1362px;
@@ -35,6 +36,7 @@
 :root.dark {
   --vp-c-brand: #a8b1ff;
 }
+// #endregion snippet
 
 @media screen and (min-width: 1440px) {
   :root {

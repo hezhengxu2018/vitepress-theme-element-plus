@@ -72,10 +72,14 @@ export default defineConfig<EPThemeConfig>({
     siteTitle: '',
     sidebar: [
       {
-        text: 'Guide',
+        text: '指南',
         items: [
-          { text: 'Introduction', link: '/guide/introduction' },
-          { text: 'Demo Page', link: '/guide/demo-page' },
+          { text: '介绍', link: '/guide/introduction' },
+          { text: '快速开始', link: '/guide/quick-start' },
+          { text: 'Vitepress 插件', link: '/guide/vitepress-plugin' },
+          { text: 'Markdown 插件', link: '/guide/md-plugin' },
+          { text: '修改配色', link: '/guide/theme' },
+          { text: '渲染测试页', link: '/guide/demo-page' },
         ],
       },
     ],

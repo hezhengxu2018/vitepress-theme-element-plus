@@ -12,14 +12,14 @@ VitePress Theme Element Plus is a pnpm workspace that contains a reusable Elemen
 └─ pnpm-workspace.yaml     # declares the two workspace packages
 ```
 
-- `packages/theme` ships the actual theme entry (`client`, `shared`, `styles`) plus `node` helpers (`mdExternalLinkIcon`, `mdTableWrapper`, `mdTag`, `mdTooltip`). `tsdown` compiles these into `packages/theme/dist`.
+- `packages/theme` ships the actual theme entry (`client`, `shared`, `styles`) plus `node` helpers (`mdExternalLinkIcon`, `mdTableWrapper`, `mdTag`, `mdTooltip`, `mdTaskList`). `tsdown` compiles these into `packages/theme/dist`.
 - `packages/docs` hosts guide content, demo components, and the `.vitepress` directory that demonstrates how to wire the theme up with Markdown/Vite plugins.
 
 ## Features
 
 - **Element Plus visual language** – Reuses Element Plus tokens and utility styles so docs match the official design system.
 - **Extended layout** – Custom `Layout.vue`, local navigation, and sidebar controls that wrap the default VitePress theme.
-- **Markdown enhancements** – `mdExternalLinkIcon`, `mdTableWrapper`, `mdTag`, and `mdTooltip` add icons, scrollable tables, semantic badges, and API tooltips directly inside Markdown.
+- **Markdown enhancements** – `mdExternalLinkIcon`, `mdTableWrapper`, `mdTag`, `mdTooltip`, and `mdTaskList` add icons, scrollable tables, semantic badges, API tooltips, and Element Plus–styled checklists directly inside Markdown.
 - **First-class demo workflow** – `vitepress-better-demo-plugin` powers `:::demo` containers that render live previews, collapse/expand code, copy snippets, and jump into StackBlitz/CodeSandbox.
 - **Group icon automation** – `vitepress-plugin-group-icons` injects Iconify glyphs into code block headers based on keywords like `pnpm`, `vue`, or explicit `~logos:vitejs~` markers.
 - **Workspace-ready tooling** – Node 24.11.0 + pnpm 10 via Volta, ESLint (`@antfu/eslint-config`), lint-staged, and Husky hooks keep formatting and commit hygiene consistent.
@@ -80,6 +80,7 @@ When contributing to the theme, prefer `pnpm -C packages/theme build:watch` for 
      mdExternalLinkIcon,
      mdTableWrapper,
      mdTag,
+     mdTaskList,
      mdTooltip,
    } from 'vitepress-theme-element-plus/node'
 
@@ -100,6 +101,7 @@ When contributing to the theme, prefer `pnpm -C packages/theme build:watch` for 
          md.use(mdExternalLinkIcon)
          md.use(mdTag)
          md.use(mdTooltip)
+         md.use(mdTaskList)
          md.use(mdTableWrapper)
          md.use(mdContainer, 'demo', createDemoContainer(md, {
            demoDir: path.resolve(__dirname, '../demo'),
@@ -141,6 +143,7 @@ When contributing to the theme, prefer `pnpm -C packages/theme build:watch` for 
 - **Table wrapper** – `mdTableWrapper` adds scrollable containers so wide tables render nicely on mobile.
 - **Inline tags** – `mdTag` converts patterns like `^(Beta)` into color-coded labels (e.g., `beta`, `deprecated`, `a11y`).
 - **API tooltips** – `mdTooltip` turns `^[prop]("string | number")` into `<api-typing>` components for quick type hints.
+- **Task lists** – `mdTaskList` renders GitHub-style checkboxes with Element Plus markup so docs inherit the framework’s checkbox visuals and accessibility.
 - **Demo containers** – `::: demo` blocks point to files under `packages/docs/demo`, showing live previews with StackBlitz/CodeSandbox buttons, copy buttons, and collapsible code panes.
 - **Group icons** – `groupIconMdPlugin` + `groupIconVitePlugin` map keywords or `~collection:name~` markers to Iconify glyphs and expose them via `virtual:group-icons.css`.
 
