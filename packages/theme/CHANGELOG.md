@@ -2,6 +2,20 @@
 
 
 
+## [0.0.8](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.7...v0.0.8) (2026-01-04)
+
+
+### Bug Fixes
+
+* **css variable:** 修复css变量修改无法生效的问题，移除无用的组件部 ([e7ed194](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/e7ed19465f10b6f840e821bfb139134881ea4c4e))
+* **css variable:** 修复css变量部分修改无法生效的问题 ([efb6915](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/efb6915abb4c4040e8ddccc3bd4c6f5634a3413b))
+* **css variable:** 移除无用的css变量,调整task list样式 ([399da6a](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/399da6a1ab2aff0feeeb23ed9240cf769ce00815))
+
+
+### Features
+
+* **theme-toggle:** 添加主题切换样式 ([3af3552](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/3af355269f5066d50006ae933404f824b94ac768))
+
 ## [0.0.7](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.6...v0.0.7) (2026-01-03)
 
 
