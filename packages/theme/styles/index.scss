@@ -6,11 +6,15 @@
   --vp-nav-height: 55px;
   --vp-nav-logo-height: 28px;
   --vp-c-brand: var(--el-color-primary);
+  --vp-c-brand-1: var(--vp-c-brand);
+  --vp-c-brand-2: var(--el-color-primary-light-5);
+  --vp-c-brand-3: var(--el-color-primary-light-8);
+  --vp-c-brand-soft: var(--el-color-primary-light-9);
   --vp-c-bg: var(--el-bg-color);
   --text-color: var(--el-text-color-primary);
   --text-color-light: var(--el-text-color-regular);
   --text-color-lighter: var(--el-text-color-secondary);
-  --bg-brand-color: var(--el-color-primary-light-9);
+  --bg-brand-color: var(--vp-c-brand-soft);
   --bg-color: var(--el-bg-color);
   --border-color: var(--el-border-color);
   --font-family: var(--el-font-family);
@@ -21,13 +25,15 @@
   --code-text-color: var(--text-color);
   --code-tooltip-bg-color: var(--code-bg-color);
   --code-tooltip-color: #0c61c9;
+  --purple-color: #6222c2;
+  --purple-color-light: #9065db;
   --block-tip-bg-color: rgba(var(--el-color-primary-rgb), .1);
   --block-warning-bg-color: rgba(var(--el-color-danger-rgb), .1);
   --link-active-bg-color: rgba(var(--el-color-primary-rgb), .1)
 }
 
 :root.dark {
-  --el-color-primary: #a8b1ff;
+  --vp-c-brand: #a8b1ff;
 }
 
 @media screen and (min-width: 1440px) {

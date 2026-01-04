@@ -56,7 +56,7 @@ pnpm -C packages/docs dev
 
 | 属性 | 描述 | 默认值 |
 | --- | --- | --- |
-| `size` | ^[Enum]`'small'\|'default'\|'large'` | `default` |
+| `size` ^(a11y) ^(deprecated)  | ^[Enum]`'small'\|'default'\|'large'` | `default` |
 | `zIndex` ^(1.1.0) | 弹层层级，支持 `number`，超过 2000 可避免被遮挡 | `2000` |
 | `teleported` ^(beta) | 是否将弹层挂载到 `body`，验证标签与 Tooltip 混合显示 | `true` |
 

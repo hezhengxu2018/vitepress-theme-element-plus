@@ -72,4 +72,12 @@ const target = computed(() =>
   margin-right: 14px;
   height: var(--vp-nav-logo-height);
 }
+
+:deep(.el-tag.el-tag--primary) {
+  background-color: var(--bg-brand-color);
+  color: var(--vp-c-brand);
+  --el-tag-bg-color: var(--vp-c-brand-soft);
+  --el-tag-border-color: var(--vp-c-brand-3);
+  --el-tag-hover-color: var(--vp-c-brand);
+}
 </style>
