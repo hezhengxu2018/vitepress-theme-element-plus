@@ -2,7 +2,7 @@
 import { ElTag } from 'element-plus'
 import { useData } from 'vitepress'
 import VPImage from 'vitepress/dist/client/theme-default/components/VPImage.vue'
-import { normalizeLink } from 'vitepress/dist/client/theme-default/support/utils'
+import { normalizeLink } from 'vitepress/dist/client/theme-default/support/utils.js'
 import { computed } from 'vue'
 import { useLangs } from '../hooks/useLangs'
 

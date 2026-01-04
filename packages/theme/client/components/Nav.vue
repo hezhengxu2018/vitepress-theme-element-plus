@@ -2,7 +2,7 @@
 import { inBrowser } from 'vitepress'
 import { useData } from 'vitepress/client'
 import VPNavScreen from 'vitepress/dist/client/theme-default/components/VPNavScreen.vue'
-import { navInjectionKey, useNav } from 'vitepress/dist/client/theme-default/composables/nav'
+import { navInjectionKey, useNav } from 'vitepress/dist/client/theme-default/composables/nav.js'
 import { computed, provide, watchEffect } from 'vue'
 import NavBar from './NavBar.vue'
 
