@@ -77,7 +77,7 @@ const target = computed(() =>
   background-color: var(--bg-brand-color);
   color: var(--vp-c-brand);
   --el-tag-bg-color: var(--vp-c-brand-soft);
-  --el-tag-border-color: var(--vp-c-brand-3);
+  --el-tag-border-color: var(--vp-c-brand);
   --el-tag-hover-color: var(--vp-c-brand);
 }
 </style>
