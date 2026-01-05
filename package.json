@@ -1,7 +1,7 @@
 {
   "name": "monorepo-vitepress-theme-element-plus",
   "type": "module",
-  "version": "0.0.10",
+  "version": "1.0.0",
   "packageManager": "pnpm@10.2.0",
   "description": "A VitePress theme for Element Plus",
   "author": "Hezhengxu",

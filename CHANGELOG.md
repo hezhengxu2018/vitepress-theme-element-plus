@@ -2,6 +2,20 @@
 
 
 
+# [1.0.0](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.10...v1.0.0) (2026-01-05)
+
+
+### Bug Fixes
+
+* **docs:** 配置同步的文档版本号 ([b7e9cbb](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/b7e9cbb879da3ff99183cd2dad69b31e8adbbe49))
+* **theme:** 添加文档标题的样式 ([4479396](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/447939661d2fae9926f378a53b6667a61a66dee7))
+* **theme:** 添加滚动条样式 ([3435638](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/3435638f8d9d21499364b7eb1f4cff0c6cff4dab))
+
+
+### Features
+
+* **theme:** 添加blogroll配置项 ([eb98441](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/eb98441d559f4b7796cc84d05f2dc3b612a5b213))
+
 ## [0.0.10](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.9...v0.0.10) (2026-01-05)
 
 
