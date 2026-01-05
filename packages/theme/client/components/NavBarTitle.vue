@@ -37,9 +37,9 @@ const target = computed(() =>
     >
       <slot name="nav-bar-title-before" />
       <VPImage v-if="theme.logo" class="logo" :image="theme.logo" />
+      <ElTag v-if="theme.version" type="primary" round>{{ theme.version }}</ElTag>
       <span v-if="theme.siteTitle" v-html="theme.siteTitle" />
       <span v-else-if="theme.siteTitle === undefined">{{ site.title }}</span>
-      <ElTag v-if="theme.version" type="primary" round>{{ theme.version }}</ElTag>
       <slot name="nav-bar-title-after" />
     </a>
   </div>
@@ -53,7 +53,6 @@ const target = computed(() =>
   width: 100%;
   height: var(--vp-nav-height);
   font-size: 16px;
-  font-weight: 600;
   color: var(--vp-c-text-1);
   transition: opacity 0.25s;
 }
@@ -68,6 +67,12 @@ const target = computed(() =>
   }
 }
 
+@media (max-width: 768px) {
+  .title span:last-child {
+    display: none;
+  }
+}
+
 :deep(.logo) {
   margin-right: 14px;
   height: var(--vp-nav-logo-height);
@@ -76,5 +81,6 @@ const target = computed(() =>
 :deep(.el-tag.el-tag--primary) {
   background-color: var(--bg-brand-color);
   color: var(--vp-c-brand);
+  margin-right: 14px;
 }
 </style>
