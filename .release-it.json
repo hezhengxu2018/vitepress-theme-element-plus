@@ -13,6 +13,14 @@
     "publish": false
   },
   "plugins": {
+    "@release-it-plugins/workspaces": {
+      "workspaces": [
+        "packages/theme",
+        "packages/docs"
+      ],
+      "publish": false,
+      "skipChecks": true
+    },
     "@release-it/conventional-changelog": {
       "preset": "angular",
       "infile": "CHANGELOG.md",
@@ -23,7 +31,7 @@
     }
   },
   "hooks": {
-    "before:init": ["npm run lint"],
+    "before:init": ["pnpm -C packages/theme lint"],
     "after:release": "echo 发布完成！"
   }
 }

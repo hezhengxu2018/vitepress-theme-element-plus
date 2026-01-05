@@ -40,7 +40,7 @@
     "build:watch": "tsdown --watch",
     "lint": "eslint ./ --fix",
     "prepublishOnly": "pnpm run build",
-    "release": "release-it"
+    "release": "pnpm -C ../.. release"
   },
   "peerDependencies": {
     "vitepress": "2.0.0-alpha.12"
