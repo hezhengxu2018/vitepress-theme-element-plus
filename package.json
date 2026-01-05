@@ -16,7 +16,7 @@
     "dev": "pnpm -C packages/docs dev",
     "build:theme": "pnpm -C packages/theme build",
     "build:docs": "pnpm -C packages/docs build",
-    "release": "packages/theme/node_modules/.bin/release-it --config packages/theme/.release-it.json",
+    "release": "release-it",
     "commit": "czg",
     "lint-staged": "lint-staged",
     "prepare": "husky && pnpm run build:theme"
