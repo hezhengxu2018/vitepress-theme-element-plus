@@ -12,13 +12,8 @@
 
 ## 配置项
 
-本主题与官方主题的配置项几乎保持一致，目前仅额外添加version字段。
-verison的配置项会显示在Navbar的logo边上。
-``` ts
-export interface EPThemeConfig extends DefaultTheme.Config {
-  /**
-   * 文档版本号
-   */
-  version?: string
-}
-```
+本主题与官方主题的配置项几乎保持一致，目前添加了version字段和footer中的blogroll配置项，用于显示文档的版本和友情链接。完整的配置例子请参考[快速开始](./quick-start)
+
+配置项的类型声明如下：
+
+<<< @../../theme/index.ts#snippet

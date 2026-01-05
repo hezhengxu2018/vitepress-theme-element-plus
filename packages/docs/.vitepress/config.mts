@@ -93,6 +93,26 @@ export default defineConfig<EPThemeConfig>({
     // Footer 配置
     footer: {
       copyright: 'Release under MIT License',
+      blogroll: [
+        {
+          title: '链接',
+          children: [
+            { text: 'GitHub', link: 'https://github.com/hezhengxu2018' },
+            { text: 'Element Plus', link: 'https://element-plus.org/' },
+            { text: 'VitePress', link: 'https://vitepress.vuejs.org/' },
+            { text: 'Vitepress Better Demo Plugin', link: 'https://vitepress-better-demo-plugin.pages.dev/' },
+          ],
+        },
+        {
+          title: '参考',
+          children: [
+            { text: 'Dux Docs', link: 'https://duxweb.github.io/vitepress-theme/' },
+            { text: 'VitePress Theme Mild', link: 'https://theme.hacxy.cn/' },
+            { text: 'Vitepress Theme Teek', link: 'https://vp.teek.top/' },
+            { text: 'VitePress Carbon', link: 'https://carbon.breno.tech/' },
+          ],
+        },
+      ],
     },
   },
 })

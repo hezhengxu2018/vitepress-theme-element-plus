@@ -14,13 +14,32 @@ const EPTheme: Theme = {
   extends: VPTheme,
   Layout,
 }
+// #region snippet
+export interface FooterBlogrollLink {
+  text: string
+  link: string
+}
+
+export interface FooterBlogrollSection {
+  title: string
+  children: FooterBlogrollLink[]
+}
+
+export interface EPThemeFooter extends DefaultTheme.Footer {
+  /**
+   * 友情链接配置
+   */
+  blogroll?: FooterBlogrollSection[]
+}
 
 export interface EPThemeConfig extends DefaultTheme.Config {
   /**
    * 文档版本号
    */
   version?: string
+  footer?: EPThemeFooter
 }
+// #endregion snippet
 
 export { Layout }
 export default EPTheme

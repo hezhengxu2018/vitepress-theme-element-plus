@@ -14,14 +14,13 @@ const blogroll = theme.value.footer?.blogroll
       <h4>{{ item.title }}</h4>
       <ElLink
         v-for="child of item.children"
-        :key="child.title"
+        :key="child.text"
         class="footer-main-link"
         target="_blank"
-        type="info"
-        :href="child.href"
+        :href="child.link"
         :underline="false"
       >
-        {{ child.title }}
+        {{ child.text }}
       </ElLink>
     </div>
   </footer>
@@ -63,6 +62,11 @@ const blogroll = theme.value.footer?.blogroll
       display: block;
       margin: 0;
       line-height: 2;
+      color: var(--text-color-light);
+
+      &:hover {
+        color: var(--text-color);
+      }
     }
   }
 }
