@@ -18,7 +18,7 @@
         "packages/theme",
         "packages/docs"
       ],
-      "publish": false,
+      "publish": true,
       "skipChecks": true,
       "additionalManifests": {
         "versionUpdates": []
