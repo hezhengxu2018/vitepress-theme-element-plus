@@ -35,7 +35,6 @@
     "styles"
   ],
   "scripts": {
-    "clean": "rimraf dist",
     "build": "tsdown",
     "build:watch": "tsdown --watch",
     "lint": "eslint ./ --fix",
@@ -49,15 +48,12 @@
     "@iconify/vue": "^4"
   },
   "devDependencies": {
-    "@release-it/conventional-changelog": "^10",
     "@types/glob": "^9.0.0",
     "@types/markdown-it": "^14.1.0",
     "@types/node": "^22.17.0",
     "@vitejs/plugin-vue": "^5.2.4",
     "@vueuse/core": "^11.3.0",
     "element-plus": "^2.11.7",
-    "release-it": "^19",
-    "rimraf": "^6.0.1",
     "sass-embedded": "^1.80.3",
     "tsdown": "0.16.0",
     "typescript": "^5.9.2",

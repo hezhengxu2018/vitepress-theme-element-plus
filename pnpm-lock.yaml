@@ -23,6 +23,9 @@ importers:
       '@release-it-plugins/workspaces':
         specifier: ^5.0.3
         version: 5.0.3(release-it@19.2.2(@types/node@22.18.13))
+      '@release-it/conventional-changelog':
+        specifier: ^10
+        version: 10.0.4(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.2.1)(release-it@19.2.2(@types/node@22.18.13))
       '@types/node':
         specifier: ^22.17.1
         version: 22.18.13
@@ -41,6 +44,9 @@ importers:
       lint-staged:
         specifier: ^16.2.6
         version: 16.2.6
+      release-it:
+        specifier: ^19
+        version: 19.2.2(@types/node@22.18.13)
       typescript:
         specifier: ^5.9.2
         version: 5.9.3
@@ -78,9 +84,6 @@ importers:
         specifier: ^4
         version: 4.3.0(vue@3.5.22(typescript@5.9.3))
     devDependencies:
-      '@release-it/conventional-changelog':
-        specifier: ^10
-        version: 10.0.4(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.2.1)(release-it@19.2.2(@types/node@22.18.13))
       '@types/glob':
         specifier: ^9.0.0
         version: 9.0.0
@@ -99,12 +102,6 @@ importers:
       element-plus:
         specifier: ^2.11.7
         version: 2.11.7(vue@3.5.22(typescript@5.9.3))
-      release-it:
-        specifier: ^19
-        version: 19.2.2(@types/node@22.18.13)
-      rimraf:
-        specifier: ^6.0.1
-        version: 6.0.1
       sass-embedded:
         specifier: ^1.80.3
         version: 1.93.2
@@ -4360,11 +4357,6 @@ packages:
   rimraf@2.7.1:
     resolution: {integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==}
     deprecated: Rimraf versions prior to v4 are no longer supported
-    hasBin: true
-
-  rimraf@6.0.1:
-    resolution: {integrity: sha512-9dkvaxAsk/xNXSJzMgFqqMCuFgt2+KsOFek3TMLfo8NCPfWpBmqwyNn5Y+NX56QUYfCtsyhF3ayiboEoUmJk/A==}
-    engines: {node: 20 || >=22}
     hasBin: true
 
   rolldown-plugin-dts@0.17.3:
@@ -8634,7 +8626,7 @@ snapshots:
       acorn: 8.15.0
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1
-      semver: 7.5.4
+      semver: 7.7.3
 
   jsonfile@3.0.1:
     optionalDependencies:
@@ -9912,11 +9904,6 @@ snapshots:
   rimraf@2.7.1:
     dependencies:
       glob: 7.2.3
-
-  rimraf@6.0.1:
-    dependencies:
-      glob: 11.0.3
-      package-json-from-dist: 1.0.1
 
   rolldown-plugin-dts@0.17.3(rolldown@1.0.0-beta.46)(typescript@5.9.3)(vue-tsc@3.1.2(typescript@5.9.3)):
     dependencies:
