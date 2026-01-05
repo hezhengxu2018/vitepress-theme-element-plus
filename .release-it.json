@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/release-it@19/schema/release-it.json",
+  "$schema": "https://unpkg.com/release-it@19.2.2/schema/release-it.json",
   "git": {
     "commitMessage": "chore: release v${version}",
     "requireBranch": "main",
@@ -31,7 +31,7 @@
     }
   },
   "hooks": {
-    "before:init": ["pnpm -C packages/theme lint"],
+    "before:init": ["pnpm -C packages/theme lint", "pnpm -C packages/docs lint"],
     "after:release": "echo 发布完成！"
   }
 }
