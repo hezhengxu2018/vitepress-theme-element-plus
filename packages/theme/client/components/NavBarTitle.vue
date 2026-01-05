@@ -76,8 +76,5 @@ const target = computed(() =>
 :deep(.el-tag.el-tag--primary) {
   background-color: var(--bg-brand-color);
   color: var(--vp-c-brand);
-  --el-tag-bg-color: var(--vp-c-brand-soft);
-  --el-tag-border-color: var(--vp-c-brand);
-  --el-tag-hover-color: var(--vp-c-brand);
 }
 </style>

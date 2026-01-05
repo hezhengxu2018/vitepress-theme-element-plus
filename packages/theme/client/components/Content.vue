@@ -136,7 +136,7 @@ appContext.app.component('ApiTyping', ApiTyping)
 
 @media screen and (min-width: 1440px) {
   .VPContent.has-sidebar {
-    padding-left: calc(var(--vp-sidebar-width-small) + 39px)
+    padding-left: calc(var(--vp-sidebar-width-small) + 32px)
   }
 }
 

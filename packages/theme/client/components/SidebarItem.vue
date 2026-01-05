@@ -181,7 +181,7 @@ function onLinkAreaClick(e: MouseEvent) {
 
 .text {
   flex-grow: 1;
-  line-height: 24px;
+  line-height: 20px;
   transition: color 0.25s;
 }
 .text-icon {
@@ -201,7 +201,6 @@ function onLinkAreaClick(e: MouseEvent) {
   color: var(--vp-c-text-1);
   font-size: 1rem;
   font-weight: 700;
-  margin-bottom: 8px;
   line-height: 24px;
 }
 

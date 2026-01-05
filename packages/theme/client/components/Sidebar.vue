@@ -112,7 +112,7 @@ watch(
 @media screen and (min-width: 1440px) {
   .VPSidebar {
     padding: 48px 32px;
-    width: calc(var(--vp-sidebar-width-small) + 39px)
+    width: calc(var(--vp-sidebar-width-small) + 32px)
   }
 }
 
