@@ -1,7 +1,7 @@
 {
   "name": "vitepress-theme-element-plus-docs",
   "type": "module",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Documentation site for VitePress Theme Element Plus",
   "scripts": {
     "dev": "vitepress dev",

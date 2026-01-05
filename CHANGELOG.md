@@ -2,6 +2,13 @@
 
 
 
+## [0.0.10](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.9...v0.0.10) (2026-01-05)
+
+
+### Bug Fixes
+
+* **style:** 修复部分样式问题,使其与element-plus保持一致 ([cd3251f](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/cd3251fbce69a59ad39b1262efc83b7f5ed1370d))
+
 ## [0.0.9](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.8...v0.0.9) (2026-01-04)
 
 
