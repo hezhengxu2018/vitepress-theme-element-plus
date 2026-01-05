@@ -6,6 +6,7 @@ import { defineConfig } from 'vitepress'
 import { createDemoContainer } from 'vitepress-better-demo-plugin'
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
 import { mdExternalLinkIcon, mdTableWrapper, mdTag, mdTaskList, mdTooltip } from 'vitepress-theme-element-plus/node'
+import pkg from '../package.json'
 
 export default defineConfig<EPThemeConfig>({
   vite: {
@@ -68,8 +69,8 @@ export default defineConfig<EPThemeConfig>({
     search: {
       provider: 'local',
     },
-    version: '1.0.0',
-    siteTitle: '',
+    version: pkg.version,
+    siteTitle: 'VitePress Theme Element Plus',
     sidebar: [
       {
         text: '指南',
