@@ -19,7 +19,10 @@
         "packages/docs"
       ],
       "publish": false,
-      "skipChecks": true
+      "skipChecks": true,
+      "additionalManifests": {
+        "versionUpdates": []
+      }
     },
     "@release-it/conventional-changelog": {
       "preset": "angular",
