@@ -31,7 +31,7 @@
     }
   },
   "hooks": {
-    "before:init": ["pnpm -C packages/theme lint", "pnpm -C packages/docs lint"],
+    "before:init": ["pnpm run lint"],
     "after:release": "echo 发布完成！"
   }
 }

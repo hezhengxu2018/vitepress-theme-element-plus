@@ -37,7 +37,6 @@
   "scripts": {
     "build": "tsdown",
     "build:watch": "tsdown --watch",
-    "lint": "eslint ./ --fix",
     "prepublishOnly": "pnpm run build",
     "release": "pnpm -C ../.. release"
   },

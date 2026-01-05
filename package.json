@@ -19,6 +19,7 @@
     "release": "release-it",
     "commit": "czg",
     "lint-staged": "lint-staged",
+    "lint": "eslint ./ --fix",
     "prepare": "husky && pnpm run build:theme"
   },
   "devDependencies": {
