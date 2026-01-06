@@ -2,6 +2,13 @@
 
 
 
+## [1.0.1](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.0.0...v1.0.1) (2026-01-06)
+
+
+### Features
+
+* **theme:** 添加对vp-raw的支持 ([aaf4e6f](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/aaf4e6f93760f61b194eb70d835e6aa38c20dc18))
+
 # [1.0.0](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v0.0.10...v1.0.0) (2026-01-05)
 
 
