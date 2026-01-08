@@ -2,6 +2,13 @@
 
 
 
+# [1.1.0](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.0.1...v1.1.0) (2026-01-08)
+
+
+### Bug Fixes
+
+* **theme:** 调整siteTitle的显示顺序 ([3c0e882](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/3c0e882b75e1a48d1e7f2f74e421a58872e6bb4d))
+
 ## [1.0.1](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.0.0...v1.0.1) (2026-01-06)
 
 
