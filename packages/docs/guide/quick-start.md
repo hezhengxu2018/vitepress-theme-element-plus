@@ -5,9 +5,9 @@
 ## 安装依赖
 
 ```bash
-pnpm add -D vitepress-theme-element-plus vitepress-better-demo-plugin vitepress-plugin-group-icons markdown-it-container
+pnpm add -D vitepress-theme-element-plus vitepress-better-demo-plugin vitepress-plugin-group-icons markdown-it-container element-plus sass-embedded
 ```
-如果需要在 TypeScript 项目中获得更完整的提示，可额外安装 `@types/markdown-it-container`。
+如果需要在 TypeScript 项目中获得更完整的提示，可额外安装 `@types/markdown-it-container`。如果不安装 `element-plus` 和 `sass-embedded` 主题无法正常渲染。
 
 ## 创建配置文件
 
