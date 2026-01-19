@@ -114,5 +114,10 @@ export default defineConfig<EPThemeConfig>({
         },
       ],
     },
+    nav: [
+      { text: '首页', link: '/' },
+      { text: '指南', link: '/guide/introduction', activeMatch: '/guide/' },
+      { text: '官方配置项', link: 'https://vitepress.dev/zh/reference/site-config' },
+    ],
   },
 })
