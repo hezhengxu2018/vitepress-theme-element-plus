@@ -99,7 +99,11 @@ const pageName = computed(() =>
 }
 
 @media (min-width: 1440px) {
-  .VPDoc {
+  .VPDoc.has-aside {
+    padding: 64px 48px 48px 64px;
+  }
+
+  .VPDoc.has-aside {
     padding: 64px 0 48px 64px;
   }
 

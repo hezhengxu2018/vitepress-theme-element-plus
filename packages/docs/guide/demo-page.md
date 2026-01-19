@@ -1,11 +1,14 @@
 ---
 title: Render Tests
 lang: zh-CN
+aside: false
 ---
 
 # 渲染测试页
 
 该页面用于验证主题内置的 Markdown 扩展与插件是否工作正常。按照各小节描述逐一检查，可快速确认自定义主题在本地或部署环境中的表现。
+
+**本页面隐藏了aside**
 
 ## 1. Demo 容器与示例组件
 
