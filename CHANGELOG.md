@@ -2,6 +2,20 @@
 
 
 
+## [1.1.1](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.1.0...v1.1.1) (2026-01-19)
+
+
+### Bug Fixes
+
+* **theme:** 为h3+h4添加上边距样式 ([0efa886](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/0efa886e6dc6f9c5986d199df9db4defb528a645))
+* **theme:** 修复theme-toggler内边距 ([6bb2ee5](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/6bb2ee52c5744a5f5ecbcafc353c47cd85a49ec8))
+* **theme:** 调整无aside时的内边距样式 ([d80e895](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/d80e895131cbff39c3935788877f6db8d62d4a95))
+
+
+### Features
+
+* **nav:** 添加导航菜单和外部链接图标样式 ([e111cc5](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/e111cc55bc486c5177772d5506f88b351d04be4d))
+
 # [1.1.0](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.0.1...v1.1.0) (2026-01-08)
 
 
