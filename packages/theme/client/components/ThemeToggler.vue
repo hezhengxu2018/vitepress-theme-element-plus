@@ -79,12 +79,22 @@ function beforeChange() {
       :before-change="beforeChange"
       :active-action-icon="DarkIcon"
       :inactive-action-icon="LightIcon"
+      class="button"
       @change="toggleDark"
     />
   </ClientOnly>
 </template>
 
 <style lang="scss" scoped>
+.button {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  height: var(--vp-nav-height);
+  color: var(--vp-c-text-1);
+  transition: color .5s;
+}
+
 :deep(.el-switch__core) {
   --el-switch-on-color: var(--bg-color-mute);
   --el-switch-off-color: var(--bg-color-mute);
