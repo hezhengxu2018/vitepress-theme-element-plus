@@ -120,4 +120,7 @@ export default defineConfig<EPThemeConfig>({
       { text: '官方配置项', link: 'https://vitepress.dev/zh/reference/site-config' },
     ],
   },
+  sitemap: {
+    hostname: 'https://vitepress-theme-element-plus-docs.vercel.app/',
+  },
 })
