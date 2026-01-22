@@ -1,7 +1,13 @@
 ---
 title: Render Tests
+description: 逐项验证 demo 容器、代码组、提示块和 Markdown 扩展渲染是否符合 VitePress Theme Element Plus 的预期。
+keywords:
+  - VitePress Demo Page
+  - 文档渲染测试
+  - Element Plus 主题对照表
 lang: zh-CN
 aside: false
+image: /logo.svg
 ---
 
 # 渲染测试页

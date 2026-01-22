@@ -7,8 +7,10 @@ import { createDemoContainer } from 'vitepress-better-demo-plugin'
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
 import { mdExternalLinkIcon, mdTableWrapper, mdTag, mdTaskList, mdTooltip } from 'vitepress-theme-element-plus/node'
 import pkg from '../package.json'
+import { createSeoHead, DEFAULT_DESCRIPTION, enhancePageData, SITE_NAME, SITE_URL } from './seo'
 
 export default defineConfig<EPThemeConfig>({
+  lang: 'zh-CN',
   vite: {
     plugins: [
       groupIconVitePlugin(),
@@ -27,14 +29,20 @@ export default defineConfig<EPThemeConfig>({
     },
   },
   // 站点配置
-  title: 'VitePress Theme Element Plus',
-  description: 'A modern and elegant VitePress theme',
+  title: SITE_NAME,
+  titleTemplate: ':title · Element Plus 风格 VitePress 主题',
+  description: DEFAULT_DESCRIPTION,
+  cleanUrls: true,
+  lastUpdated: true,
   head: [
     ['link', { rel: 'icon', href: '/favicon.svg' }],
     ['meta', { name: 'theme-color', content: '#3b82f6' }],
   ],
   appearance: true,
-  lastUpdated: false,
+  transformPageData: enhancePageData,
+  transformHead({ pageData }) {
+    return createSeoHead(pageData)
+  },
   // Markdown 配置
   markdown: {
     math: true,
@@ -70,7 +78,7 @@ export default defineConfig<EPThemeConfig>({
       provider: 'local',
     },
     version: pkg.version,
-    siteTitle: 'VitePress Theme Element Plus',
+    siteTitle: SITE_NAME,
     sidebar: [
       {
         text: '指南',
@@ -121,6 +129,6 @@ export default defineConfig<EPThemeConfig>({
     ],
   },
   sitemap: {
-    hostname: 'https://vitepress-theme-element-plus-docs.vercel.app/',
+    hostname: SITE_URL,
   },
 })

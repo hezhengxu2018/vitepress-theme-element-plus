@@ -1,3 +1,12 @@
+---
+title: Markdown 插件
+description: 了解主题推荐的 mdExternalLinkIcon、mdTag、mdTooltip 等 Markdown 插件，并按需挑选适合的能力。
+keywords:
+  - VitePress Markdown 插件
+  - mdExternalLinkIcon
+  - vitepress-theme-element-plus 扩展
+---
+
 # Markdown 插件
 
 以下插件可根据需要安装，如果全部安装可直接复制[快速开始](./quick-start)的配置项

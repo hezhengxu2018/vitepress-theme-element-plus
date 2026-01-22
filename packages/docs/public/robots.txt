@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vitepress-theme-element-plus.silver-fe.dev/sitemap.xml

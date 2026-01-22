@@ -1,4 +1,11 @@
 ---
+title: VitePress Theme Element Plus
+description: 使用 Element Plus 风格的 VitePress Theme Element Plus，快速搭建配色统一、带 demo 容器和 Markdown 增强的组件文档站点。
+keywords:
+  - VitePress Theme Element Plus
+  - Element Plus 文档主题
+  - Vitepress 主题
+image: /logo.svg
 layout: home
 page: true
 

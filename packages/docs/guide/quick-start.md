@@ -1,3 +1,12 @@
+---
+title: 快速开始
+description: 按照安装依赖、配置 VitePress、注册主题入口的步骤，几分钟内完成 VitePress Theme Element Plus 的接入。
+keywords:
+  - vitepress-theme-element-plus 安装
+  - VitePress 快速开始
+  - Element Plus 主题接入
+---
+
 # 快速开始
 
 根据下面的步骤操作可快速获得与 Element-plus 文档网站几乎一致的渲染效果。如果有不需要的插件或配置项可自行选择。

@@ -1,3 +1,12 @@
+---
+title: 介绍
+description: 概览 VitePress Theme Element Plus 的设计目标、注意事项与配置特点，帮助你判断该主题是否适合你的组件文档站点。
+keywords:
+  - VitePress Theme Element Plus 介绍
+  - Element Plus 风格主题
+  - VitePress 文档定制
+---
+
 # 介绍
 
 ::: warning 注意

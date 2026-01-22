@@ -1,3 +1,12 @@
+---
+title: Vitepress 插件
+description: 配置 vitepress-better-demo-plugin 与 vitepress-plugin-group-icons，复用 Element Plus 风格的示例容器与代码块图标。
+keywords:
+  - vitepress-better-demo-plugin
+  - vitepress-plugin-group-icons
+  - VitePress 插件推荐
+---
+
 # Vitepress 插件
 
 为保持风格与官方文档一致，你需要自行安装、配置两个插件，如果不在意风格完全一致可以忽略。
