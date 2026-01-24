@@ -6,8 +6,6 @@ import { nextTick, ref } from 'vue'
 import DarkIcon from '../icons/dark.vue'
 import LightIcon from '../icons/light.vue'
 
-defineOptions({ inheritAttrs: false })
-
 const { site, isDark } = useData()
 const switchRef = ref<SwitchInstance>()
 
@@ -67,23 +65,24 @@ function beforeChange() {
 </script>
 
 <template>
-  <ClientOnly>
-    <ElSwitch
-      v-if="
-        site.appearance
-          && site.appearance !== 'force-dark'
-          && site.appearance !== 'force-auto'
-      "
-      ref="switchRef"
-      :model-value="isDark"
-      v-bind="$attrs"
-      :before-change="beforeChange"
-      :active-action-icon="DarkIcon"
-      :inactive-action-icon="LightIcon"
-      class="VPNavBarAppearance"
-      @change="handleChange"
-    />
-  </ClientOnly>
+  <div class="VPNavBarAppearance">
+    <ClientOnly>
+      <ElSwitch
+        v-if="
+          site.appearance
+            && site.appearance !== 'force-dark'
+            && site.appearance !== 'force-auto'
+        "
+        ref="switchRef"
+        :model-value="isDark"
+        v-bind="$attrs"
+        :before-change="beforeChange"
+        :active-action-icon="DarkIcon"
+        :inactive-action-icon="LightIcon"
+        @change="handleChange"
+      />
+    </ClientOnly>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -118,8 +117,8 @@ function beforeChange() {
 }
 
 .VPNavBarAppearance {
-    display: none;
-  }
+  display: none;
+}
 
 @media (min-width: 1280px) {
   .VPNavBarAppearance {
