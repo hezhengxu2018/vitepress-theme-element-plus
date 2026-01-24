@@ -2,6 +2,15 @@
 
 
 
+## [1.1.2](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.1.1...v1.1.2) (2026-01-24)
+
+
+### Features
+
+* **docs:** 添加 SEO 支持和更新文档元数据 ([ddf7eb7](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/ddf7eb7201186ce6c3b02c5714fe8b2edca35656))
+* **docs:** 添加sitemap ([1d63561](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/1d63561f2f5d1892085f7d356f09553820da6986))
+* **theme:** 添加主题切换功能并优化样式 ([e22c156](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/e22c156d3b6d81b7cf5898728fab97dab3912bf0))
+
 ## [1.1.1](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.1.0...v1.1.1) (2026-01-19)
 
 
