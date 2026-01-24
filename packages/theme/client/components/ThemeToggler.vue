@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { SwitchInstance } from 'element-plus'
-import { useDark, useToggle } from '@vueuse/core'
 import { ElSwitch } from 'element-plus'
 import { useData } from 'vitepress/client'
 import { nextTick, ref } from 'vue'
@@ -9,11 +8,13 @@ import LightIcon from '../icons/light.vue'
 
 defineOptions({ inheritAttrs: false })
 
-const { site } = useData()
-
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
+const { site, isDark } = useData()
 const switchRef = ref<SwitchInstance>()
+
+function handleChange(value: boolean) {
+  if (isDark.value !== value)
+    isDark.value = value
+}
 
 function beforeChange() {
   return new Promise<boolean>((resolve) => {
@@ -79,8 +80,8 @@ function beforeChange() {
       :before-change="beforeChange"
       :active-action-icon="DarkIcon"
       :inactive-action-icon="LightIcon"
-      class="button"
-      @change="toggleDark"
+      class="VPNavBarAppearance"
+      @change="handleChange"
     />
   </ClientOnly>
 </template>
@@ -114,5 +115,16 @@ function beforeChange() {
 
 :deep(.light-icon) {
   color: #606266;
+}
+
+.VPNavBarAppearance {
+    display: none;
+  }
+
+@media (min-width: 1280px) {
+  .VPNavBarAppearance {
+    display: flex;
+    align-items: center;
+  }
 }
 </style>

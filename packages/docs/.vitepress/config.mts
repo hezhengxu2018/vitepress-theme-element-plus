@@ -120,6 +120,13 @@ export default defineConfig<EPThemeConfig>({
             { text: 'VitePress Carbon', link: 'https://carbon.breno.tech/' },
           ],
         },
+        {
+          title: '例子',
+          children: [
+            { text: 'Silver Formily Element Plus', link: 'https://element-plus.silver-formily.org/' },
+            { text: 'Silver Formily Vue', link: 'https://vue.silver-formily.org/' },
+          ],
+        },
       ],
     },
     nav: [
