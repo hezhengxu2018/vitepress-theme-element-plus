@@ -2,6 +2,13 @@
 
 
 
+## [1.1.3](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.1.2...v1.1.3) (2026-01-24)
+
+
+### Bug Fixes
+
+* 修复ssr问题所做的兼容性修改 ([53125c6](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/53125c64ac3ff33ad38144cff6fdaf084e45e096))
+
 ## [1.1.2](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.1.1...v1.1.2) (2026-01-24)
 
 
