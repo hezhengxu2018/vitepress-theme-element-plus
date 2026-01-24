@@ -1,4 +1,4 @@
-﻿import type { EPThemeConfig } from 'vitepress-theme-element-plus'
+import type { EPThemeConfig } from 'vitepress-theme-element-plus'
 import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import mdContainer from 'markdown-it-container'
