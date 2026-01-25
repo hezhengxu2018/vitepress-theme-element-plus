@@ -36,7 +36,7 @@ const blogroll = theme.value.footer?.blogroll
     background-color: var(--bg-color);
     max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 0;
+    padding: 40px 64px;
   }
 
   .container {
