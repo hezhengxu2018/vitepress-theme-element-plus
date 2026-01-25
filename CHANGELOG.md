@@ -2,6 +2,16 @@
 
 
 
+## [1.1.4](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.1.3...v1.1.4) (2026-01-25)
+
+
+### Bug Fixes
+
+* **theme:** 修复链接样式异常 ([9eae5e7](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/9eae5e72e517858e146a8b48d3c330422d51f539))
+* **theme:** 修复首页footer样式问题 ([c9fe3e1](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/c9fe3e12f1c032c5994012de1838811aa6204fc5))
+* **theme:** 修复footer文本过长样式 ([90d745f](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/90d745f71c21a81b88a23e97418d44b416945388))
+* **theme:** 修复footer样式 ([05351cf](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/05351cf25df6f44143680dfe7a1a07c758f34120))
+
 ## [1.1.3](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.1.2...v1.1.3) (2026-01-24)
 
 
