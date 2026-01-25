@@ -74,16 +74,24 @@
       font-weight: 500;
       text-decoration: inherit;
       color: var(--vp-c-brand);
-      display: inline-flex;
+      display: inline;
       align-items: center;
+    }
+  }
+
+  a:hover {
+    @include isolate-vp-raw {
+      color: var(--vp-c-brand-3);
     }
   }
 
   a .link-icon {
     @include isolate-vp-raw {
       margin-left: 0.25rem;
-      height: 1em;
+      height: 1.2em;
       width: 1em;
+      display: inline;
+      vertical-align: text-bottom;
     }
   }
 

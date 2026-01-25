@@ -2,10 +2,21 @@
 import { ElLink } from 'element-plus'
 import { useData } from 'vitepress'
 import { useLayout } from 'vitepress/theme'
+import { computed } from 'vue'
 
 const { isHome } = useLayout()
 const { theme } = useData()
 const blogroll = theme.value.footer?.blogroll
+
+const linkUnderline = computed(() => {
+  const underlineProp = (ElLink as any)?.props?.underline
+  const types = Array.isArray(underlineProp?.type)
+    ? underlineProp.type
+    : underlineProp?.type
+      ? [underlineProp.type]
+      : []
+  return types.includes(String) ? 'never' : false
+})
 </script>
 
 <template>
@@ -18,7 +29,7 @@ const blogroll = theme.value.footer?.blogroll
         class="footer-main-link"
         target="_blank"
         :href="child.link"
-        :underline="false"
+        :underline="linkUnderline"
       >
         {{ child.text }}
       </ElLink>
