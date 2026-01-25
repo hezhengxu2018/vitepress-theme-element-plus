@@ -136,13 +136,13 @@ appContext.app.component('ApiTyping', ApiTyping)
 
 @media screen and (min-width: 1440px) {
   .VPContent.has-sidebar {
-    padding-left: calc(var(--vp-sidebar-width-small) + 32px)
+    padding-left: calc(var(--vp-sidebar-width-small) + 32px);
   }
 }
 
 @media screen and (min-width: 1680px) {
   .VPContent.has-sidebar {
-    padding-left: calc(var(--vp-sidebar-width-small) + 48px)
+    padding-left: calc(var(--vp-sidebar-width-small) + 48px);
   }
 }
 </style>

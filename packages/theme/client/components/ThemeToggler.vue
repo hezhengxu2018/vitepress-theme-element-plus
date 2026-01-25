@@ -92,7 +92,7 @@ function beforeChange() {
   padding: 0 12px;
   height: var(--vp-nav-height);
   color: var(--vp-c-text-1);
-  transition: color .5s;
+  transition: color 0.5s;
 }
 
 :deep(.el-switch__core) {

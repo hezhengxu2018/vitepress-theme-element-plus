@@ -39,6 +39,7 @@ pnpm add vitepress-theme-element-plus
 多语言代码组同样支持关键字或指定 Iconify 名称（如 `~logos:vitejs~`），保存后 Vite 会热刷新 `virtual:group-icons.css`：
 
 ::: code-group
+
 ```ts [setup ~logos:vitejs~]
 import Theme from 'vitepress-theme-element-plus'
 import { createApp } from 'vue'
@@ -47,6 +48,7 @@ import { createApp } from 'vue'
 ```bash [pnpm dev]
 pnpm -C packages/docs dev
 ```
+
 :::
 
 ## 3. 标签、Tooltip 与外部链接
@@ -63,28 +65,30 @@ pnpm -C packages/docs dev
 
 `mdTableWrapper` 会为表格添加 `.vp-table` 包裹层，确保在窄屏下出现横向滚动条。检查表格线条、悬停状态与 Tooltip 交互：
 
-| 属性 | 描述 | 默认值 |
-| --- | --- | --- |
-| `size` ^(a11y) ^(deprecated)  | ^[Enum]`'small'\|'default'\|'large'` | `default` |
-| `zIndex` ^(1.1.0) | 弹层层级，支持 `number`，超过 2000 可避免被遮挡 | `2000` |
-| `teleported` ^(beta) | 是否将弹层挂载到 `body`，验证标签与 Tooltip 混合显示 | `true` |
+| 属性                         | 描述                                                 | 默认值    |
+| ---------------------------- | ---------------------------------------------------- | --------- |
+| `size` ^(a11y) ^(deprecated) | ^[Enum]`'small'\|'default'\|'large'`                 | `default` |
+| `zIndex` ^(1.1.0)            | 弹层层级，支持 `number`，超过 2000 可避免被遮挡      | `2000`    |
+| `teleported` ^(beta)         | 是否将弹层挂载到 `body`，验证标签与 Tooltip 混合显示 | `true`    |
 
 ## 5. 提示块与列表
 
 `vitepress-theme-element-plus` 继承 VitePress 的自定义块样式，下方用于验证标题、正文与列表对齐是否符合预期：
 
 ::: tip 检查项
+
 1. 切换浅色/深色模式，确认配色一致。
 2. 缩放浏览器宽度，确保响应式间距正常。
 3. 使用本页所有交互（复制代码、折叠 Demo 等）以排查潜在脚本错误。
-:::
+   :::
 
 ::: warning 警告
+
 1. 切换浅色/深色模式，确认配色一致。
 2. 缩放浏览器宽度，确保响应式间距正常。
 3. 使用本页所有交互（复制代码、折叠 Demo 等）以排查潜在脚本错误。
-:::
-完成以上检查后，即可确认主题的主要渲染能力正常工作。如需扩展新的测试项，可按相同模式增加段落，保持“说明 + 预期行为”的结构即可。
+   :::
+   完成以上检查后，即可确认主题的主要渲染能力正常工作。如需扩展新的测试项，可按相同模式增加段落，保持“说明 + 预期行为”的结构即可。
 
 ## 6. Markdown 语法示例
 

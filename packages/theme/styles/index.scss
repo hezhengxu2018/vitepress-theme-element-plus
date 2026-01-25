@@ -17,7 +17,7 @@
   --bg-color: var(--el-bg-color);
   --border-color: var(--el-border-color);
   --font-family: var(--el-font-family);
-  --font-family-mono: "JetBrains Mono", source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  --font-family-mono: 'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   --code-font-family: var(--font-family-mono);
   --code-font-size: var(--el-font-size-base);
   --code-bg-color: var(--el-fill-color-light);
@@ -26,9 +26,9 @@
   --code-tooltip-color: #0c61c9;
   --purple-color: #6222c2;
   --purple-color-light: #9065db;
-  --block-tip-bg-color: rgba(var(--el-color-primary-rgb), .1);
-  --block-warning-bg-color: rgba(var(--el-color-danger-rgb), .1);
-  --link-active-bg-color: rgba(var(--el-color-primary-rgb), .1)
+  --block-tip-bg-color: rgba(var(--el-color-primary-rgb), 0.1);
+  --block-warning-bg-color: rgba(var(--el-color-danger-rgb), 0.1);
+  --link-active-bg-color: rgba(var(--el-color-primary-rgb), 0.1);
 }
 
 :root.dark {
@@ -51,7 +51,7 @@
 
 // fix "vitepress-plugin-group-icons" problem
 .vp-code-block-title-bar.vp-code-block-title-bar {
-    margin: 16px 0px 0px;
+  margin: 16px 0px 0px;
 }
 
 .vp-code-group .tabs.tabs {
@@ -60,7 +60,9 @@
   border-radius: 8px 8px 0px 0px;
 }
 
-:is(.vp-external-link-icon, .vp-doc a[href*='://'], .vp-doc a[target='_blank']):not(:is(.no-icon, svg a, :has(img, svg)))::after {
+:is(.vp-external-link-icon, .vp-doc a[href*='://'], .vp-doc a[target='_blank']):not(
+    :is(.no-icon, svg a, :has(img, svg))
+  )::after {
   --icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='currentColor' d='M10 6v2H5v11h11v-5h2v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm11-3v8h-2V6.413l-7.793 7.794l-1.414-1.414L17.585 5H13V3z' /></svg>");
   width: 16px;
   height: 16px;

@@ -13,7 +13,7 @@ keywords:
 
 ## 链接与表格
 
-``` ts
+```ts
 import { mdExternalLinkIcon, mdTableWrapper } from 'vitepress-theme-element-plus/node'
 ```
 
@@ -21,7 +21,7 @@ import { mdExternalLinkIcon, mdTableWrapper } from 'vitepress-theme-element-plus
 
 ## 标签语法
 
-``` ts
+```ts
 import { mdTag } from 'vitepress-theme-element-plus/node'
 ```
 
@@ -29,25 +29,27 @@ import { mdTag } from 'vitepress-theme-element-plus/node'
 
 ## API Tooltip
 
-``` ts
+```ts
 import { mdTooltip } from 'vitepress-theme-element-plus/node'
 ```
 
 `mdTooltip` 解析：
-``` md
+
+```md
 ^[属性类型]`描述`
 ```
+
 这样的语法，生成 `<api-typing>` 组件，常用于 API 表格里说明类型或补充信息。
 
 ## 任务列表
 
-``` ts
+```ts
 import { mdTaskList } from 'vitepress-theme-element-plus/node'
 ```
 
 element-plus风格的任务列表。完整的配置类型声明如下：
 
-``` ts
+```ts
 export interface ElementPlusTaskListOptions {
   disabled?: boolean
   itemClass?: string

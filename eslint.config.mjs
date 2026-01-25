@@ -11,4 +11,7 @@ export default antfu({
   rules: {
     'vue/no-v-text-v-html-on-component': 'off',
   },
+  formatters: {
+    css: true,
+  },
 })

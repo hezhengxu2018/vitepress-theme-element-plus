@@ -39,6 +39,7 @@ pnpm add vitepress-theme-element-plus
 Code groups also support keywords or explicit Iconify names (e.g. `~logos:vitejs~`). Vite will hot-reload `virtual:group-icons.css` after save:
 
 ::: code-group
+
 ```ts [setup ~logos:vitejs~]
 import Theme from 'vitepress-theme-element-plus'
 import { createApp } from 'vue'
@@ -47,6 +48,7 @@ import { createApp } from 'vue'
 ```bash [pnpm dev]
 pnpm -C packages/docs dev
 ```
+
 :::
 
 ## 3. Tags, tooltips, and external links
@@ -63,27 +65,29 @@ Example paragraph:
 
 `mdTableWrapper` wraps tables in `.vp-table` so narrow viewports get horizontal scrolling. Verify table borders, hover states, and tooltip interactions:
 
-| Prop | Description | Default |
-| --- | --- | --- |
-| `size` ^(a11y) ^(deprecated)  | ^[Enum]`'small'\|'default'\|'large'` | `default` |
-| `zIndex` ^(1.1.0) | Popup stacking order. Use values > 2000 to avoid overlap. | `2000` |
-| `teleported` ^(beta) | Whether to mount the popup to `body` and test mixed tag/tooltip rendering. | `true` |
+| Prop                         | Description                                                                | Default   |
+| ---------------------------- | -------------------------------------------------------------------------- | --------- |
+| `size` ^(a11y) ^(deprecated) | ^[Enum]`'small'\|'default'\|'large'`                                       | `default` |
+| `zIndex` ^(1.1.0)            | Popup stacking order. Use values > 2000 to avoid overlap.                  | `2000`    |
+| `teleported` ^(beta)         | Whether to mount the popup to `body` and test mixed tag/tooltip rendering. | `true`    |
 
 ## 5. Callouts and lists
 
 `vitepress-theme-element-plus` inherits VitePress callout styling. Use the sections below to verify title, body text, and list alignment:
 
 ::: tip Checklist
+
 1. Toggle light/dark mode and confirm colors match.
 2. Resize the browser and verify responsive spacing.
 3. Try all interactions on this page (copy buttons, demo folding, etc.) to catch script issues.
-:::
+   :::
 
 ::: warning Warning
+
 1. Toggle light/dark mode and confirm colors match.
 2. Resize the browser and verify responsive spacing.
 3. Try all interactions on this page (copy buttons, demo folding, etc.) to catch script issues.
-:::
+   :::
 
 After the checks above, you can be confident the theme's core rendering works. If you need more coverage, add sections using the same "description + expected behavior" structure.
 

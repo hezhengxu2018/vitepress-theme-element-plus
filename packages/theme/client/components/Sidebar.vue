@@ -112,14 +112,14 @@ watch(
 @media screen and (min-width: 1440px) {
   .VPSidebar {
     padding: 48px 32px;
-    width: calc(var(--vp-sidebar-width-small) + 32px)
+    width: calc(var(--vp-sidebar-width-small) + 32px);
   }
 }
 
 @media screen and (min-width: 1680px) {
   .VPSidebar {
     padding: 48px;
-    width: calc(var(--vp-sidebar-width-small) + 48px)
+    width: calc(var(--vp-sidebar-width-small) + 48px);
   }
 }
 

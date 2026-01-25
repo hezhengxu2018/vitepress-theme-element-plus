@@ -13,7 +13,7 @@ Install only what you need. If you want everything, you can directly copy the co
 
 ## Links and tables
 
-``` ts
+```ts
 import { mdExternalLinkIcon, mdTableWrapper } from 'vitepress-theme-element-plus/node'
 ```
 
@@ -21,7 +21,7 @@ import { mdExternalLinkIcon, mdTableWrapper } from 'vitepress-theme-element-plus
 
 ## Tag syntax
 
-``` ts
+```ts
 import { mdTag } from 'vitepress-theme-element-plus/node'
 ```
 
@@ -29,13 +29,13 @@ import { mdTag } from 'vitepress-theme-element-plus/node'
 
 ## API Tooltip
 
-``` ts
+```ts
 import { mdTooltip } from 'vitepress-theme-element-plus/node'
 ```
 
 `mdTooltip` parses syntax like:
 
-``` md
+```md
 ^[prop-type]`description`
 ```
 
@@ -43,13 +43,13 @@ and generates the `<api-typing>` component, which is commonly used in API tables
 
 ## Task list
 
-``` ts
+```ts
 import { mdTaskList } from 'vitepress-theme-element-plus/node'
 ```
 
 Element Plus styled task lists. The option types are:
 
-``` ts
+```ts
 export interface ElementPlusTaskListOptions {
   disabled?: boolean
   itemClass?: string

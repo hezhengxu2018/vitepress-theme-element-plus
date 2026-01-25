@@ -22,7 +22,7 @@
     @include isolate-vp-raw {
       margin-top: 2.25rem;
       margin-bottom: 1.25rem;
-      padding-bottom: .3rem;
+      padding-bottom: 0.3rem;
       line-height: 1.25;
       font-size: 1.65rem;
       font-weight: 600;
@@ -50,13 +50,13 @@
     }
   }
 
-  h2+h3 {
+  h2 + h3 {
     @include isolate-vp-raw {
       margin-top: 1.5rem;
     }
   }
 
-  h3+h4 {
+  h3 + h4 {
     @include isolate-vp-raw {
       margin-top: 1rem;
     }
@@ -81,12 +81,11 @@
 
   a .link-icon {
     @include isolate-vp-raw {
-      margin-left: .25rem;
+      margin-left: 0.25rem;
       height: 1em;
       width: 1em;
     }
   }
-
 
   h1,
   h2,
@@ -178,20 +177,30 @@
   a.header-anchor {
     @include isolate-vp-raw {
       position: absolute;
-      margin-top: .125em;
-      margin-left: -.87em;
-      padding-right: .23em;
-      font-size: .85em;
+      margin-top: 0.125em;
+      margin-left: -0.87em;
+      padding-right: 0.23em;
+      font-size: 0.85em;
       opacity: 0;
     }
   }
 
-  h1:hover .header-anchor,h1:focus .header-anchor,h2:hover .header-anchor,h2:focus .header-anchor,h3:hover .header-anchor,h3:focus .header-anchor,h4:hover .header-anchor,h4:focus .header-anchor,h5:hover .header-anchor,h5:focus .header-anchor,h6:hover .header-anchor,h6:focus .header-anchor {
+  h1:hover .header-anchor,
+  h1:focus .header-anchor,
+  h2:hover .header-anchor,
+  h2:focus .header-anchor,
+  h3:hover .header-anchor,
+  h3:focus .header-anchor,
+  h4:hover .header-anchor,
+  h4:focus .header-anchor,
+  h5:hover .header-anchor,
+  h5:focus .header-anchor,
+  h6:hover .header-anchor,
+  h6:focus .header-anchor {
     @include isolate-vp-raw {
-      opacity: 1
+      opacity: 1;
     }
   }
-
 
   .custom-block {
     .custom-block-title {
@@ -230,22 +239,22 @@
   blockquote {
     @include isolate-vp-raw {
       margin: 1rem 0;
-      border-left: .2rem solid var(--el-border-color);
-      padding: .25rem 0 .25rem 1rem;
+      border-left: 0.2rem solid var(--el-border-color);
+      padding: 0.25rem 0 0.25rem 1rem;
       font-size: 1rem;
-      color: var(--text-color-lighter)
+      color: var(--text-color-lighter);
     }
   }
 
-  blockquote>p {
+  blockquote > p {
     @include isolate-vp-raw {
-      margin: 0
+      margin: 0;
     }
   }
 
   form {
     @include isolate-vp-raw {
-      margin: 0
+      margin: 0;
     }
   }
 
@@ -254,19 +263,19 @@
       margin: 16px 0;
       font-size: 18px;
       font-weight: 600;
-      cursor: pointer
+      cursor: pointer;
     }
   }
 
   figure {
     @include isolate-vp-raw {
-      margin: 0
+      margin: 0;
     }
   }
 
   img {
     @include isolate-vp-raw {
-      max-width: 100%
+      max-width: 100%;
     }
   }
 
@@ -277,10 +286,10 @@
     }
   }
 
-  li>ul,
-  li>ol {
+  li > ul,
+  li > ol {
     @include isolate-vp-raw {
-      margin: 0
+      margin: 0;
     }
   }
 
@@ -290,13 +299,13 @@
     @include isolate-vp-raw {
       margin: 1rem 0;
       line-height: 1.7;
-      list-style-type: disc
+      list-style-type: disc;
     }
   }
 
-  ol>li {
+  ol > li {
     @include isolate-vp-raw {
-      list-style: auto
+      list-style: auto;
     }
   }
 
@@ -328,7 +337,7 @@
       }
     }
 
-    &>li {
+    & > li {
       @include isolate-vp-raw {
         list-style: none;
       }

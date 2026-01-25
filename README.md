@@ -39,14 +39,14 @@ The root `prepare` script runs `husky install` and `pnpm run build:theme`, ensur
 
 ## Common Scripts
 
-| Command | Description |
-| --- | --- |
-| `pnpm dev` | Launches the docs site (`pnpm -C packages/docs dev`) with hot reload. |
-| `pnpm build` | Runs `pnpm -r build` to compile both the theme and docs. |
-| `pnpm build:theme` | Builds only `packages/theme` via `tsdown`. |
-| `pnpm build:docs` | Static site build for the docs (`vitepress build`). |
-| `pnpm -C packages/docs preview` | Preview the generated docs output locally. |
-| `pnpm lint-staged` | Runs ESLint auto-fixes on staged files (triggered by Husky). |
+| Command                         | Description                                                           |
+| ------------------------------- | --------------------------------------------------------------------- |
+| `pnpm dev`                      | Launches the docs site (`pnpm -C packages/docs dev`) with hot reload. |
+| `pnpm build`                    | Runs `pnpm -r build` to compile both the theme and docs.              |
+| `pnpm build:theme`              | Builds only `packages/theme` via `tsdown`.                            |
+| `pnpm build:docs`               | Static site build for the docs (`vitepress build`).                   |
+| `pnpm -C packages/docs preview` | Preview the generated docs output locally.                            |
+| `pnpm lint-staged`              | Runs ESLint auto-fixes on staged files (triggered by Husky).          |
 
 When contributing to the theme, prefer `pnpm -C packages/theme build:watch` for faster rebuilds.
 
