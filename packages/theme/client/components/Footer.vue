@@ -49,6 +49,7 @@ const blogroll = theme.value.footer?.blogroll
     display: inline-block;
     vertical-align: top;
     margin-right: 130px;
+    width: 200px;
 
     h4 {
       font-size: 18px;
@@ -66,6 +67,13 @@ const blogroll = theme.value.footer?.blogroll
 
       &:hover {
         color: var(--text-color);
+      }
+
+      & .el-link__inner {
+        display: block;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
     }
   }
