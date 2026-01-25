@@ -155,5 +155,8 @@ const showFooter = computed(
   font-weight: 500;
   color: var(--vp-c-brand);
   transition: color 0.25s;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 </style>
