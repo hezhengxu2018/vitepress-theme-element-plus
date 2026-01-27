@@ -1,74 +1,28 @@
 # VitePress Theme Element Plus
 
-VitePress Theme Element Plus is a pnpm workspace that contains a reusable Element Plus–inspired VitePress theme (`packages/theme`) and a showcase/documentation site (`packages/docs`). The theme keeps the familiar Element Plus layout, typography, and component language while exposing composable Markdown helpers, demo containers, and icon automation so multiple doc sites can share a consistent experience.
+- [English README](README.en.md)
 
-## Repository Structure
+- [在线文档](https://vitepress-theme-element-plus.silver-fe.dev)
 
-```
-├─ package.json            # workspace scripts + shared tooling
-├─ packages
-│  ├─ theme                # VitePress theme source, styles, and node helpers
-│  └─ docs                 # Reference site showing the theme in action
-└─ pnpm-workspace.yaml     # declares the two workspace packages
-```
+## 概览
+VitePress Theme Element Plus 是一个可复用的 Element Plus 风格 VitePress 主题（`packages/theme`）。主题延续了 Element Plus 的布局、排版和组件语言，并提供多种 Markdown 增强、演示容器和图标自动化能力，帮助多个站点复用一致的写作体验。
 
-- `packages/theme` ships the actual theme entry (`client`, `shared`, `styles`) plus `node` helpers (`mdExternalLinkIcon`, `mdTableWrapper`, `mdTag`, `mdTooltip`, `mdTaskList`). `tsdown` compiles these into `packages/theme/dist`.
-- `packages/docs` hosts guide content, demo components, and the `.vitepress` directory that demonstrates how to wire the theme up with Markdown/Vite plugins.
+## 功能亮点
+- **Element Plus 视觉语言**：复用 Element Plus 设计令文档与官方体系保持一致。
+- **扩展布局**：自定义 `Layout.vue`、局部导航与侧边栏控制，在默认 VitePress 主题之上增强。
+- **Markdown 增强**：插件直接在 Markdown 中追加外链图标、可滚动表格、语义标签、API 提示和 Element Plus 风格任务列表。
+- **一流的 Demo 工作流**：`vitepress-better-demo-plugin` 驱动 `:::demo` 容器，支持实时预览、折叠代码、复制按钮以及 StackBlitz/CodeSandbox 快捷入口。
+- **图标自动化**：`vitepress-plugin-group-icons` 基于 `pnpm`、`vue` 或 `~logos:vitejs~` 等关键字自动注入 Iconify 图标，统一代码块视觉。
+- **工作区工具链**：依赖 Node 24.11.0 + pnpm 10（通过 Volta 管理），配合 ESLint（`@antfu/eslint-config`）、lint-staged 与 Husky 保持格式与提交规范。
 
-## Features
-
-- **Element Plus visual language** – Reuses Element Plus tokens and utility styles so docs match the official design system.
-- **Extended layout** – Custom `Layout.vue`, local navigation, and sidebar controls that wrap the default VitePress theme.
-- **Markdown enhancements** – `mdExternalLinkIcon`, `mdTableWrapper`, `mdTag`, `mdTooltip`, and `mdTaskList` add icons, scrollable tables, semantic badges, API tooltips, and Element Plus–styled checklists directly inside Markdown.
-- **First-class demo workflow** – `vitepress-better-demo-plugin` powers `:::demo` containers that render live previews, collapse/expand code, copy snippets, and jump into StackBlitz/CodeSandbox.
-- **Group icon automation** – `vitepress-plugin-group-icons` injects Iconify glyphs into code block headers based on keywords like `pnpm`, `vue`, or explicit `~logos:vitejs~` markers.
-- **Workspace-ready tooling** – Node 24.11.0 + pnpm 10 via Volta, ESLint (`@antfu/eslint-config`), lint-staged, and Husky hooks keep formatting and commit hygiene consistent.
-
-## Prerequisites
-
-- Node.js 24.11.0 (managed automatically if you use Volta as recommended in `package.json`).
-- pnpm 10.x (`corepack enable` or install manually).
-
-## Installation
-
-```bash
-pnpm install
-```
-
-The root `prepare` script runs `husky install` and `pnpm run build:theme`, ensuring `packages/theme/dist` exists for downstream builds (including CI/CD environments like Cloudflare Pages).
-
-## Common Scripts
-
-| Command                         | Description                                                           |
-| ------------------------------- | --------------------------------------------------------------------- |
-| `pnpm dev`                      | Launches the docs site (`pnpm -C packages/docs dev`) with hot reload. |
-| `pnpm build`                    | Runs `pnpm -r build` to compile both the theme and docs.              |
-| `pnpm build:theme`              | Builds only `packages/theme` via `tsdown`.                            |
-| `pnpm build:docs`               | Static site build for the docs (`vitepress build`).                   |
-| `pnpm -C packages/docs preview` | Preview the generated docs output locally.                            |
-| `pnpm lint-staged`              | Runs ESLint auto-fixes on staged files (triggered by Husky).          |
-
-When contributing to the theme, prefer `pnpm -C packages/theme build:watch` for faster rebuilds.
-
-## Workflow Tips
-
-1. **Install dependencies** – Always run `pnpm install` from the repo root so workspace links and the `prepare` hook run correctly.
-2. **Develop docs** – Use `pnpm dev` to iterate on both theme and docs; VitePress will hot reload when you edit files in `packages/theme`.
-3. **Validate builds** – Before opening a PR, run `pnpm build:theme` and `pnpm build:docs`, then `pnpm -C packages/docs preview` to click through demo pages (as noted in `AGENTS.md` guidelines).
-4. **Commit style** – Use `pnpm commit` (czg) for Conventional Commits; lint-staged + Husky will auto-fix lintable files.
-
-## Using the Theme in Another Project
-
-1. Install the dependencies in your target docs project:
-
+## 快速开始
+1. 在目标文档项目中安装依赖：
    ```bash
    pnpm add -D vitepress-theme-element-plus vitepress-better-demo-plugin \
      vitepress-plugin-group-icons markdown-it-container
-   pnpm add -D @types/markdown-it-container # optional but recommended
+   pnpm add -D @types/markdown-it-container # 建议安装以获得类型提示
    ```
-
-2. Configure VitePress (`.vitepress/config.mts`) similar to the example in `packages/docs/.vitepress/config.mts`:
-
+2. 参考 `packages/docs/.vitepress/config.mts` 配置 VitePress：
    ```ts
    import type { EPThemeConfig } from 'vitepress-theme-element-plus'
    import path from 'node:path'
@@ -116,9 +70,7 @@ When contributing to the theme, prefer `pnpm -C packages/theme build:watch` for 
      },
    })
    ```
-
-3. Register the theme in `.vitepress/theme/index.ts` so demo components and generated icon CSS load on both client and build outputs:
-
+3. 在 `.vitepress/theme/index.ts` 注册主题，确保 demo 组件与自动生成的图标 CSS 在客户端与构建阶段均可用：
    ```ts
    import {
      VitepressEpDemoBox,
@@ -136,38 +88,22 @@ When contributing to the theme, prefer `pnpm -C packages/theme build:watch` for 
    } as typeof Theme
    ```
 
-## Markdown & Demo Enhancements
+## Markdown 与演示增强
+- **代码主题**：`markdown.theme.light/dark` 分别配置为 `github-light` 与 `github-dark`。
+- **外链图标**：`mdExternalLinkIcon` 为所有外部链接追加 `vp-link` 风格提示。
+- **表格容器**：`mdTableWrapper` 为宽表格添加滚动容器，改善移动端体验。
+- **内联标签**：`mdTag` 识别 `^(Beta)` 等标记并渲染彩色标签（如 `beta`、`deprecated`、`a11y`）。
+- **API 提示**：`mdTooltip` 将 `^[prop]("string | number")` 转换为 `<api-typing>` 组件，快速展示类型信息。
+- **任务列表**：`mdTaskList` 输出 Element Plus 风格的复选框，兼顾无障碍表现。
+- **Demo 容器**：`packages/docs/demo` 下的 `::: demo` 块支持实时预览、复制按钮以及 StackBlitz/CodeSandbox 快捷入口。
+- **图标分组**：`groupIconMdPlugin` + `groupIconVitePlugin` 基于关键字或 `~collection:name~` 自动注入 Iconify 图标并通过 `virtual:group-icons.css` 暴露样式。
 
-- **Code theming** – `markdown.theme.light/dark` is set to `github-light` and `github-dark`.
-- **External link icons** – `mdExternalLinkIcon` appends a visual cue and aligns with `vp-link` styling.
-- **Table wrapper** – `mdTableWrapper` adds scrollable containers so wide tables render nicely on mobile.
-- **Inline tags** – `mdTag` converts patterns like `^(Beta)` into color-coded labels (e.g., `beta`, `deprecated`, `a11y`).
-- **API tooltips** – `mdTooltip` turns `^[prop]("string | number")` into `<api-typing>` components for quick type hints.
-- **Task lists** – `mdTaskList` renders GitHub-style checkboxes with Element Plus markup so docs inherit the framework’s checkbox visuals and accessibility.
-- **Demo containers** – `::: demo` blocks point to files under `packages/docs/demo`, showing live previews with StackBlitz/CodeSandbox buttons, copy buttons, and collapsible code panes.
-- **Group icons** – `groupIconMdPlugin` + `groupIconVitePlugin` map keywords or `~collection:name~` markers to Iconify glyphs and expose them via `virtual:group-icons.css`.
+## 贡献指南
+1. Fork 并克隆仓库。
+2. 执行 `pnpm install` 安装依赖。
+3. 日常开发运行 `pnpm dev`。
+4. 确认 `pnpm build:theme`、`pnpm build:docs` 与 lint 全部通过。
+5. 使用 `pnpm commit`（czg）遵循 Conventional Commits 规范。
 
-## Deployment Notes
-
-- Cloudflare Pages (or any CI) should run `pnpm install` at the repo root so the workspace dependencies link correctly and `prepare` builds the theme.
-- The docs build must always run **after** `packages/theme/dist` exists; if you customize CI, keep the sequence `pnpm install && pnpm run build`.
-- For local sanity checks before deploying, run:
-  ```bash
-  pnpm build:theme
-  pnpm build:docs
-  pnpm -C packages/docs preview
-  ```
-
-## Contributing
-
-1. Fork and clone the repository.
-2. Run `pnpm install`.
-3. Use `pnpm dev` for day-to-day development.
-4. Ensure `pnpm build:theme`, `pnpm build:docs`, and linting pass.
-5. Commit using `pnpm commit` (czg) to follow Conventional Commits.
-
-Bug reports and feature requests are welcome via GitHub Issues or Discussions.
-
-## License
-
-MIT © Hezhengxu. See [`LICENSE`](./LICENSE) for details.
+## 许可证
+MIT © Hezhengxu，详见 [`LICENSE`](./LICENSE)。
