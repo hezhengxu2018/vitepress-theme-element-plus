@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@types/markdown-it-container": "^2",
+    "element-plus": "^2.11.7",
     "markdown-it-container": "^4.0.0",
     "markdown-it-mathjax3": "^4.0.0",
     "typescript": "^5.7.2",

@@ -8,6 +8,7 @@ const resolvedHeaders: { element: HTMLHeadElement, link: string }[] = []
 
 export type MenuItem = Omit<Header, 'slug' | 'children'> & {
   element: HTMLHeadElement
+  titleTags: string[]
   children?: MenuItem[]
 }
 
@@ -26,9 +27,11 @@ export function getHeaders(range: DefaultTheme.Config['outline']): MenuItem[] {
     .filter(el => el.id && el.hasChildNodes())
     .map((el) => {
       const level = Number(el.tagName[1])
+      const { text, tags } = serializeHeader(el)
       return {
         element: el as HTMLHeadElement,
-        title: serializeHeader(el),
+        title: text,
+        titleTags: tags,
         link: `#${el.id}`,
         level,
       }
@@ -37,19 +40,29 @@ export function getHeaders(range: DefaultTheme.Config['outline']): MenuItem[] {
   return resolveHeaders(headers, range)
 }
 
-function serializeHeader(h: Element): string {
-  let ret = ''
+function serializeHeader(h: Element): { text: string, tags: string[] } {
+  let text = ''
+  const tags: string[] = []
   for (const node of Array.from(h.childNodes)) {
     if (node.nodeType === 1) {
-      if (ignoreRE.test((node as Element).className))
+      const element = node as HTMLElement
+      if (ignoreRE.test(element.className))
         continue
-      ret += node.textContent
+      if (element.classList.contains('el-tag')) {
+        tags.push(element.outerHTML)
+        continue
+      }
+      text += element.textContent ?? ''
     }
     else if (node.nodeType === 3) {
-      ret += node.textContent
+      const value = node.textContent ?? ''
+      text += value
     }
   }
-  return ret.trim()
+  return {
+    text: text.trim(),
+    tags,
+  }
 }
 
 export function resolveHeaders(

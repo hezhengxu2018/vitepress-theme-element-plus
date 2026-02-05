@@ -6,15 +6,12 @@ keywords:
   - 文档渲染测试
   - Element Plus 主题对照表
 lang: zh-CN
-aside: false
+outline: [2, 5]
 image: /logo.svg
 ---
 
 # 渲染测试页
-
 该页面用于验证主题内置的 Markdown 扩展与插件是否工作正常。按照各小节描述逐一检查，可快速确认自定义主题在本地或部署环境中的表现。
-
-**本页面隐藏了aside**
 
 ## 1. Demo 容器与示例组件
 
@@ -28,7 +25,7 @@ image: /logo.svg
 demo
 :::
 
-## 2. 代码块标题图标（`vitepress-plugin-group-icons`）
+## 2. 代码块标题图标（`vitepress-plugin-group-icons`）<ElTag effect="dark">New</ElTag>
 
 单个代码块会根据标题里的关键字自动注入图标：
 
@@ -117,6 +114,15 @@ pnpm -C packages/docs dev
 ### 文字强调与行内元素
 
 文本中的 **粗体**、_斜体_、`inline code`、以及 [链接文字](https://element-plus.org) 应继承主题主色。使用 <sup>上标</sup> 或 <sub>下标</sub> 等语法也应正常显示。内联 `MathJax`（如 $E = mc^2$）若启用插件应保持基线位置。
+
+### 标题与 outline 层级 <ElTag>Demo</ElTag> <ElTag type="danger">Demo</ElTag>
+
+现在会对标题上的 `ElTag` 做特殊处理，会保持样式的渲染在outline上。
+::: warning 注意
+你需要手动注册`ElTag`组件。
+:::
+
+由于本主题的配置项几乎是扩展自Vitepress的，你可以手动通过 frontmatter 手动指定 outline 的显示层级。但不能渲染层级超过2层以上的outline。
 
 ### 分隔线与定义列表
 

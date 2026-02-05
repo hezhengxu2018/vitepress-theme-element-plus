@@ -15,12 +15,12 @@
   "scripts": {
     "dev": "pnpm -C packages/docs dev",
     "build:theme": "pnpm -C packages/theme build",
-    "build:docs": "pnpm -C packages/docs build",
+    "build:docs": "pnpm run build:theme && pnpm -C packages/docs build",
     "release": "release-it",
     "commit": "czg",
     "lint-staged": "lint-staged",
     "lint": "eslint ./ --fix",
-    "prepare": "husky && pnpm run build:theme"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.2.0",

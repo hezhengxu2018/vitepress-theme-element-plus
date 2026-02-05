@@ -1,3 +1,4 @@
+import { ElTag } from 'element-plus'
 import {
   VitepressEpDemoBox,
   VitepressEpDemoPlaceholder,
@@ -8,6 +9,7 @@ import 'virtual:group-icons.css'
 export default {
   ...Theme,
   enhanceApp({ app }) {
+    app.component('ElTag', ElTag)
     app.component('VitepressDemoBox', VitepressEpDemoBox)
     app.component('VitepressDemoPlaceholder', VitepressEpDemoPlaceholder)
   },
