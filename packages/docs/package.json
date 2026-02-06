@@ -6,6 +6,7 @@
   "description": "Documentation site for VitePress Theme Element Plus",
   "scripts": {
     "dev": "vitepress dev",
+    "prebuild": "pnpm -C ../theme build",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
