@@ -2,6 +2,19 @@
 
 
 
+# [1.2.0](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.1.4...v1.2.0) (2026-02-06)
+
+
+### Bug Fixes
+
+* **theme:** 修复versionTag样式问题 ([172e32a](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/172e32abf04708966c0009e6436f42e722a5d5e0))
+
+
+### Features
+
+* **docs:** 添加英文文档并更新中文文档内容 ([0ee79b1](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/0ee79b18d7553bc7f3ec78c7fe3806823620ba82))
+* **theme:** outline 支持特殊显示写在标题上的ElTag ([20202df](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/20202dfa607b764417019fe29fa90f731c333a80))
+
 ## [1.1.4](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.1.3...v1.1.4) (2026-01-25)
 
 
