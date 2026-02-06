@@ -191,6 +191,8 @@ function onLinkAreaClick(e: MouseEvent) {
 }
 .version-tag {
   margin-left: 8px;
+  background-color: var(--bg-color);
+  font-weight: normal;
 }
 .VPSidebarItem.level-0 > .item {
   color: var(--vp-c-text-1);

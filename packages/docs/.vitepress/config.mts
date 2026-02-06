@@ -24,7 +24,7 @@ const zhSidebar = [
       { text: 'Vitepress 插件', link: '/zh/guide/vitepress-plugin' },
       { text: 'Markdown 插件', link: '/zh/guide/md-plugin' },
       { text: '修改配色', link: '/zh/guide/theme' },
-      { text: '渲染测试页', link: '/zh/guide/render-test-page' },
+      { text: '渲染测试页', link: '/zh/guide/render-test-page', promotion: '1.0.0' },
     ],
   },
 ]
@@ -44,7 +44,7 @@ const enSidebar = [
       { text: 'VitePress Plugins', link: '/en/guide/vitepress-plugin' },
       { text: 'Markdown Plugins', link: '/en/guide/md-plugin' },
       { text: 'Theme', link: '/en/guide/theme' },
-      { text: 'Demo Page', link: '/en/guide/render-test-page' },
+      { text: 'Demo Page', link: '/en/guide/render-test-page', promotion: '1.0.0' },
     ],
   },
 ]
@@ -75,6 +75,7 @@ const zhFooter = {
       children: [
         { text: 'Silver Formily Element Plus', link: 'https://element-plus.silver-formily.org/' },
         { text: 'Silver Formily Vue', link: 'https://vue.silver-formily.org/' },
+        { text: 'Silver Formily Reactive Vue', link: 'https://vue-reactive.silver-formily.org/' },
       ],
     },
   ],
@@ -106,6 +107,7 @@ const enFooter = {
       children: [
         { text: 'Silver Formily Element Plus', link: 'https://element-plus.silver-formily.org/' },
         { text: 'Silver Formily Vue', link: 'https://vue.silver-formily.org/' },
+        { text: 'Silver Formily Reactive Vue', link: 'https://vue-reactive.silver-formily.org/' },
       ],
     },
   ],

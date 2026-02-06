@@ -6,7 +6,7 @@ keywords:
   - 文档渲染测试
   - Element Plus 主题对照表
 lang: zh-CN
-outline: [2, 5]
+outline: [2, 4]
 image: /logo.svg
 ---
 
@@ -25,7 +25,7 @@ image: /logo.svg
 demo
 :::
 
-## 2. 代码块标题图标（`vitepress-plugin-group-icons`）<ElTag effect="dark">New</ElTag>
+## 2. 代码块标题图标（`vitepress-plugin-group-icons`）<ElTag effect="dark">Demo</ElTag>
 
 单个代码块会根据标题里的关键字自动注入图标：
 
