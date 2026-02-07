@@ -69,7 +69,7 @@ Example paragraph:
 | `zIndex` ^(1.1.0)            | Popup stacking order. Use values > 2000 to avoid overlap.                  | `2000`    |
 | `teleported` ^(beta)         | Whether to mount the popup to `body` and test mixed tag/tooltip rendering. | `true`    |
 
-## 5. Callouts and lists
+## 5. Callouts and lists ^(1.1.0)
 
 `vitepress-theme-element-plus` inherits VitePress callout styling. Use the sections below to verify title, body text, and list alignment:
 
