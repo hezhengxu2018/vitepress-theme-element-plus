@@ -49,7 +49,14 @@ function serializeHeader(h: Element): { text: string, tags: string[] } {
       if (ignoreRE.test(element.className))
         continue
       if (element.classList.contains('el-tag') || element.classList.contains('vp-tag')) {
-        tags.push(element.outerHTML)
+        const cloned = element.cloneNode(true) as HTMLElement
+        const transitionClassRE = /(?:^|-)enter-(?:active|from|to)$|(?:^|-)leave-(?:active|from|to)$/
+        for (const cls of Array.from(cloned.classList)) {
+          if (transitionClassRE.test(cls) || cls.startsWith('el-zoom-in-center-')) {
+            cloned.classList.remove(cls)
+          }
+        }
+        tags.push(cloned.outerHTML)
         continue
       }
       text += element.textContent ?? ''
