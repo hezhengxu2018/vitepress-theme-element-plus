@@ -2,6 +2,13 @@
 
 
 
+# [1.3.0](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.2.0...v1.3.0) (2026-02-07)
+
+
+### Features
+
+* **theme:** outline支持vp-tag的特殊显示 ([eec0f91](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/eec0f91daf5b18715eddcbef5b399c21467f3743))
+
 # [1.2.0](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.1.4...v1.2.0) (2026-02-06)
 
 
