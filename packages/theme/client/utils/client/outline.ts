@@ -48,7 +48,7 @@ function serializeHeader(h: Element): { text: string, tags: string[] } {
       const element = node as HTMLElement
       if (ignoreRE.test(element.className))
         continue
-      if (element.classList.contains('el-tag')) {
+      if (element.classList.contains('el-tag') || element.classList.contains('vp-tag')) {
         tags.push(element.outerHTML)
         continue
       }

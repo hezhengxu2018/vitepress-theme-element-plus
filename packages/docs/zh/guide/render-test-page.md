@@ -68,7 +68,7 @@ pnpm -C packages/docs dev
 | `zIndex` ^(1.1.0)            | 弹层层级，支持 `number`，超过 2000 可避免被遮挡      | `2000`    |
 | `teleported` ^(beta)         | 是否将弹层挂载到 `body`，验证标签与 Tooltip 混合显示 | `true`    |
 
-## 5. 提示块与列表
+## 5. 提示块与列表 ^(1.1.0)
 
 `vitepress-theme-element-plus` 继承 VitePress 的自定义块样式，下方用于验证标题、正文与列表对齐是否符合预期：
 

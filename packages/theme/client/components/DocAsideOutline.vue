@@ -134,8 +134,12 @@ onContentUpdated(() => {
 }
 
 :deep(.el-tag) {
-  transform: scale(0.6);
-  margin-left: -6px;
-  margin-right: -6px;
+  transform: scale(0.75);
+  margin-left: -4px;
+  margin-right: -4px;
+}
+
+:deep(.vp-tag) {
+  margin-left: 6px;
 }
 </style>
