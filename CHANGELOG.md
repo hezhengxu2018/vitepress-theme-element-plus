@@ -2,6 +2,13 @@
 
 
 
+## [1.3.1](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.3.0...v1.3.1) (2026-02-07)
+
+
+### Bug Fixes
+
+* **theme:** 修复因为抓取outline时的el-tag动画导致el-tag无法显示的问题 ([d952a17](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/d952a1746c8945789bdde6f842f00b71fc232460))
+
 # [1.3.0](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.2.0...v1.3.0) (2026-02-07)
 
 
