@@ -2,6 +2,13 @@
 
 
 
+## [1.3.2](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.3.1...v1.3.2) (2026-02-26)
+
+
+### Bug Fixes
+
+* 修复peerDependencies的warn ([d372c0b](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/d372c0b5f6d9fb8ca745609d812b25ed519390b7))
+
 ## [1.3.1](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.3.0...v1.3.1) (2026-02-07)
 
 
