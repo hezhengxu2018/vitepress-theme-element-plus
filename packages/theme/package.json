@@ -41,7 +41,7 @@
     "release": "pnpm -C ../.. release"
   },
   "peerDependencies": {
-    "vitepress": "2.0.0-alpha.12"
+    "vitepress": "^2.0.0-alpha.12"
   },
   "dependencies": {
     "@iconify/vue": "^4"
