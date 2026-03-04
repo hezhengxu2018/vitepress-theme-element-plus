@@ -42,7 +42,16 @@ function toErrorMessage(error: unknown) {
 
 export async function onRequestPost({ request, env }: RequestContext) {
   try {
-    if (!env.RAG_ID)
+    const ragId = typeof env.RAG_ID === 'string' ? env.RAG_ID.trim() : ''
+    console.warn('[ask-api] env-check', {
+      url: request.url,
+      method: request.method,
+      hasAI: Boolean(env.AI),
+      hasRagId: Boolean(ragId),
+      ragIdLength: ragId.length,
+    })
+
+    if (!ragId)
       throw new Error('Missing env.RAG_ID configuration')
 
     const payload = await request.json() as { query?: unknown }
@@ -50,7 +59,7 @@ export async function onRequestPost({ request, env }: RequestContext) {
     if (!query)
       return Response.json({ error: 'Query is required' }, { status: 400 })
 
-    const result = await env.AI.autorag(env.RAG_ID).aiSearch({
+    const result = await env.AI.autorag(ragId).aiSearch({
       query,
       rewrite_query: true,
       max_num_results: 8,
