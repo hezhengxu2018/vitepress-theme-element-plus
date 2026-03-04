@@ -215,7 +215,7 @@ export default defineConfig<EPThemeConfig>({
       enabled: true,
       triggerText: 'Ask AI',
       title: 'Chat',
-      width: 380,
+      width: 500,
     },
     siteTitle: SITE_NAME,
     externalLinkIcon: true,

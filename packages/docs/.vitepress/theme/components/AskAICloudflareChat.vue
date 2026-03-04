@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { BubbleListItemProps } from 'vue-element-plus-x/types/BubbleList'
-import { computed, ref } from 'vue'
+import { ElButton } from 'element-plus'
+import { computed, defineAsyncComponent, ref } from 'vue'
 import { BubbleList, Sender } from 'vue-element-plus-x'
 
 interface ChatSource {
@@ -28,6 +29,20 @@ interface BubbleItem extends BubbleListItemProps {
 }
 
 const endpoint = import.meta.env.VITE_ASK_AI_ENDPOINT || '/api/ask'
+const XMarkdownClient = defineAsyncComponent(
+  () => import('vue-element-plus-x/es/XMarkdown/index.js'),
+)
+const senderInputStyle = {
+  resize: 'none',
+  maxHeight: '176px',
+  maxWidth: '100%',
+  minHeight: '22px',
+  height: 'auto',
+}
+const senderAutoSize = {
+  minRows: 1,
+  maxRows: 6,
+}
 
 const messages = ref<ChatMessage[]>([])
 const input = ref('')
@@ -51,7 +66,6 @@ const bubbleList = computed<BubbleItem[]>(() => {
       content: message.content,
       placement: isAssistant ? 'start' : 'end',
       variant: isAssistant ? 'outlined' : 'filled',
-      isMarkdown: isAssistant,
       loading: isCurrentStreaming && !message.content,
       sources: message.sources,
     }
@@ -67,10 +81,14 @@ function appendMessage(message: Omit<ChatMessage, 'id'>) {
   return id
 }
 
+function getMessageById(id: number) {
+  return messages.value.find(message => message.id === id)
+}
+
 function appendAssistantChunk(id: number, chunk: string) {
   if (!chunk)
     return
-  const assistantMessage = messages.value.find(message => message.id === id)
+  const assistantMessage = getMessageById(id)
   if (!assistantMessage)
     return
   assistantMessage.content += chunk
@@ -79,7 +97,7 @@ function appendAssistantChunk(id: number, chunk: string) {
 function updateAssistantSources(id: number, sources: ChatSource[]) {
   if (!sources.length)
     return
-  const assistantMessage = messages.value.find(message => message.id === id)
+  const assistantMessage = getMessageById(id)
   if (!assistantMessage)
     return
   assistantMessage.sources = sources
@@ -289,7 +307,7 @@ async function sendMessage(internalValue?: string) {
 
     await streamAssistantResponse(response, assistantId)
 
-    const assistantMessage = messages.value.find(message => message.id === assistantId)
+    const assistantMessage = getMessageById(assistantId)
     if (assistantMessage && !assistantMessage.content.trim()) {
       assistantMessage.content = '未返回答案，请检查 AI Search 索引或模型配置。'
     }
@@ -297,7 +315,7 @@ async function sendMessage(internalValue?: string) {
   catch (error) {
     const message = error instanceof Error ? error.message : '请求失败，请稍后重试。'
     errorMessage.value = message
-    const assistantMessage = messages.value.find(item => item.id === assistantId)
+    const assistantMessage = getMessageById(assistantId)
     if (assistantMessage) {
       assistantMessage.content = `请求失败：${message}`
       assistantMessage.sources = []
@@ -329,6 +347,19 @@ function formatScore(score: number | null) {
       max-height="100%"
       show-back-button
     >
+      <template #content="{ item }">
+        <ClientOnly v-if="item.role === 'assistant'">
+          <XMarkdownClient
+            :markdown="item.content || ''"
+            :enable-breaks="true"
+          />
+          <template #fallback>
+            <span class="ask-ai-message__plain">{{ item.content }}</span>
+          </template>
+        </ClientOnly>
+        <span v-else class="ask-ai-message__plain">{{ item.content }}</span>
+      </template>
+
       <template #footer="{ item }">
         <ul v-if="item.sources?.length" class="ask-ai-message__sources">
           <li v-for="source in item.sources" :key="`${item.id}:${source.file}`">
@@ -343,15 +374,16 @@ function formatScore(score: number | null) {
       <p v-if="errorMessage" class="ask-ai-chat__error">
         {{ errorMessage }}
       </p>
-      <button
+      <ElButton
         v-if="messages.length"
-        type="button"
-        class="ask-ai-chat__clear"
+        size="small"
+        text
+        type="primary"
         :disabled="isLoading"
         @click="clearMessages"
       >
         清空会话
-      </button>
+      </ElButton>
     </div>
 
     <Sender
@@ -360,6 +392,8 @@ function formatScore(score: number | null) {
       :loading="isLoading"
       :submit-btn-disabled="!canSubmit"
       :allow-speech="false"
+      :auto-size="senderAutoSize"
+      :input-style="senderInputStyle"
       clearable
       placeholder="例如：如何在主题中启用 Ask AI 侧栏？"
       @submit="sendMessage"
@@ -387,10 +421,29 @@ function formatScore(score: number | null) {
   min-height: 0;
 }
 
+.ask-ai-chat__bubble-list :deep(.el-bubble-content-wrapper .el-bubble-content) {
+  padding: 8px 11px;
+  font-size: 13px;
+  line-height: 1.55;
+  min-height: auto;
+}
+
+.ask-ai-chat__bubble-list :deep(.el-bubble-content .elx-xmarkdown-container) {
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+}
+
+.ask-ai-chat__bubble-list :deep(.el-bubble-content pre),
+.ask-ai-chat__bubble-list :deep(.el-bubble-content code) {
+  font-size: 12px;
+}
+
 .ask-ai-chat__status {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   min-height: 20px;
 }
 
@@ -400,23 +453,17 @@ function formatScore(score: number | null) {
   font-size: 12px;
 }
 
-.ask-ai-chat__clear {
-  border: 1px solid var(--vp-c-divider);
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-2);
-  border-radius: 8px;
-  padding: 4px 10px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-.ask-ai-chat__clear:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 .ask-ai-chat__sender {
   flex-shrink: 0;
+}
+
+.ask-ai-chat__sender :deep(.el-textarea__inner) {
+  height: auto !important;
+  min-height: 22px !important;
+}
+
+.ask-ai-message__plain {
+  white-space: pre-wrap;
 }
 
 .ask-ai-message__sources {
