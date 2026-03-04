@@ -151,6 +151,7 @@ export default defineConfig<EPThemeConfig>({
       noExternal: [
         'vitepress-theme-element-plus',
         'vitepress-better-demo-plugin',
+        'vue-element-plus-x',
       ],
     },
     optimizeDeps: {

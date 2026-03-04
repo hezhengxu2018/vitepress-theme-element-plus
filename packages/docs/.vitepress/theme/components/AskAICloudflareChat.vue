@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue'
+import type { BubbleListItemProps } from 'vue-element-plus-x/types/BubbleList'
+import { computed, ref } from 'vue'
+import { BubbleList, Sender } from 'vue-element-plus-x'
 
 interface ChatSource {
   file: string
@@ -19,17 +21,41 @@ interface AskResponse {
   error?: string
 }
 
+interface BubbleItem extends BubbleListItemProps {
+  id: number
+  role: ChatMessage['role']
+  sources?: ChatSource[]
+}
+
 const endpoint = import.meta.env.VITE_ASK_AI_ENDPOINT || '/api/ask'
 
 const messages = ref<ChatMessage[]>([])
 const input = ref('')
 const isLoading = ref(false)
 const errorMessage = ref('')
-const messageContainerRef = ref<HTMLElement>()
+const activeAssistantId = ref<number | null>(null)
 let messageId = 0
 
 const canSubmit = computed(() => {
   return input.value.trim().length > 0 && !isLoading.value
+})
+
+const bubbleList = computed<BubbleItem[]>(() => {
+  return messages.value.map((message) => {
+    const isAssistant = message.role === 'assistant'
+    const isCurrentStreaming = activeAssistantId.value === message.id && isLoading.value
+
+    return {
+      id: message.id,
+      role: message.role,
+      content: message.content,
+      placement: isAssistant ? 'start' : 'end',
+      variant: isAssistant ? 'outlined' : 'filled',
+      isMarkdown: isAssistant,
+      loading: isCurrentStreaming && !message.content,
+      sources: message.sources,
+    }
+  })
 })
 
 function appendMessage(message: Omit<ChatMessage, 'id'>) {
@@ -57,24 +83,6 @@ function updateAssistantSources(id: number, sources: ChatSource[]) {
   if (!assistantMessage)
     return
   assistantMessage.sources = sources
-}
-
-function formatScore(score: number | null) {
-  if (typeof score !== 'number')
-    return '--'
-  return score.toFixed(3)
-}
-
-function clearMessages() {
-  messages.value = []
-  errorMessage.value = ''
-}
-
-async function scrollToBottom() {
-  await nextTick()
-  if (!messageContainerRef.value)
-    return
-  messageContainerRef.value.scrollTop = messageContainerRef.value.scrollHeight
 }
 
 function normalizeSources(value: unknown): ChatSource[] {
@@ -217,8 +225,6 @@ async function streamAssistantResponse(response: Response, assistantId: number) 
     else {
       appendAssistantChunk(assistantId, chunk)
     }
-
-    await scrollToBottom()
   }
 
   const tail = decoder.decode()
@@ -235,8 +241,15 @@ async function streamAssistantResponse(response: Response, assistantId: number) 
   }
 }
 
-async function sendMessage() {
-  const query = input.value.trim()
+function clearMessages() {
+  if (isLoading.value)
+    return
+  messages.value = []
+  errorMessage.value = ''
+}
+
+async function sendMessage(internalValue?: string) {
+  const query = (typeof internalValue === 'string' ? internalValue : input.value).trim()
   if (!query || isLoading.value)
     return
 
@@ -250,6 +263,7 @@ async function sendMessage() {
     content: '',
     sources: [],
   })
+  activeAssistantId.value = assistantId
   input.value = ''
   isLoading.value = true
 
@@ -291,76 +305,65 @@ async function sendMessage() {
   }
   finally {
     isLoading.value = false
-    await scrollToBottom()
+    activeAssistantId.value = null
   }
 }
 
-watch(
-  () => messages.value.length,
-  async () => {
-    await scrollToBottom()
-  },
-)
+function formatScore(score: number | null) {
+  if (typeof score !== 'number')
+    return '--'
+  return score.toFixed(3)
+}
 </script>
 
 <template>
   <section class="ask-ai-chat">
-    <div ref="messageContainerRef" class="ask-ai-chat__messages">
-      <template v-if="messages.length">
-        <article
-          v-for="message in messages"
-          :key="message.id"
-          class="ask-ai-message"
-          :class="`is-${message.role}`"
-        >
-          <header class="ask-ai-message__header">
-            {{ message.role === 'user' ? '你' : 'AI' }}
-          </header>
-          <p class="ask-ai-message__content">
-            {{ message.content }}
-          </p>
-          <ul v-if="message.sources?.length" class="ask-ai-message__sources">
-            <li v-for="source in message.sources" :key="`${message.id}:${source.file}`">
-              <span class="ask-ai-source__file">{{ source.file }}</span>
-              <span class="ask-ai-source__score">score: {{ formatScore(source.score) }}</span>
-            </li>
-          </ul>
-        </article>
-      </template>
-      <p v-else class="ask-ai-chat__placeholder">
-        输入问题后将调用 Cloudflare AI Search 返回答案。
-      </p>
-    </div>
-
-    <p v-if="errorMessage" class="ask-ai-chat__error">
-      {{ errorMessage }}
+    <p v-if="!messages.length" class="ask-ai-chat__placeholder">
+      输入问题后将调用 Cloudflare AI Search 返回答案。
     </p>
 
-    <form class="ask-ai-chat__form" @submit.prevent="sendMessage">
-      <textarea
-        v-model="input"
-        class="ask-ai-chat__input"
-        rows="4"
-        placeholder="例如：如何在主题中启用 Ask AI 侧栏？"
-      />
-      <div class="ask-ai-chat__actions">
-        <button
-          type="button"
-          class="ask-ai-chat__btn ask-ai-chat__btn-muted"
-          :disabled="isLoading || messages.length === 0"
-          @click="clearMessages"
-        >
-          清空
-        </button>
-        <button
-          type="submit"
-          class="ask-ai-chat__btn ask-ai-chat__btn-primary"
-          :disabled="!canSubmit"
-        >
-          {{ isLoading ? '发送中...' : '发送' }}
-        </button>
-      </div>
-    </form>
+    <BubbleList
+      class="ask-ai-chat__bubble-list"
+      :list="bubbleList"
+      :auto-scroll="true"
+      max-height="100%"
+      show-back-button
+    >
+      <template #footer="{ item }">
+        <ul v-if="item.sources?.length" class="ask-ai-message__sources">
+          <li v-for="source in item.sources" :key="`${item.id}:${source.file}`">
+            <span class="ask-ai-source__file">{{ source.file }}</span>
+            <span class="ask-ai-source__score">score: {{ formatScore(source.score) }}</span>
+          </li>
+        </ul>
+      </template>
+    </BubbleList>
+
+    <div class="ask-ai-chat__status">
+      <p v-if="errorMessage" class="ask-ai-chat__error">
+        {{ errorMessage }}
+      </p>
+      <button
+        v-if="messages.length"
+        type="button"
+        class="ask-ai-chat__clear"
+        :disabled="isLoading"
+        @click="clearMessages"
+      >
+        清空会话
+      </button>
+    </div>
+
+    <Sender
+      v-model="input"
+      class="ask-ai-chat__sender"
+      :loading="isLoading"
+      :submit-btn-disabled="!canSubmit"
+      :allow-speech="false"
+      clearable
+      placeholder="例如：如何在主题中启用 Ask AI 侧栏？"
+      @submit="sendMessage"
+    />
   </section>
 </template>
 
@@ -369,15 +372,7 @@ watch(
   display: flex;
   flex-direction: column;
   height: 100%;
-  gap: 12px;
-}
-
-.ask-ai-chat__messages {
-  flex: 1;
   min-height: 0;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
   gap: 12px;
 }
 
@@ -387,38 +382,50 @@ watch(
   font-size: 13px;
 }
 
-.ask-ai-message {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 10px;
-  padding: 10px 12px;
-  background: var(--vp-c-bg-soft);
+.ask-ai-chat__bubble-list {
+  flex: 1;
+  min-height: 0;
 }
 
-.ask-ai-message.is-user {
-  background: var(--vp-c-bg-elv);
+.ask-ai-chat__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 20px;
 }
 
-.ask-ai-message__header {
-  font-size: 12px;
-  color: var(--vp-c-text-2);
-  margin-bottom: 6px;
-}
-
-.ask-ai-message__content {
+.ask-ai-chat__error {
   margin: 0;
-  white-space: pre-wrap;
-  line-height: 1.6;
-  color: var(--vp-c-text-1);
-  font-size: 13px;
+  color: var(--vp-c-danger-1);
+  font-size: 12px;
+}
+
+.ask-ai-chat__clear {
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-2);
+  border-radius: 8px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.ask-ai-chat__clear:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ask-ai-chat__sender {
+  flex-shrink: 0;
 }
 
 .ask-ai-message__sources {
   list-style: none;
-  margin: 10px 0 0;
+  margin: 8px 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .ask-ai-message__sources li {
@@ -430,71 +437,14 @@ watch(
 }
 
 .ask-ai-source__file {
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-text-2);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .ask-ai-source__score {
-  color: var(--vp-c-text-2);
+  color: var(--vp-c-text-3);
   flex-shrink: 0;
-}
-
-.ask-ai-chat__error {
-  margin: 0;
-  color: var(--vp-c-danger-1);
-  font-size: 12px;
-}
-
-.ask-ai-chat__form {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.ask-ai-chat__input {
-  width: 100%;
-  resize: vertical;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 10px;
-  padding: 10px 12px;
-  font: inherit;
-  color: var(--vp-c-text-1);
-  background: var(--vp-c-bg-soft);
-}
-
-.ask-ai-chat__input:focus {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 1px;
-}
-
-.ask-ai-chat__actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.ask-ai-chat__btn {
-  border: 1px solid var(--vp-c-divider);
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
-  border-radius: 8px;
-  padding: 6px 12px;
-  cursor: pointer;
-}
-
-.ask-ai-chat__btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.ask-ai-chat__btn-primary {
-  border-color: var(--vp-c-brand-1);
-  color: var(--vp-c-brand-1);
-}
-
-.ask-ai-chat__btn-muted {
-  color: var(--vp-c-text-2);
 }
 </style>
