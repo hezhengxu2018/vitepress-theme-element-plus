@@ -33,10 +33,30 @@ const canSubmit = computed(() => {
 })
 
 function appendMessage(message: Omit<ChatMessage, 'id'>) {
+  const id = ++messageId
   messages.value.push({
-    id: ++messageId,
+    id,
     ...message,
   })
+  return id
+}
+
+function appendAssistantChunk(id: number, chunk: string) {
+  if (!chunk)
+    return
+  const assistantMessage = messages.value.find(message => message.id === id)
+  if (!assistantMessage)
+    return
+  assistantMessage.content += chunk
+}
+
+function updateAssistantSources(id: number, sources: ChatSource[]) {
+  if (!sources.length)
+    return
+  const assistantMessage = messages.value.find(message => message.id === id)
+  if (!assistantMessage)
+    return
+  assistantMessage.sources = sources
 }
 
 function formatScore(score: number | null) {
@@ -57,6 +77,164 @@ async function scrollToBottom() {
   messageContainerRef.value.scrollTop = messageContainerRef.value.scrollHeight
 }
 
+function normalizeSources(value: unknown): ChatSource[] {
+  if (!Array.isArray(value))
+    return []
+
+  return value
+    .map((item) => {
+      if (!item || typeof item !== 'object')
+        return null
+      const source = item as Record<string, unknown>
+      const file = typeof source.file === 'string'
+        ? source.file
+        : typeof source.filename === 'string'
+          ? source.filename
+          : null
+      if (!file)
+        return null
+      const rawScore = source.score
+      return {
+        file,
+        score: typeof rawScore === 'number' ? rawScore : null,
+      } as ChatSource
+    })
+    .filter((item): item is ChatSource => Boolean(item))
+}
+
+function extractTextFromPayload(payload: unknown, depth = 0): string {
+  if (depth > 4)
+    return ''
+
+  if (typeof payload === 'string')
+    return payload
+
+  if (Array.isArray(payload))
+    return payload.map(item => extractTextFromPayload(item, depth + 1)).join('')
+
+  if (!payload || typeof payload !== 'object')
+    return ''
+
+  const record = payload as Record<string, unknown>
+  const directText = ['response', 'text', 'delta', 'token', 'content', 'output_text']
+    .find(key => typeof record[key] === 'string')
+  if (directText)
+    return record[directText] as string
+
+  return extractTextFromPayload(record.data, depth + 1)
+}
+
+function extractSourcesFromPayload(payload: unknown, depth = 0): ChatSource[] {
+  if (depth > 4 || !payload || typeof payload !== 'object')
+    return []
+
+  const record = payload as Record<string, unknown>
+  const normalized = normalizeSources(record.sources)
+  if (normalized.length)
+    return normalized
+
+  return extractSourcesFromPayload(record.data, depth + 1)
+}
+
+function parseDataLine(dataLine: string) {
+  if (dataLine === '[DONE]') {
+    return { text: '', sources: [] as ChatSource[] }
+  }
+
+  try {
+    const payload = JSON.parse(dataLine) as unknown
+    return {
+      text: extractTextFromPayload(payload),
+      sources: extractSourcesFromPayload(payload),
+    }
+  }
+  catch {
+    return { text: dataLine, sources: [] as ChatSource[] }
+  }
+}
+
+function consumeSSEBuffer(buffer: string) {
+  const textChunks: string[] = []
+  let latestSources: ChatSource[] = []
+  let cursor = buffer
+  let separator = cursor.indexOf('\n\n')
+
+  while (separator !== -1) {
+    const eventBlock = cursor.slice(0, separator)
+    cursor = cursor.slice(separator + 2)
+
+    const dataLines = eventBlock
+      .split('\n')
+      .filter(line => line.startsWith('data:'))
+      .map(line => line.slice(5).trimStart())
+
+    dataLines.forEach((dataLine) => {
+      const { text, sources } = parseDataLine(dataLine)
+      if (text)
+        textChunks.push(text)
+      if (sources.length)
+        latestSources = sources
+    })
+
+    separator = cursor.indexOf('\n\n')
+  }
+
+  return {
+    remaining: cursor,
+    textChunks,
+    latestSources,
+  }
+}
+
+async function streamAssistantResponse(response: Response, assistantId: number) {
+  if (!response.body)
+    return
+
+  const reader = response.body.getReader()
+  const decoder = new TextDecoder()
+  let isSSE = false
+  let sseBuffer = ''
+
+  while (true) {
+    const { done, value } = await reader.read()
+    if (done)
+      break
+    if (!value)
+      continue
+
+    const chunk = decoder.decode(value, { stream: true })
+    if (!chunk)
+      continue
+
+    if (isSSE || chunk.includes('data:') || chunk.includes('event:')) {
+      isSSE = true
+      sseBuffer += chunk.replace(/\r\n/g, '\n')
+      const { remaining, textChunks, latestSources } = consumeSSEBuffer(sseBuffer)
+      sseBuffer = remaining
+      textChunks.forEach(text => appendAssistantChunk(assistantId, text))
+      updateAssistantSources(assistantId, latestSources)
+    }
+    else {
+      appendAssistantChunk(assistantId, chunk)
+    }
+
+    await scrollToBottom()
+  }
+
+  const tail = decoder.decode()
+  if (tail) {
+    if (isSSE) {
+      sseBuffer += tail
+      const { textChunks, latestSources } = consumeSSEBuffer(`${sseBuffer}\n\n`)
+      textChunks.forEach(text => appendAssistantChunk(assistantId, text))
+      updateAssistantSources(assistantId, latestSources)
+    }
+    else {
+      appendAssistantChunk(assistantId, tail)
+    }
+  }
+}
+
 async function sendMessage() {
   const query = input.value.trim()
   if (!query || isLoading.value)
@@ -67,6 +245,11 @@ async function sendMessage() {
     role: 'user',
     content: query,
   })
+  const assistantId = appendMessage({
+    role: 'assistant',
+    content: '',
+    sources: [],
+  })
   input.value = ''
   isLoading.value = true
 
@@ -76,35 +259,35 @@ async function sendMessage() {
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query, stream: true }),
     })
 
-    let payload: AskResponse | undefined
-    try {
-      payload = await response.json() as AskResponse
-    }
-    catch {
-      payload = undefined
-    }
-
     if (!response.ok) {
+      let payload: AskResponse | undefined
+      try {
+        payload = await response.json() as AskResponse
+      }
+      catch {
+        payload = undefined
+      }
       throw new Error(payload?.error || `Request failed (${response.status})`)
     }
 
-    const answer = payload?.answer?.trim() || '未返回答案，请检查 AI Search 索引或模型配置。'
-    appendMessage({
-      role: 'assistant',
-      content: answer,
-      sources: payload?.sources || [],
-    })
+    await streamAssistantResponse(response, assistantId)
+
+    const assistantMessage = messages.value.find(message => message.id === assistantId)
+    if (assistantMessage && !assistantMessage.content.trim()) {
+      assistantMessage.content = '未返回答案，请检查 AI Search 索引或模型配置。'
+    }
   }
   catch (error) {
     const message = error instanceof Error ? error.message : '请求失败，请稍后重试。'
     errorMessage.value = message
-    appendMessage({
-      role: 'assistant',
-      content: `请求失败：${message}`,
-    })
+    const assistantMessage = messages.value.find(item => item.id === assistantId)
+    if (assistantMessage) {
+      assistantMessage.content = `请求失败：${message}`
+      assistantMessage.sources = []
+    }
   }
   finally {
     isLoading.value = false
