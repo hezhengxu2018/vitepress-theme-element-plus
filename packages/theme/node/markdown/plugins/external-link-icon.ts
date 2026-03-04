@@ -1,7 +1,7 @@
 import type MarkdownIt from 'markdown-it'
 import type { RenderRule } from 'markdown-it/lib/renderer.mjs'
 
-const renderToken: RenderRule = (tokens, idx, options, env, self) =>
+const renderToken: RenderRule = (tokens, idx, options, _env, self) =>
   self.renderToken(tokens, idx, options)
 
 export default function mdExternalLinkIcon(md: MarkdownIt): void {

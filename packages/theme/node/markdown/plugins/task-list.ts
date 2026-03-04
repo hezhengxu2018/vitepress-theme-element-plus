@@ -65,11 +65,14 @@ export const mdElementPlusTaskList: PluginWithOptions<ElementPlusTaskListOptions
       const inlineToken = tokens[i]
       const listItemToken = tokens[i - 2]
       const parentListToken = tokens.findLast((token, idx) => idx < i - 2 && token.level === listItemToken.level - 1 && token.type.endsWith('list_open'))
+      const children = inlineToken.children
+      if (!children)
+        continue
 
       addClass(listItemToken, itemClass)
       addClass(parentListToken, listClass)
 
-      const textToken = inlineToken.children?.find(child => child.type === 'text')
+      const textToken = children.find(child => child.type === 'text')
       if (!textToken)
         continue
 
@@ -82,11 +85,11 @@ export const mdElementPlusTaskList: PluginWithOptions<ElementPlusTaskListOptions
         <input id="${id}" class="el-checkbox__original" type="checkbox" ${checked ? 'checked' : ''} ${disabled ? 'disabled' : ''} aria-checked="${checked ? 'true' : 'false'}" role="presentation">
       </span>`
 
-      inlineToken.children.unshift(
+      children.unshift(
         html(state, `<label class="el-checkbox ${checkboxClass}" for="${id}" role="checkbox" aria-checked="${checked ? 'true' : 'false'}">`),
         html(state, `${input}<span class="el-checkbox__label ${labelClass}">`),
       )
-      inlineToken.children.push(html(state, '</span></label>'))
+      children.push(html(state, '</span></label>'))
     }
 
     return true

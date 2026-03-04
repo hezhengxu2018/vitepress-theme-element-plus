@@ -122,9 +122,13 @@ function buildTree(data: MenuItem[], min: number, max: number): MenuItem[] {
       return
     resolvedHeaders.push({ element: node.element, link: node.link })
 
-    if (parent)
-      (parent as MenuItem).children.push(node)
-    else result.push(node)
+    if (parent && !('shouldIgnore' in parent)) {
+      parent.children ||= []
+      parent.children.push(node)
+    }
+    else {
+      result.push(node)
+    }
 
     stack.push(node)
   })

@@ -83,3 +83,18 @@ export default {
 - When opened, the panel pushes main content left and the navbar yields width.
 - The top search box is hidden while the panel is open.
 - When viewport width is below `1680px` and the panel is open, the right outline is hidden to reduce layout squeeze.
+
+## Cloudflare AI Search Integration
+
+The docs site now includes a minimal working integration:
+
+- Pages Function: `packages/docs/functions/api/ask.ts`
+- Chat UI component: `packages/docs/.vitepress/theme/components/AskAICloudflareChat.vue`
+- Slot mounting entry: `packages/docs/.vitepress/theme/index.ts`
+
+Set these in your Cloudflare Pages project before deployment:
+
+- `AI`: Workers AI binding (variable name must match the function code).
+- `RAG_ID`: the AI Search index ID you created.
+
+Local development calls `/api/ask` by default. If you need another backend URL, set `VITE_ASK_AI_ENDPOINT` to override it.

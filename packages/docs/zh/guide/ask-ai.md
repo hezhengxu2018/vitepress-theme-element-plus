@@ -83,3 +83,18 @@ export default {
 - 展开侧栏后，页面主内容会向左压缩，导航栏同步让位。
 - 侧栏展开时会隐藏顶部搜索框。
 - 当屏幕宽度小于 `1680px` 且侧栏展开时，会隐藏文档右侧 outline 区域以避免挤压内容。
+
+## Cloudflare AI Search 对接
+
+文档示例站已内置了最小可用接入：
+
+- Pages Function: `packages/docs/functions/api/ask.ts`
+- 前端会话组件: `packages/docs/.vitepress/theme/components/AskAICloudflareChat.vue`
+- 插槽挂载入口: `packages/docs/.vitepress/theme/index.ts`
+
+部署时需要在 Cloudflare Pages 项目中配置：
+
+- `AI`：Workers AI 绑定（变量名必须与函数代码一致）。
+- `RAG_ID`：你创建好的 AI Search 索引 ID。
+
+本地开发默认请求 `/api/ask`。如果你需要切换成其他后端地址，可设置环境变量 `VITE_ASK_AI_ENDPOINT` 覆盖默认值。
