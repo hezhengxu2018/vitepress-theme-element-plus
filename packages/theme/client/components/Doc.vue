@@ -1,14 +1,21 @@
 <script setup lang="ts">
+import { useMediaQuery } from '@vueuse/core'
 import { useData, useRoute } from 'vitepress'
 import { computed } from 'vue'
+import { useAskAIPanel } from '../hooks/useAskAIPanel'
 import { useSidebar } from '../hooks/useSidebar'
 import VPDocAside from './DocAside.vue'
 import VPDocFooter from './DocFooter.vue'
 
 const { theme } = useData()
+const { isOpen: isAskAIPanelOpen } = useAskAIPanel()
+const is1680 = useMediaQuery('(min-width: 1680px)')
 
 const route = useRoute()
 const { hasAside, leftAside, hasSidebar } = useSidebar()
+const hideAsideForAskAi = computed(() =>
+  hasAside.value && !is1680.value && isAskAIPanelOpen.value,
+)
 
 const pageName = computed(() =>
   route.path.replace(/[./]+/g, '_').replace(/_html$/, ''),
@@ -16,7 +23,10 @@ const pageName = computed(() =>
 </script>
 
 <template>
-  <div class="VPDoc" :class="{ 'has-sidebar': hasSidebar, 'has-aside': hasAside }">
+  <div
+    class="VPDoc"
+    :class="{ 'has-sidebar': hasSidebar, 'has-aside': hasAside, 'hide-aside-for-ask-ai': hideAsideForAskAi }"
+  >
     <slot name="doc-top" />
     <div class="container">
       <div v-if="hasAside" class="aside" :class="{ 'left-aside': leftAside }">
@@ -141,6 +151,10 @@ const pageName = computed(() =>
   padding-right: 32px;
 }
 
+.VPDoc.hide-aside-for-ask-ai .aside {
+  display: none;
+}
+
 .left-aside {
   order: 1;
   padding-left: unset;
@@ -176,6 +190,10 @@ const pageName = computed(() =>
     order: 1;
     margin: 0;
     min-width: 640px;
+  }
+
+  .VPDoc.hide-aside-for-ask-ai .content {
+    padding-right: 64px;
   }
 }
 
