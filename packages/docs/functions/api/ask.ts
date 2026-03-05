@@ -109,21 +109,8 @@ function resolveStream(result: AiSearchResult) {
   return null
 }
 
-function createCORSHeaders(request: Request) {
-  const origin = request.headers.get('origin') || '*'
+function createSSEHeaders() {
   return {
-    'access-control-allow-origin': origin,
-    'access-control-allow-methods': 'POST, OPTIONS',
-    'access-control-allow-headers': 'content-type, authorization',
-    'access-control-max-age': '86400',
-    'vary': 'Origin',
-  }
-}
-
-function createSSEHeaders(request: Request) {
-  const corsHeaders = createCORSHeaders(request)
-  return {
-    ...corsHeaders,
     'content-type': 'text/event-stream; charset=utf-8',
     'cache-control': 'no-cache, no-transform',
     'x-content-type-options': 'nosniff',
@@ -150,13 +137,6 @@ function createAiSearchOptions(query: string): AiSearchOptions {
   }
 }
 
-export function onRequestOptions({ request }: Pick<RequestContext, 'request'>) {
-  return new Response(null, {
-    status: 204,
-    headers: createCORSHeaders(request),
-  })
-}
-
 export async function onRequestPost({ request, env }: RequestContext) {
   try {
     const ragId = typeof env.RAG_ID === 'string' ? env.RAG_ID.trim() : ''
@@ -166,12 +146,8 @@ export async function onRequestPost({ request, env }: RequestContext) {
     const payload = await request.json() as { query?: unknown, stream?: unknown }
     const query = typeof payload.query === 'string' ? payload.query.trim() : ''
     const shouldStream = payload.stream === true
-    if (!query) {
-      return Response.json(
-        { error: 'Query is required' },
-        { status: 400, headers: createCORSHeaders(request) },
-      )
-    }
+    if (!query)
+      return Response.json({ error: 'Query is required' }, { status: 400 })
 
     const autorag = env.AI.autorag(ragId)
     const aiSearchOptions = createAiSearchOptions(query)
@@ -186,27 +162,25 @@ export async function onRequestPost({ request, env }: RequestContext) {
       const stream = resolveStream(result)
       if (stream) {
         return new Response(stream, {
-          headers: createSSEHeaders(request),
+          headers: createSSEHeaders(),
         })
       }
 
       const fallbackText = typeof result.response === 'string' ? result.response : ''
       return new Response(createSSEFromText(fallbackText), {
-        headers: createSSEHeaders(request),
+        headers: createSSEHeaders(),
       })
     }
 
     return Response.json({
       answer: result.response ?? '',
-    }, {
-      headers: createCORSHeaders(request),
     })
   }
   catch (error) {
     const { status, message } = createErrorResponse(error)
     return Response.json(
       { error: message },
-      { status, headers: createCORSHeaders(request) },
+      { status },
     )
   }
 }

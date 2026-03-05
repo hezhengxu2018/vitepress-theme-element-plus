@@ -31,6 +31,7 @@ const askClient = hookFetch.create({
   headers: {
     'content-type': 'application/json',
   },
+  withCredentials: true,
 })
 const senderInputStyle = {
   resize: 'none',
