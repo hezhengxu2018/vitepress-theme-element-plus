@@ -1,35 +1,37 @@
 <script setup lang="ts">
+import type { HookFetchRequest } from 'hook-fetch'
 import type { BubbleListItemProps } from 'vue-element-plus-x/types/BubbleList'
 import { ElButton } from 'element-plus'
-import { computed, ref } from 'vue'
-import { BubbleList, Sender } from 'vue-element-plus-x'
+import hookFetch from 'hook-fetch'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { BubbleList, Sender, useXStream } from 'vue-element-plus-x'
 import AiMarkdownRenderer from './AiMarkdownRenderer.vue'
-
-interface ChatSource {
-  file: string
-  score: number | null
-}
 
 interface ChatMessage {
   id: number
   role: 'user' | 'assistant'
   content: string
-  sources?: ChatSource[]
 }
 
 interface AskResponse {
   answer?: string
-  sources?: ChatSource[]
   error?: string
 }
 
 interface BubbleItem extends BubbleListItemProps {
   id: number
   role: ChatMessage['role']
-  sources?: ChatSource[]
 }
 
 const endpoint = import.meta.env.VITE_ASK_AI_ENDPOINT || '/api/ask'
+const sseOptions = {
+  doneSymbol: '[DONE]',
+}
+const askClient = hookFetch.create({
+  headers: {
+    'content-type': 'application/json',
+  },
+})
 const senderInputStyle = {
   resize: 'none',
   maxHeight: '176px',
@@ -47,7 +49,11 @@ const input = ref('')
 const isLoading = ref(false)
 const errorMessage = ref('')
 const activeAssistantId = ref<number | null>(null)
+const { startStream, cancel: cancelStream, data: streamData, error: streamError } = useXStream()
+const streamCursor = ref(0)
+const streamAssistantId = ref<number | null>(null)
 let messageId = 0
+let currentRequest: HookFetchRequest<unknown, unknown> | null = null
 
 const canSubmit = computed(() => {
   return input.value.trim().length > 0 && !isLoading.value
@@ -66,7 +72,6 @@ const bubbleList = computed<BubbleItem[]>(() => {
       variant: isAssistant ? 'borderless' : 'filled',
       noStyle: isAssistant,
       loading: isCurrentStreaming && !message.content,
-      sources: message.sources,
     }
   })
 })
@@ -93,40 +98,6 @@ function appendAssistantChunk(id: number, chunk: string) {
   assistantMessage.content += chunk
 }
 
-function updateAssistantSources(id: number, sources: ChatSource[]) {
-  if (!sources.length)
-    return
-  const assistantMessage = getMessageById(id)
-  if (!assistantMessage)
-    return
-  assistantMessage.sources = sources
-}
-
-function normalizeSources(value: unknown): ChatSource[] {
-  if (!Array.isArray(value))
-    return []
-
-  return value
-    .map((item) => {
-      if (!item || typeof item !== 'object')
-        return null
-      const source = item as Record<string, unknown>
-      const file = typeof source.file === 'string'
-        ? source.file
-        : typeof source.filename === 'string'
-          ? source.filename
-          : null
-      if (!file)
-        return null
-      const rawScore = source.score
-      return {
-        file,
-        score: typeof rawScore === 'number' ? rawScore : null,
-      } as ChatSource
-    })
-    .filter((item): item is ChatSource => Boolean(item))
-}
-
 function extractTextFromPayload(payload: unknown, depth = 0): string {
   if (depth > 4)
     return ''
@@ -149,113 +120,57 @@ function extractTextFromPayload(payload: unknown, depth = 0): string {
   return extractTextFromPayload(record.data, depth + 1)
 }
 
-function extractSourcesFromPayload(payload: unknown, depth = 0): ChatSource[] {
-  if (depth > 4 || !payload || typeof payload !== 'object')
-    return []
+function parseDataLine(dataValue: unknown) {
+  if (dataValue == null)
+    return ''
 
-  const record = payload as Record<string, unknown>
-  const normalized = normalizeSources(record.sources)
-  if (normalized.length)
-    return normalized
+  const rawLine = typeof dataValue === 'string' ? dataValue : String(dataValue)
+  const line = rawLine.endsWith('\r') ? rawLine.slice(0, -1) : rawLine
+  // SSE `data:` value may have one optional leading space.
+  const normalizedLine = line.startsWith(' ') ? line.slice(1) : line
 
-  return extractSourcesFromPayload(record.data, depth + 1)
-}
-
-function parseDataLine(dataLine: string) {
-  if (dataLine === '[DONE]') {
-    return { text: '', sources: [] as ChatSource[] }
-  }
+  if (!normalizedLine || normalizedLine.trim() === sseOptions.doneSymbol)
+    return ''
 
   try {
-    const payload = JSON.parse(dataLine) as unknown
-    return {
-      text: extractTextFromPayload(payload),
-      sources: extractSourcesFromPayload(payload),
-    }
+    const payload = JSON.parse(normalizedLine) as unknown
+    return extractTextFromPayload(payload)
   }
   catch {
-    return { text: dataLine, sources: [] as ChatSource[] }
+    return normalizedLine
   }
 }
 
-function consumeSSEBuffer(buffer: string) {
-  const textChunks: string[] = []
-  let latestSources: ChatSource[] = []
-  let cursor = buffer
-  let separator = cursor.indexOf('\n\n')
+async function resolveErrorMessage(error: unknown) {
+  if (error && typeof error === 'object') {
+    const errorObject = error as {
+      message?: unknown
+      response?: unknown
+      status?: unknown
+    }
 
-  while (separator !== -1) {
-    const eventBlock = cursor.slice(0, separator)
-    cursor = cursor.slice(separator + 2)
+    if (errorObject.response instanceof Response) {
+      try {
+        const payload = await errorObject.response.clone().json() as AskResponse
+        if (typeof payload?.error === 'string' && payload.error)
+          return payload.error
+      }
+      catch {
+        // Ignore parse error and fallback to generic message.
+      }
 
-    const dataLines = eventBlock
-      .split('\n')
-      .filter(line => line.startsWith('data:'))
-      .map(line => line.slice(5).trimStart())
+      if (typeof errorObject.status === 'number')
+        return `Request failed (${errorObject.status})`
+    }
 
-    dataLines.forEach((dataLine) => {
-      const { text, sources } = parseDataLine(dataLine)
-      if (text)
-        textChunks.push(text)
-      if (sources.length)
-        latestSources = sources
-    })
-
-    separator = cursor.indexOf('\n\n')
+    if (typeof errorObject.message === 'string' && errorObject.message)
+      return errorObject.message
   }
 
-  return {
-    remaining: cursor,
-    textChunks,
-    latestSources,
-  }
-}
+  if (error instanceof Error && error.message)
+    return error.message
 
-async function streamAssistantResponse(response: Response, assistantId: number) {
-  if (!response.body)
-    return
-
-  const reader = response.body.getReader()
-  const decoder = new TextDecoder()
-  let isSSE = false
-  let sseBuffer = ''
-
-  while (true) {
-    const { done, value } = await reader.read()
-    if (done)
-      break
-    if (!value)
-      continue
-
-    const chunk = decoder.decode(value, { stream: true })
-    if (!chunk)
-      continue
-
-    if (isSSE || chunk.includes('data:') || chunk.includes('event:')) {
-      isSSE = true
-      sseBuffer += chunk.replace(/\r\n/g, '\n')
-      const { remaining, textChunks, latestSources } = consumeSSEBuffer(sseBuffer)
-      sseBuffer = remaining
-      textChunks.forEach(text => appendAssistantChunk(assistantId, text))
-      updateAssistantSources(assistantId, latestSources)
-    }
-    else {
-      appendAssistantChunk(assistantId, chunk)
-    }
-  }
-
-  const tail = decoder.decode()
-  if (tail) {
-    if (isSSE) {
-      sseBuffer += tail
-      const { textChunks, latestSources } = consumeSSEBuffer(`${sseBuffer}\n\n`)
-      textChunks.forEach(text => appendAssistantChunk(assistantId, text))
-      updateAssistantSources(assistantId, latestSources)
-    }
-    else {
-      appendAssistantChunk(assistantId, tail)
-    }
-  }
+  return '请求失败，请稍后重试。'
 }
 
 function clearMessages() {
@@ -278,22 +193,28 @@ async function sendMessage(internalValue?: string) {
   const assistantId = appendMessage({
     role: 'assistant',
     content: '',
-    sources: [],
   })
   activeAssistantId.value = assistantId
   input.value = ''
   isLoading.value = true
 
   try {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({ query, stream: true }),
+    const request = askClient.post(endpoint, {
+      query,
+      stream: true,
     })
+    currentRequest = request
+    const response = await request.response
 
-    if (!response.ok) {
+    if (response.body) {
+      streamCursor.value = 0
+      streamAssistantId.value = assistantId
+      await startStream({ readableStream: response.body })
+
+      if (streamError.value)
+        throw streamError.value
+    }
+    else {
       let payload: AskResponse | undefined
       try {
         payload = await response.json() as AskResponse
@@ -301,10 +222,8 @@ async function sendMessage(internalValue?: string) {
       catch {
         payload = undefined
       }
-      throw new Error(payload?.error || `Request failed (${response.status})`)
+      appendAssistantChunk(assistantId, payload?.answer || '')
     }
-
-    await streamAssistantResponse(response, assistantId)
 
     const assistantMessage = getMessageById(assistantId)
     if (assistantMessage && !assistantMessage.content.trim()) {
@@ -312,25 +231,44 @@ async function sendMessage(internalValue?: string) {
     }
   }
   catch (error) {
-    const message = error instanceof Error ? error.message : '请求失败，请稍后重试。'
+    const message = await resolveErrorMessage(error)
     errorMessage.value = message
     const assistantMessage = getMessageById(assistantId)
     if (assistantMessage) {
       assistantMessage.content = `请求失败：${message}`
-      assistantMessage.sources = []
     }
   }
   finally {
+    cancelStream()
+    streamAssistantId.value = null
+    streamCursor.value = 0
+    currentRequest = null
     isLoading.value = false
     activeAssistantId.value = null
   }
 }
 
-function formatScore(score: number | null) {
-  if (typeof score !== 'number')
-    return '--'
-  return score.toFixed(3)
-}
+watch(
+  () => streamData.value.length,
+  (length) => {
+    const assistantId = streamAssistantId.value
+    if (assistantId === null || !length)
+      return
+
+    for (; streamCursor.value < length; streamCursor.value++) {
+      const item = streamData.value[streamCursor.value]
+      const text = parseDataLine(item.data)
+      if (text)
+        appendAssistantChunk(assistantId, text)
+    }
+  },
+  { flush: 'sync' },
+)
+
+onBeforeUnmount(() => {
+  cancelStream()
+  currentRequest?.abort()
+})
 </script>
 
 <template>
@@ -357,15 +295,6 @@ function formatScore(score: number | null) {
           </template>
         </ClientOnly>
         <span v-else class="ask-ai-message__plain">{{ item.content }}</span>
-      </template>
-
-      <template #footer="{ item }">
-        <ul v-if="item.sources?.length" class="ask-ai-message__sources">
-          <li v-for="source in item.sources" :key="`${item.id}:${source.file}`">
-            <span class="ask-ai-source__file">{{ source.file }}</span>
-            <span class="ask-ai-source__score">score: {{ formatScore(source.score) }}</span>
-          </li>
-        </ul>
       </template>
     </BubbleList>
 
@@ -425,6 +354,7 @@ function formatScore(score: number | null) {
   font-size: 13px;
   line-height: 1.55;
   min-height: auto;
+  --bubble-content-max-width: 340px;
 }
 
 .ask-ai-chat__status {
@@ -452,34 +382,5 @@ function formatScore(score: number | null) {
 
 .ask-ai-message__plain {
   white-space: pre-wrap;
-}
-
-.ask-ai-message__sources {
-  list-style: none;
-  margin: 8px 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.ask-ai-message__sources li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 12px;
-}
-
-.ask-ai-source__file {
-  color: var(--vp-c-text-2);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ask-ai-source__score {
-  color: var(--vp-c-text-3);
-  flex-shrink: 0;
 }
 </style>

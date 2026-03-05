@@ -1,21 +1,18 @@
-interface AiSearchInput {
+interface AiSearchOptions {
   query: string
   rewrite_query?: boolean
   max_num_results?: number
   reranking?: {
     enabled: boolean
   }
-  stream?: boolean
 }
 
-interface AiSearchResultItem {
-  filename?: string
-  score?: number
+interface AiSearchInput extends AiSearchOptions {
+  stream?: boolean
 }
 
 interface AiSearchResult {
   response?: string | ReadableStream<Uint8Array>
-  data?: AiSearchResultItem[]
   body?: ReadableStream<Uint8Array>
 }
 
@@ -77,6 +74,15 @@ function createSSEFromText(text: string) {
   })
 }
 
+function createAiSearchOptions(query: string): AiSearchOptions {
+  return {
+    query,
+    rewrite_query: true,
+    max_num_results: 8,
+    reranking: { enabled: true },
+  }
+}
+
 export async function onRequestPost({ request, env }: RequestContext) {
   try {
     const ragId = typeof env.RAG_ID === 'string' ? env.RAG_ID.trim() : ''
@@ -89,11 +95,11 @@ export async function onRequestPost({ request, env }: RequestContext) {
     if (!query)
       return Response.json({ error: 'Query is required' }, { status: 400 })
 
-    const result = await env.AI.autorag(ragId).aiSearch({
-      query,
-      rewrite_query: true,
-      max_num_results: 8,
-      reranking: { enabled: true },
+    const autorag = env.AI.autorag(ragId)
+    const aiSearchOptions = createAiSearchOptions(query)
+
+    const result = await autorag.aiSearch({
+      ...aiSearchOptions,
       stream: shouldStream,
     })
 
@@ -111,14 +117,8 @@ export async function onRequestPost({ request, env }: RequestContext) {
       })
     }
 
-    const sources = (result.data ?? []).map(item => ({
-      file: item.filename ?? 'unknown',
-      score: typeof item.score === 'number' ? item.score : null,
-    }))
-
     return Response.json({
       answer: result.response ?? '',
-      sources,
     })
   }
   catch (error) {

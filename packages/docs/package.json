@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "element-plus": "^2.11.7",
+    "hook-fetch": "^2.3.2",
     "markdown-it": "^14.1.1",
     "markdown-it-container": "^4.0.0",
     "markdown-it-mathjax3": "^4.0.0",
