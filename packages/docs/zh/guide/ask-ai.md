@@ -96,5 +96,21 @@ export default {
 
 - `AI`：Workers AI 绑定（变量名必须与函数代码一致）。
 - `RAG_ID`：你创建好的 AI Search 索引 ID。
+- `AI_SEARCH_TIMEOUT_MS`（可选）：AI Search 请求超时（毫秒，默认 `15000`）。
 
 本地开发默认请求 `/api/ask`。如果你需要切换成其他后端地址，可设置环境变量 `VITE_ASK_AI_ENDPOINT` 覆盖默认值。
+
+本地调试 Cloudflare Functions（含 `env.AI` / `env.RAG_ID`）可按下面方式运行：
+
+1. 复制 `packages/docs/.dev.vars.example` 为 `packages/docs/.dev.vars`，并填入 `RAG_ID`。
+2. 终端 A 运行 `pnpm dev:vitepress`（或在根目录运行 `pnpm dev:vitepress`）。
+3. 终端 B 运行 `pnpm dev:cf`（或在根目录运行 `pnpm dev:cf`）。
+4. 打开 `http://localhost:5173` 调试文档页面，`/api/ask` 会自动代理到 `http://localhost:8788`。
+
+如果你本机网络导致 `dev:cf` 中 AI Search 超时（如 `504 Gateway Timeout`），可临时改为代理线上函数：
+
+```bash
+ASK_AI_PROXY_TARGET=https://<your-pages-domain> pnpm dev:vitepress
+```
+
+此时无需本地启动 `pnpm dev:cf`。

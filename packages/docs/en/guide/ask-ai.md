@@ -96,5 +96,21 @@ Set these in your Cloudflare Pages project before deployment:
 
 - `AI`: Workers AI binding (variable name must match the function code).
 - `RAG_ID`: the AI Search index ID you created.
+- `AI_SEARCH_TIMEOUT_MS` (optional): AI Search request timeout in milliseconds (default `15000`).
 
 Local development calls `/api/ask` by default. If you need another backend URL, set `VITE_ASK_AI_ENDPOINT` to override it.
+
+For local Cloudflare Functions debugging (with `env.AI` / `env.RAG_ID`):
+
+1. Copy `packages/docs/.dev.vars.example` to `packages/docs/.dev.vars` and set `RAG_ID`.
+2. In terminal A, run `pnpm dev:vitepress` (or `pnpm dev:vitepress` at repo root).
+3. In terminal B, run `pnpm dev:cf` (or `pnpm dev:cf` at repo root).
+4. Open `http://localhost:5173` for docs testing; `/api/ask` is proxied to `http://localhost:8788`.
+
+If AI Search keeps timing out in local `dev:cf` (for example `504 Gateway Timeout`), you can proxy to your deployed Pages Function instead:
+
+```bash
+ASK_AI_PROXY_TARGET=https://<your-pages-domain> pnpm dev:vitepress
+```
+
+In this mode, you do not need to run local `pnpm dev:cf`.

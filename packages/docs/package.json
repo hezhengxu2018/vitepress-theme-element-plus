@@ -6,6 +6,8 @@
   "description": "Documentation site for VitePress Theme Element Plus",
   "scripts": {
     "dev": "vitepress dev",
+    "dev:vitepress": "vitepress dev --port 5173",
+    "dev:cf": "pnpm dlx wrangler pages dev . --port 8788 --env-file .dev.vars",
     "prebuild": "pnpm -C ../theme build",
     "build": "vitepress build",
     "preview": "vitepress preview"

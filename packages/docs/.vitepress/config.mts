@@ -1,5 +1,6 @@
 import type { EPThemeConfig } from 'vitepress-theme-element-plus'
 import path, { dirname } from 'node:path'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import mdContainer from 'markdown-it-container'
 import { defineConfig } from 'vitepress'
@@ -8,6 +9,8 @@ import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-i
 import { mdExternalLinkIcon, mdTableWrapper, mdTag, mdTaskList, mdTooltip } from 'vitepress-theme-element-plus/node'
 import pkg from '../package.json'
 import { createSeoHead, DEFAULT_DESCRIPTION, enhancePageData, SITE_NAME, SITE_URL } from './seo'
+
+const askAiProxyTarget = (process.env.ASK_AI_PROXY_TARGET || '').trim() || 'http://127.0.0.1:8788'
 
 const zhNav = [
   { text: '首页', link: '/zh/' },
@@ -147,6 +150,14 @@ export default defineConfig<EPThemeConfig>({
     plugins: [
       groupIconVitePlugin(),
     ],
+    server: {
+      proxy: {
+        '/api/ask': {
+          target: askAiProxyTarget,
+          changeOrigin: true,
+        },
+      },
+    },
     ssr: {
       noExternal: [
         'vitepress-theme-element-plus',
