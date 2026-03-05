@@ -32,12 +32,32 @@ export interface EPThemeFooter extends DefaultTheme.Footer {
   blogroll?: FooterBlogrollSection[]
 }
 
+export interface EPThemeAskAiConfig {
+  /**
+   * 是否显示 Ask AI 入口
+   */
+  enabled?: boolean
+  /**
+   * 入口按钮文案
+   */
+  triggerText?: string
+  /**
+   * 滑出面板标题
+   */
+  title?: string
+  /**
+   * 滑出面板宽度
+   */
+  width?: number | string
+}
+
 export interface EPThemeConfig extends DefaultTheme.Config {
   /**
    * 文档版本号
    */
   version?: string
   footer?: EPThemeFooter
+  askAi?: EPThemeAskAiConfig
 }
 // #endregion snippet
 

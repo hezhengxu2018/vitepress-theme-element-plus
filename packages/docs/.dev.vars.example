@@ -1,0 +1,4 @@
+# Cloudflare AI Search index id
+RAG_ID=replace-with-your-rag-id
+# Optional: request timeout in ms (1000~120000)
+AI_SEARCH_TIMEOUT_MS=15000

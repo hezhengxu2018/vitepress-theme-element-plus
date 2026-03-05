@@ -1,1 +1,3 @@
 .vitepress/cache
+.wrangler
+.dev.vars

@@ -1,0 +1,116 @@
+---
+title: Ask AI Sidebar
+description: Enable the Ask AI trigger and right sliding panel with themeConfig.askAi, then render your own chat logic through slots.
+keywords:
+  - vitepress-theme-element-plus Ask AI
+  - askAi config
+  - VitePress AI sidebar
+---
+
+# Ask AI Sidebar
+
+`vitepress-theme-element-plus` provides a configurable Ask AI trigger and right-side sliding panel. The theme only ships the layout and interaction shell, not model integration logic.
+
+## Enable It
+
+Configure `themeConfig.askAi` in `.vitepress/config.mts` (or `config.ts`):
+
+```ts
+import type { EPThemeConfig } from 'vitepress-theme-element-plus'
+import { defineConfig } from 'vitepress'
+
+export default defineConfig<EPThemeConfig>({
+  themeConfig: {
+    askAi: {
+      enabled: true,
+      triggerText: 'Ask AI',
+      title: 'Chat',
+      width: 380,
+    },
+  },
+})
+```
+
+## Options
+
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `enabled` | `boolean` | `false` | Enables Ask AI. Trigger button and panel only render when this is `true`. |
+| `triggerText` | `string` | `'Ask AI'` | Label text for the navbar trigger button. |
+| `title` | `string` | `'Chat'` | Header title shown in the panel. |
+| `width` | `number \| string` | `420` | Panel width. `number` is converted to `px`; `string` accepts any valid CSS width value. |
+
+## Slot Integration
+
+Use theme `Layout` slots to mount your own chat UI:
+
+| Slot Name | Location | Description |
+| --- | --- | --- |
+| `ask-ai-panel-header` | Panel header | Customize the header (replace default title and close icon). |
+| `ask-ai-panel-content` | Panel body | Main chat content such as messages, input box, and streaming output. |
+| `ask-ai-panel-footer` | Panel footer | Optional footer area for disclaimers or quick actions. |
+
+All three slots receive the same slot props:
+
+- `isOpen`: Whether the panel is currently open.
+- `open`: Open the panel.
+- `close`: Close the panel.
+- `toggle`: Toggle panel state.
+
+Example:
+
+```ts
+import Theme from 'vitepress-theme-element-plus'
+import { h } from 'vue'
+
+export default {
+  extends: Theme,
+  Layout() {
+    return h(Theme.Layout, null, {
+      'ask-ai-panel-content': ({ close }) =>
+        h('div', [
+          h('p', 'Mount your chat component here'),
+          h('button', { onClick: close }, 'Close'),
+        ]),
+    })
+  },
+}
+```
+
+## Current Layout Behavior
+
+- On desktop (`>= 960px`), the Ask AI trigger appears next to the navbar search.
+- When opened, the panel pushes main content left and the navbar yields width.
+- The top search box is hidden while the panel is open.
+- When viewport width is below `1680px` and the panel is open, the right outline is hidden to reduce layout squeeze.
+
+## Cloudflare AI Search Integration
+
+The docs site now includes a minimal working integration:
+
+- Pages Function: `packages/docs/functions/api/ask.ts`
+- Chat UI component: `packages/docs/.vitepress/theme/components/AskAICloudflareChat.vue`
+- Slot mounting entry: `packages/docs/.vitepress/theme/index.ts`
+
+Set these in your Cloudflare Pages project before deployment:
+
+- `AI`: Workers AI binding (variable name must match the function code).
+- `RAG_ID`: the AI Search index ID you created.
+- `AI_SEARCH_TIMEOUT_MS` (optional): AI Search request timeout in milliseconds (default `15000`).
+
+Local development calls `/api/ask` by default. If you need another backend URL, set `VITE_ASK_AI_ENDPOINT` to override it.
+
+For local Cloudflare Functions debugging (with `env.AI` / `env.RAG_ID`):
+
+1. Copy `packages/docs/.dev.vars.example` to `packages/docs/.dev.vars` and set `RAG_ID`.
+2. In terminal A, run `pnpm dev:vitepress` (or `pnpm dev:vitepress` at repo root).
+3. In terminal B, run `pnpm dev:cf` (or `pnpm dev:cf` at repo root).
+4. Open `http://localhost:5173` for docs testing; `/api/ask` is proxied to `http://localhost:8788`.
+
+If AI Search keeps timing out in local `dev:cf` (for example `504 Gateway Timeout`), you can proxy to your deployed Pages Function instead:
+
+```bash
+ASK_AI_PROXY_TARGET=https://<your-pages-domain> pnpm dev:vitepress
+```
+
+In this mode, you do not need to run local `pnpm dev:cf`.

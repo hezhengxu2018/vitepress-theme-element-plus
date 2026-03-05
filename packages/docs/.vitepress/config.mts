@@ -1,5 +1,6 @@
 import type { EPThemeConfig } from 'vitepress-theme-element-plus'
 import path, { dirname } from 'node:path'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import mdContainer from 'markdown-it-container'
 import { defineConfig } from 'vitepress'
@@ -8,6 +9,8 @@ import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-i
 import { mdExternalLinkIcon, mdTableWrapper, mdTag, mdTaskList, mdTooltip } from 'vitepress-theme-element-plus/node'
 import pkg from '../package.json'
 import { createSeoHead, DEFAULT_DESCRIPTION, enhancePageData, SITE_NAME, SITE_URL } from './seo'
+
+const askAiProxyTarget = (process.env.ASK_AI_PROXY_TARGET || '').trim() || 'http://127.0.0.1:8788'
 
 const zhNav = [
   { text: '首页', link: '/zh/' },
@@ -21,6 +24,7 @@ const zhSidebar = [
     items: [
       { text: '介绍', link: '/zh/guide/introduction' },
       { text: '快速开始', link: '/zh/guide/quick-start' },
+      { text: 'Ask AI 侧栏', link: '/zh/guide/ask-ai' },
       { text: 'Vitepress 插件', link: '/zh/guide/vitepress-plugin' },
       { text: 'Markdown 插件', link: '/zh/guide/md-plugin' },
       { text: '修改配色', link: '/zh/guide/theme' },
@@ -41,6 +45,7 @@ const enSidebar = [
     items: [
       { text: 'Introduction', link: '/en/guide/introduction' },
       { text: 'Quick Start', link: '/en/guide/quick-start' },
+      { text: 'Ask AI Sidebar', link: '/en/guide/ask-ai' },
       { text: 'VitePress Plugins', link: '/en/guide/vitepress-plugin' },
       { text: 'Markdown Plugins', link: '/en/guide/md-plugin' },
       { text: 'Theme', link: '/en/guide/theme' },
@@ -145,10 +150,19 @@ export default defineConfig<EPThemeConfig>({
     plugins: [
       groupIconVitePlugin(),
     ],
+    server: {
+      proxy: {
+        '/api/ask': {
+          target: askAiProxyTarget,
+          changeOrigin: true,
+        },
+      },
+    },
     ssr: {
       noExternal: [
         'vitepress-theme-element-plus',
         'vitepress-better-demo-plugin',
+        'vue-element-plus-x',
       ],
     },
     optimizeDeps: {
@@ -208,6 +222,12 @@ export default defineConfig<EPThemeConfig>({
       provider: 'local',
     },
     version: pkg.version,
+    askAi: {
+      enabled: true,
+      triggerText: 'AI',
+      title: 'Chat',
+      width: 380,
+    },
     siteTitle: SITE_NAME,
     externalLinkIcon: true,
     // 社交链接

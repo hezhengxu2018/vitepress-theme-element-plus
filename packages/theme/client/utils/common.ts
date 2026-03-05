@@ -61,7 +61,7 @@ export function isPlainObject(obj: any) {
   return true
 }
 
-export function isString(value) {
+export function isString(value: unknown) {
   return typeof value === 'string'
 }
 
