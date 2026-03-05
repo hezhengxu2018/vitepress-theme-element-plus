@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "element-plus": "^2.11.7",
+    "markdown-it": "^14.1.1",
     "markdown-it-container": "^4.0.0",
     "markdown-it-mathjax3": "^4.0.0",
+    "shiki": "^4.0.1",
     "vitepress": "^2.0.0-alpha.12",
     "vitepress-better-demo-plugin": "^0.3.1",
     "vitepress-plugin-group-icons": "^1.0.0",

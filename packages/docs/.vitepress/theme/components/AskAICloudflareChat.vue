@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { BubbleListItemProps } from 'vue-element-plus-x/types/BubbleList'
 import { ElButton } from 'element-plus'
-import { computed, defineAsyncComponent, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { BubbleList, Sender } from 'vue-element-plus-x'
+import AiMarkdownRenderer from './AiMarkdownRenderer.vue'
 
 interface ChatSource {
   file: string
@@ -29,9 +30,6 @@ interface BubbleItem extends BubbleListItemProps {
 }
 
 const endpoint = import.meta.env.VITE_ASK_AI_ENDPOINT || '/api/ask'
-const XMarkdownClient = defineAsyncComponent(
-  () => import('vue-element-plus-x/es/XMarkdown/index.js'),
-)
 const senderInputStyle = {
   resize: 'none',
   maxHeight: '176px',
@@ -65,7 +63,8 @@ const bubbleList = computed<BubbleItem[]>(() => {
       role: message.role,
       content: message.content,
       placement: isAssistant ? 'start' : 'end',
-      variant: isAssistant ? 'outlined' : 'filled',
+      variant: isAssistant ? 'borderless' : 'filled',
+      noStyle: isAssistant,
       loading: isCurrentStreaming && !message.content,
       sources: message.sources,
     }
@@ -349,7 +348,7 @@ function formatScore(score: number | null) {
     >
       <template #content="{ item }">
         <ClientOnly v-if="item.role === 'assistant'">
-          <XMarkdownClient
+          <AiMarkdownRenderer
             :markdown="item.content || ''"
             :enable-breaks="true"
           />
@@ -395,7 +394,7 @@ function formatScore(score: number | null) {
       :auto-size="senderAutoSize"
       :input-style="senderInputStyle"
       clearable
-      placeholder="例如：如何在主题中启用 Ask AI 侧栏？"
+      placeholder="请输入问题"
       @submit="sendMessage"
     />
   </section>
@@ -421,22 +420,11 @@ function formatScore(score: number | null) {
   min-height: 0;
 }
 
-.ask-ai-chat__bubble-list :deep(.el-bubble-content-wrapper .el-bubble-content) {
+.ask-ai-chat__bubble-list :deep(.el-bubble:not(.el-bubble-no-style) .el-bubble-content-wrapper .el-bubble-content) {
   padding: 8px 11px;
   font-size: 13px;
   line-height: 1.55;
   min-height: auto;
-}
-
-.ask-ai-chat__bubble-list :deep(.el-bubble-content .elx-xmarkdown-container) {
-  padding: 0;
-  border-radius: 0;
-  color: inherit;
-}
-
-.ask-ai-chat__bubble-list :deep(.el-bubble-content pre),
-.ask-ai-chat__bubble-list :deep(.el-bubble-content code) {
-  font-size: 12px;
 }
 
 .ask-ai-chat__status {
