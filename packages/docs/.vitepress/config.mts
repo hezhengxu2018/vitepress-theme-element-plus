@@ -213,9 +213,9 @@ export default defineConfig<EPThemeConfig>({
     version: pkg.version,
     askAi: {
       enabled: true,
-      triggerText: 'Ask AI',
+      triggerText: 'AI',
       title: 'Chat',
-      width: 500,
+      width: 380,
     },
     siteTitle: SITE_NAME,
     externalLinkIcon: true,
