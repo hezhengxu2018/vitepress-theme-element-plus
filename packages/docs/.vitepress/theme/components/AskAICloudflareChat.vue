@@ -27,6 +27,7 @@ const endpoint = import.meta.env.VITE_ASK_AI_ENDPOINT || '/api/ask'
 const sseOptions = {
   doneSymbol: '[DONE]',
 }
+
 const askClient = hookFetch.create({
   headers: {
     'content-type': 'application/json',
@@ -73,6 +74,7 @@ const bubbleList = computed<BubbleItem[]>(() => {
       variant: isAssistant ? 'borderless' : 'filled',
       noStyle: isAssistant,
       loading: isCurrentStreaming && !message.content,
+      maxWidth: 'calc(--vp-ask-ai-panel-width - 40px)',
     }
   })
 })
