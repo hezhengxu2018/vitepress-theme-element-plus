@@ -91,6 +91,12 @@ export default defineConfig<EPThemeConfig>({
       provider: 'local',
     },
     version: pkg.version,
+    mobilePreview: {
+      previewPath: '/preview/',
+      deviceWidth: 390,
+      deviceHeight: 760,
+      demoRoot: 'demo/',
+    },
     externalLinkIcon: true,
   },
 })
@@ -101,3 +107,9 @@ export default defineConfig<EPThemeConfig>({
 在 `.vitepress/theme/index.ts` 中复用主题默认导出，并把 demo 包裹组件和图标样式挂入 VitePress：
 
 <<< @/.vitepress/theme/index.ts
+
+如果要启用移动端预览，当前主题入口里提供的 `mobilePreviewRegistryKey` 也需要一起注册。示例站点通过 `import.meta.glob('../../**/*.vue')` 建立 demo registry，使 `mobileDemo` 可以按 `themeConfig.mobilePreview.demoRoot` 解析到对应组件。
+
+## 移动端预览
+
+完整配置请参考[移动端预览](/zh/guide/mobile-preview)

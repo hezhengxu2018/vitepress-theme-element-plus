@@ -4,11 +4,14 @@ import { computed } from 'vue'
 import { useSidebar } from '../hooks/useSidebar'
 import VPDocAside from './DocAside.vue'
 import VPDocFooter from './DocFooter.vue'
+import MobilePreviewFrame from './MobilePreviewFrame.vue'
 
-const { theme } = useData()
+const { theme, frontmatter } = useData()
 
 const route = useRoute()
 const { hasAside, leftAside, hasSidebar } = useSidebar()
+const hasMobilePreview = computed(() => typeof frontmatter.value.mobileDemo === 'string' && frontmatter.value.mobileDemo.trim().length > 0)
+const showAside = computed(() => hasAside.value)
 
 const pageName = computed(() =>
   route.path.replace(/[./]+/g, '_').replace(/_html$/, ''),
@@ -16,10 +19,16 @@ const pageName = computed(() =>
 </script>
 
 <template>
-  <div class="VPDoc" :class="{ 'has-sidebar': hasSidebar, 'has-aside': hasAside }">
+  <div class="VPDoc" :class="{ 'has-sidebar': hasSidebar, 'has-aside': showAside, 'has-mobile-preview': hasMobilePreview }">
     <slot name="doc-top" />
     <div class="container">
-      <div v-if="hasAside" class="aside" :class="{ 'left-aside': leftAside }">
+      <div v-if="hasMobilePreview" class="preview">
+        <div class="preview-container">
+          <MobilePreviewFrame />
+        </div>
+      </div>
+
+      <div v-if="showAside" class="aside" :class="{ 'left-aside': leftAside }">
         <div class="aside-container">
           <div class="aside-content">
             <VPDocAside>
@@ -112,8 +121,16 @@ const pageName = computed(() =>
     justify-content: center;
   }
 
+  .VPDoc.has-mobile-preview .container {
+    gap: 32px;
+  }
+
   .VPDoc .aside {
     display: block;
+  }
+
+  .VPDoc.has-aside.has-mobile-preview .aside {
+    display: none;
   }
 }
 
@@ -130,6 +147,17 @@ const pageName = computed(() =>
 .container {
   margin: 0 auto;
   width: 100%;
+}
+
+.preview {
+  margin-bottom: 24px;
+  order: 2;
+}
+
+.preview-container {
+  width: 100%;
+  position: sticky;
+  top: calc(var(--vp-nav-height) + 32px);
 }
 
 .aside {
@@ -176,6 +204,12 @@ const pageName = computed(() =>
     order: 1;
     margin: 0;
     min-width: 640px;
+  }
+}
+
+@media (min-width: 1680px) {
+  .VPDoc.has-aside.has-mobile-preview .aside {
+    display: block;
   }
 }
 

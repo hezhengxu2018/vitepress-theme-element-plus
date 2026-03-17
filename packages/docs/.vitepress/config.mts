@@ -24,6 +24,7 @@ const zhSidebar = [
       { text: 'Vitepress 插件', link: '/zh/guide/vitepress-plugin' },
       { text: 'Markdown 插件', link: '/zh/guide/md-plugin' },
       { text: '修改配色', link: '/zh/guide/theme' },
+      { text: '移动端预览', link: '/zh/guide/mobile-preview', promotion: '1.4.0' },
       { text: '渲染测试页', link: '/zh/guide/render-test-page', promotion: '1.0.0' },
     ],
   },
@@ -44,6 +45,7 @@ const enSidebar = [
       { text: 'VitePress Plugins', link: '/en/guide/vitepress-plugin' },
       { text: 'Markdown Plugins', link: '/en/guide/md-plugin' },
       { text: 'Theme', link: '/en/guide/theme' },
+      { text: 'Mobile Preview', link: '/en/guide/mobile-preview' },
       { text: 'Demo Page', link: '/en/guide/render-test-page', promotion: '1.0.0' },
     ],
   },
@@ -209,6 +211,12 @@ export default defineConfig<EPThemeConfig>({
     },
     version: pkg.version,
     siteTitle: SITE_NAME,
+    mobilePreview: {
+      previewPath: '/preview/',
+      deviceWidth: 375,
+      deviceHeight: 700,
+      demoRoot: 'demo/',
+    },
     externalLinkIcon: true,
     // 社交链接
     socialLinks: [

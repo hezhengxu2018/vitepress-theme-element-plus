@@ -90,6 +90,12 @@ export default defineConfig<EPThemeConfig>({
       provider: 'local',
     },
     version: pkg.version,
+    mobilePreview: {
+      previewPath: '/preview/',
+      deviceWidth: 390,
+      deviceHeight: 760,
+      demoRoot: 'demo/',
+    },
     externalLinkIcon: true,
   },
 })
@@ -100,3 +106,9 @@ export default defineConfig<EPThemeConfig>({
 In `.vitepress/theme/index.ts`, reuse the theme's default export and register the demo wrapper component plus icon styles:
 
 <<< @/.vitepress/theme/index.ts
+
+If you want mobile previews, the same theme entry should also provide `mobilePreviewRegistryKey`. The example site builds the registry with `import.meta.glob('../../**/*.vue')`, so `mobileDemo` can resolve components relative to `themeConfig.mobilePreview.demoRoot`.
+
+## Mobile Preview
+
+For the complete setup, see [Mobile Preview](/en/guide/mobile-preview).

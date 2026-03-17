@@ -12,6 +12,7 @@ VitePress Theme Element Plus 是一个可复用的 Element Plus 风格 VitePress
 - **扩展布局**：自定义 `Layout.vue`、局部导航与侧边栏控制，在默认 VitePress 主题之上增强。
 - **Markdown 增强**：插件直接在 Markdown 中追加外链图标、可滚动表格、语义标签、API 提示和 Element Plus 风格任务列表。
 - **一流的 Demo 工作流**：`vitepress-better-demo-plugin` 驱动 `:::demo` 容器，支持实时预览、折叠代码、复制按钮以及 StackBlitz/CodeSandbox 快捷入口。
+- **独立移动端预览**：通过单独的预览运行时页面和 iframe 手机壳展示移动端 Demo，避免弹层、`100vh` 和 `position: fixed` 污染文档页面。
 - **图标自动化**：`vitepress-plugin-group-icons` 基于 `pnpm`、`vue` 或 `~logos:vitejs~` 等关键字自动注入 Iconify 图标，统一代码块视觉。
 - **工作区工具链**：依赖 Node 24.11.0 + pnpm 10（通过 Volta 管理），配合 ESLint（`@antfu/eslint-config`）、lint-staged 与 Husky 保持格式与提交规范。
 
@@ -66,27 +67,60 @@ VitePress Theme Element Plus 是一个可复用的 Element Plus 风格 VitePress
      themeConfig: {
        logo: '/logo.svg',
        search: { provider: 'local' },
+       mobilePreview: {
+         previewPath: '/preview/',
+         demoRoot: 'demo/',
+       },
        sidebar: [{ text: 'Guide', items: [{ text: 'Introduction', link: '/guide/introduction' }] }],
      },
    })
    ```
-3. 在 `.vitepress/theme/index.ts` 注册主题，确保 demo 组件与自动生成的图标 CSS 在客户端与构建阶段均可用：
+3. 在 `.vitepress/theme/index.ts` 注册主题，确保 demo 组件、移动端预览 registry 与自动生成的图标 CSS 在客户端与构建阶段均可用：
    ```ts
+   import type { MobilePreviewRegistry } from 'vitepress-theme-element-plus'
    import {
      VitepressEpDemoBox,
      VitepressEpDemoPlaceholder,
    } from 'vitepress-better-demo-plugin/theme/element-plus'
-   import Theme from 'vitepress-theme-element-plus'
+   import Theme, {
+     mobilePreviewRegistryKey,
+   } from 'vitepress-theme-element-plus'
    import 'virtual:group-icons.css'
+
+   const mobilePreviewRegistry = Object.fromEntries(
+     Object.entries(import.meta.glob('../../**/*.vue')).map(([path, loader]) => [
+       path.replace('../../', ''),
+       loader,
+     ]),
+   ) as MobilePreviewRegistry
 
    export default {
      ...Theme,
      enhanceApp({ app }) {
        app.component('VitepressDemoBox', VitepressEpDemoBox)
        app.component('VitepressDemoPlaceholder', VitepressEpDemoPlaceholder)
+       app.provide(mobilePreviewRegistryKey, mobilePreviewRegistry)
      },
    } as typeof Theme
    ```
+
+## 移动端预览配置
+
+如果你想在文档页右侧展示手机壳预览，或者提供独立的移动端运行时页面，需要补三项配置：
+
+1. 在 `themeConfig.mobilePreview` 中设置 `demoRoot`，它决定 `mobileDemo` frontmatter 的默认根路径。
+2. 在站点内提供一个 `layout: mobile-preview` 的独立预览页，例如 `/zh/preview/` 或 `/en/preview/`。
+3. 在目标文档页的 frontmatter 中声明 `mobileDemo`。
+
+示例：
+
+```yml
+---
+mobileDemo: mobile-preview-demo.vue
+---
+```
+
+当 `demoRoot` 为 `demo/` 时，上面的写法会解析为 `demo/mobile-preview-demo.vue`。如果你更倾向显式路径，也可以继续直接写完整地址。
 
 ## Markdown 与演示增强
 - **代码主题**：`markdown.theme.light/dark` 分别配置为 `github-light` 与 `github-dark`。
@@ -96,6 +130,7 @@ VitePress Theme Element Plus 是一个可复用的 Element Plus 风格 VitePress
 - **API 提示**：`mdTooltip` 将 `^[prop]("string | number")` 转换为 `<api-typing>` 组件，快速展示类型信息。
 - **任务列表**：`mdTaskList` 输出 Element Plus 风格的复选框，兼顾无障碍表现。
 - **Demo 容器**：`packages/docs/demo` 下的 `::: demo` 块支持实时预览、复制按钮以及 StackBlitz/CodeSandbox 快捷入口。
+- **移动端预览**：文档页可通过 `mobileDemo` frontmatter 挂载手机壳 iframe，并使用 `themeConfig.mobilePreview.demoRoot` 统一解析 Demo 路径。
 - **图标分组**：`groupIconMdPlugin` + `groupIconVitePlugin` 基于关键字或 `~collection:name~` 自动注入 Iconify 图标并通过 `virtual:group-icons.css` 暴露样式。
 
 ## 贡献指南

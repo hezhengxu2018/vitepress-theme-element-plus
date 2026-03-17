@@ -8,10 +8,12 @@ import { computed, provide, useSlots, watch } from 'vue'
 import { useCloseSidebarOnEscape } from '../hooks/useSidebar'
 import Content from './Content.vue'
 import LocalNav from './LocalNav.vue'
+import MobilePreviewLayout from './MobilePreviewLayout.vue'
 import Nav from './Nav.vue'
 import Sidebar from './Sidebar.vue'
 
 const { frontmatter } = useData()
+const isStandaloneMobilePreview = computed(() => frontmatter.value.layout === 'mobile-preview')
 
 useCloseSidebarOnEscape()
 const {
@@ -32,7 +34,8 @@ provide(layoutInfoInjectionKey, heroImageSlotExists)
 </script>
 
 <template>
-  <div v-if="frontmatter.layout !== false" class="Layout VMLayout" :class="frontmatter.pageClass">
+  <MobilePreviewLayout v-if="isStandaloneMobilePreview" />
+  <div v-else-if="frontmatter.layout !== false" class="Layout VMLayout" :class="frontmatter.pageClass">
     <slot name="layout-top" />
     <VPSkipLink />
     <VPBackdrop class="backdrop" :show="isSidebarOpen" @click="closeSidebar()" />
