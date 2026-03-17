@@ -2,6 +2,13 @@
 
 
 
+# [1.4.0](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.3.2...v1.4.0) (2026-03-17)
+
+
+### Features
+
+* **theme:** 新增移动端预览功能 ([96212bc](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/96212bc8ed625c63d92dd2866d25616d4067c3b4))
+
 ## [1.3.2](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.3.1...v1.3.2) (2026-02-26)
 
 
