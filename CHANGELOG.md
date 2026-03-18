@@ -2,6 +2,15 @@
 
 
 
+## [1.4.1](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.4.0...v1.4.1) (2026-03-18)
+
+
+### Bug Fixes
+
+* **theme:** 优化has-aside样式，调整移动预览的右侧内边距 ([8c2f798](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/8c2f79875e322184c08bdfaa648b1c6743ca2e3e))
+* **theme:** 调整.footer的内边距和.footer-main的上边距 ([05fbb79](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/05fbb79dac2f152c19590de64097194791487e6c))
+* **theme:** 调整预览路径配置 ([614c1d5](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/614c1d5d0d2f6026257f9d7abd4a3a2902181cf5))
+
 # [1.4.0](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.3.2...v1.4.0) (2026-03-17)
 
 
