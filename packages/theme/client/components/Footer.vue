@@ -41,7 +41,7 @@ const linkUnderline = computed(() => {
 .footer {
   background-color: var(--vp-c-bg-soft);
   box-sizing: border-box;
-  padding: 42px 64px 64px;
+  padding: 0px 64px 64px;
 
   &.is-home {
     background-color: var(--bg-color);
@@ -60,6 +60,7 @@ const linkUnderline = computed(() => {
     display: inline-block;
     vertical-align: top;
     margin-right: 130px;
+    margin-top: 42px;
     width: 200px;
 
     h4 {
