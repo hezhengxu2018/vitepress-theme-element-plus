@@ -109,10 +109,6 @@ const pageName = computed(() =>
 
 @media (min-width: 1440px) {
   .VPDoc.has-aside {
-    padding: 64px 48px 48px 64px;
-  }
-
-  .VPDoc.has-aside {
     padding: 64px 0 48px 64px;
   }
 
@@ -131,6 +127,12 @@ const pageName = computed(() =>
 
   .VPDoc.has-aside.has-mobile-preview .aside {
     display: none;
+  }
+}
+
+@media (min-width: 1440px) and (max-width: 1679px) {
+  .VPDoc.has-aside.has-mobile-preview {
+    padding-right: 32px;
   }
 }
 
