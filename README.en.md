@@ -113,6 +113,12 @@ If you want a phone-frame preview beside doc pages, or a standalone mobile runti
 2. Add a standalone preview page with `layout: mobile-preview`, such as `/en/preview/`.
 3. Declare `mobileDemo` in the target doc page frontmatter.
 
+Additional notes:
+
+- `previewPath: 'preview/'` resolves from the current locale root; even root-locale pages under `/component/*` still land on `/preview/`.
+- `previewPath: '../preview/'` is useful when multiple doc groups share one preview page.
+- `previewPath: '/preview/'` uses an explicit site-absolute path.
+
 Example:
 
 ```yml

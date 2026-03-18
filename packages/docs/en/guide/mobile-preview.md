@@ -36,7 +36,7 @@ This step is required for standalone preview pages to work. The `mobile-preview`
 
 | Option | Description | Default |
 | --- | --- | --- |
-| `previewPath` | Standalone preview page path | `'/preview/'` |
+| `previewPath` | Standalone preview page path | `'preview/'` |
 | `deviceWidth` | Outer width of the phone frame shown beside the doc | `390` |
 | `deviceHeight` | Height of the iframe viewport inside the frame | `760` |
 | `demoRoot` | Default root used to resolve `mobileDemo` | `'demo/'` |
@@ -47,7 +47,7 @@ Example:
 const siteConfig = {
   themeConfig: {
     mobilePreview: {
-      previewPath: '/preview/',
+      previewPath: 'preview/',
       deviceWidth: 430,
       deviceHeight: 932,
       demoRoot: 'demo/mobile/',
@@ -55,6 +55,16 @@ const siteConfig = {
   },
 }
 ```
+
+`previewPath` supports a few common forms:
+
+- `preview/`: resolved from the current locale root. For example, `/component/input` becomes `/preview/`, while `/en/component/input` becomes `/en/preview/`.
+- `../preview/`: still resolved from the locale root, but with one level of relative navigation, which is useful when multiple doc groups share one preview entry.
+- `/preview/`: an explicit site-absolute path.
+
+:::tip Tip
+Relative preview paths are resolved from the actual locale prefixes declared in the site config, not by blindly taking the first segment of the current route. That means root-locale pages under nested routes such as `/component/*` still resolve `preview/` to `/preview/`.
+:::
 
 The doc page only needs a `mobileDemo` field:
 
@@ -73,6 +83,11 @@ By default, this value is resolved against `themeConfig.mobilePreview.demoRoot`.
 ### 3. Configure the standalone preview page
 
 Create an `index.md` file under the path configured by `themeConfig.mobilePreview.previewPath`, and set its layout to `mobile-preview`. This generates the isolated preview page used by both the iframe and the external preview link. The component id is passed in via query string, and the layout resolves it against the registry created in step 1.
+
+When you use a relative `previewPath`:
+
+- `preview/` usually maps to `preview/index.md` under the locale root
+- `../preview/` means “step out once, then resolve `preview/index.md`”
 
 ```md
 ---

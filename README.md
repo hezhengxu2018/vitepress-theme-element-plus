@@ -112,6 +112,12 @@ VitePress Theme Element Plus 是一个可复用的 Element Plus 风格 VitePress
 2. 在站点内提供一个 `layout: mobile-preview` 的独立预览页，例如 `/zh/preview/` 或 `/en/preview/`。
 3. 在目标文档页的 frontmatter 中声明 `mobileDemo`。
 
+补充说明：
+
+- `previewPath: 'preview/'` 会按当前 locale 根路径解析；根语言页面 `/component/*` 也会稳定落到 `/preview/`。
+- `previewPath: '../preview/'` 适合多个文档分组共用一个预览页。
+- `previewPath: '/preview/'` 会显式使用站点绝对路径。
+
 示例：
 
 ```yml

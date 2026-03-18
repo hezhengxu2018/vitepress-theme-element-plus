@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import type { SiteData } from 'vitepress'
 import { useData, useRoute } from 'vitepress'
 import { computed, ref, watch } from 'vue'
 import { resolveMobilePreviewId } from '../mobile-preview'
 
-const { frontmatter, isDark, theme } = useData()
+const { frontmatter, isDark, site, theme } = useData()
 const route = useRoute()
 const frameRef = ref<HTMLIFrameElement>()
 const previewConfig = computed(() => theme.value.mobilePreview ?? {})
@@ -25,7 +26,7 @@ const previewHref = computed(() => {
     theme: isDark.value ? 'dark' : 'light',
   })
 
-  return `${resolveLocalePreviewPath(route.path, previewPath)}?${search.toString()}`
+  return `${resolveLocalePreviewPath(route.path, previewPath, site.value)}?${search.toString()}`
 })
 
 const frameStyle = computed(() => ({
@@ -37,17 +38,35 @@ function normalizePreviewPath(value: unknown): string {
   if (typeof value !== 'string' || !value.trim())
     return 'preview/'
 
-  return value
-    .trim()
+  const trimmedValue = value.trim()
+  const normalizedPath = trimmedValue
     .replace(/^\/+/, '')
     .replace(/\/?$/, '/')
+
+  return trimmedValue.startsWith('/')
+    ? `/${normalizedPath}`
+    : normalizedPath
 }
 
-function resolveLocalePreviewPath(path: string, previewPath: string): string {
-  const matchedLocale = path.match(/^\/([^/]+)\//)
-  const localePrefix = matchedLocale ? `/${matchedLocale[1]}/` : '/'
+function normalizeLocalePrefix(value: string): string {
+  return `/${value.replace(/^\/+|\/+$/g, '')}/`
+}
 
-  return `${localePrefix}${previewPath}`
+function getLocalePrefix(path: string, siteData: SiteData): string {
+  const localePrefixes = Object.keys(siteData.locales ?? {})
+    .filter(locale => locale !== 'root')
+    .map(normalizeLocalePrefix)
+    .sort((left, right) => right.length - left.length)
+
+  return localePrefixes.find(prefix => path.startsWith(prefix)) ?? '/'
+}
+
+function resolveLocalePreviewPath(path: string, previewPath: string, siteData: SiteData): string {
+  if (previewPath.startsWith('/'))
+    return previewPath
+
+  const localePrefix = getLocalePrefix(path, siteData)
+  return new URL(previewPath, `https://mobile-preview.local${localePrefix}`).pathname
 }
 
 function syncTheme(): void {

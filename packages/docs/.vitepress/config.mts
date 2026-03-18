@@ -212,7 +212,7 @@ export default defineConfig<EPThemeConfig>({
     version: pkg.version,
     siteTitle: SITE_NAME,
     mobilePreview: {
-      previewPath: '/preview/',
+      previewPath: 'preview/',
       deviceWidth: 375,
       deviceHeight: 700,
       demoRoot: 'demo/',

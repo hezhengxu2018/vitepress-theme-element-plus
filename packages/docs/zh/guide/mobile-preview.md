@@ -33,12 +33,12 @@ mobileDemo: mobile-preview-demo.vue
 
 `themeConfig.mobilePreview` 当前支持以下配置：
 
-| 配置项        | 说明                                  | 默认值       |
-| ------------- | ------------------------------------- | ------------ |
-| `previewPath` | 独立预览页路径                        | `'/preview/'` |
-| `deviceWidth` | 侧边手机壳的外层宽度                  | `390`        |
-| `deviceHeight` | iframe 内部可视区域高度               | `760`        |
-| `demoRoot`    | `mobileDemo` 的默认根路径             | `'demo/'`    |
+| 配置项         | 说明                      | 默认值       |
+| -------------- | ------------------------- | ------------ |
+| `previewPath`  | 独立预览页路径            | `'preview/'` |
+| `deviceWidth`  | 侧边手机壳的外层宽度      | `390`        |
+| `deviceHeight` | iframe 内部可视区域高度   | `760`        |
+| `demoRoot`     | `mobileDemo` 的默认根路径 | `'demo/'`    |
 
 示例：
 
@@ -46,7 +46,7 @@ mobileDemo: mobile-preview-demo.vue
 const siteConfig = {
   themeConfig: {
     mobilePreview: {
-      previewPath: '/preview/',
+      previewPath: 'preview/',
       deviceWidth: 430,
       deviceHeight: 932,
       demoRoot: 'demo/mobile/',
@@ -54,6 +54,16 @@ const siteConfig = {
   },
 }
 ```
+
+`previewPath` 支持几种常见写法：
+
+- `preview/`：相对于当前 locale 根路径解析。比如根语言页面 `/component/input` 会得到 `/preview/`，而 `/en/component/input` 会得到 `/en/preview/`。
+- `../preview/`：仍然基于 locale 根路径做相对跳转，适合多个文档分组共用一个预览入口。
+- `/preview/`：显式写成站点绝对路径。
+
+:::tip 提示
+相对路径的解析基于站点实际配置的 locale 前缀，而不是简单取当前路由的第一段。因此即使根语言页面本身位于 `/component/*` 这样的嵌套路由下，`preview/` 仍然会稳定解析到 `/preview/`。
+:::
 
 页面只需要在 frontmatter 中声明 `mobileDemo`：
 
@@ -71,7 +81,12 @@ mobileDemo: mobile-preview-demo.vue
 
 ### 3、配置独立预览页面
 
-使用 `themeConfig.mobilePreview.previewPath` 指定的路径，在该路径下新建一个 `index.md` 文件，核心配置是使用 `mobile-preview` 的 layout。完成后会生成一个独立的预览页面；iframe 和打开新页面的链接本质上都会指向这个页面，并通过 query 参数传入组件 id，然后由该 layout 从第一步注册的 registry 中找到对应组件进行渲染。
+使用 `themeConfig.mobilePreview.previewPath` 指定的路径，在对应位置新建一个 `index.md` 文件，核心配置是使用 `mobile-preview` 的 layout。完成后会生成一个独立的预览页面；iframe 和打开新页面的链接本质上都会指向这个页面，并通过 query 参数传入组件 id，然后由该 layout 从第一步注册的 registry 中找到对应组件进行渲染。
+
+如果你使用的是相对路径：
+
+- `preview/` 通常对应 locale 根目录下的 `preview/index.md`
+- `../preview/` 表示从 locale 根目录回退一层后再解析 `preview/index.md`
 
 ```md
 ---
