@@ -6,7 +6,7 @@ import { computed } from 'vue'
 
 const { isHome } = useLayout()
 const { theme } = useData()
-const blogroll = theme.value.footer?.blogroll
+const blogroll = computed(() => theme.value.footer?.blogroll ?? [])
 
 const linkUnderline = computed(() => {
   const underlineProp = (ElLink as any)?.props?.underline
@@ -20,7 +20,7 @@ const linkUnderline = computed(() => {
 </script>
 
 <template>
-  <footer v-if="blogroll && blogroll.length" class="footer" :class="{ 'is-home': isHome }">
+  <footer v-if="blogroll.length" class="footer" :class="{ 'is-home': isHome }">
     <div v-for="item of blogroll" :key="item.title" class="footer-main">
       <h4>{{ item.title }}</h4>
       <ElLink
