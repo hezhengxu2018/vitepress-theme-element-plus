@@ -2,6 +2,13 @@
 
 
 
+## [1.4.2](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.4.1...v1.4.2) (2026-06-10)
+
+
+### Bug Fixes
+
+* **theme:** 修复主题的友情链接不会随语言切换的问题 ([3ba8cb3](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/3ba8cb348c76e27d1313fa4b0784f5f43c0c5f59))
+
 ## [1.4.1](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.4.0...v1.4.1) (2026-03-18)
 
 
