@@ -2,6 +2,12 @@
 
 
 
+## [1.4.4](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.4.3...v1.4.4) (2026-10-20)
+
+### Bug Fixes
+
+* 修复dark mode在切换页面后的残留 ([ea2ce53](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/ea2ce53b3dd30ce31fab65fbf0be92d4fd884afa))
+
 ## [1.4.3](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.4.2...v1.4.3) (2026-10-20)
 
 
