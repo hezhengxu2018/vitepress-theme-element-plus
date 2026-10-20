@@ -2,6 +2,13 @@
 
 
 
+## [1.4.3](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.4.2...v1.4.3) (2026-10-20)
+
+
+### Bug Fixes
+
+* 修复移动端主题配色不会切换的问题 ([06ee660](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/06ee6602aa38851b3a008ea5dfb75f2be2b4d555))
+
 ## [1.4.2](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.4.1...v1.4.2) (2026-06-10)
 
 
