@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
-import { useData } from 'vitepress'
-import { computed, inject, markRaw, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
+import { dataSymbol, useData } from 'vitepress'
+import { computed, inject, markRaw, onBeforeUnmount, onMounted, provide, ref, shallowRef, watch } from 'vue'
 import { mobilePreviewRegistryKey, resolveMobilePreviewId } from '../mobile-preview'
 
-const { frontmatter, isDark, theme } = useData()
+const data = useData()
+const { frontmatter, theme } = data
+// VitePress's isDark writes shared localStorage. A preview must never change
+// its parent's preference, including when useDark would normalize it to auto.
+const isDark = ref(data.isDark.value)
+provide(dataSymbol, { ...data, isDark })
 const registry = inject(mobilePreviewRegistryKey)
 const demoId = ref('')
 const errorMessage = ref('')
@@ -19,13 +24,23 @@ const statusMessage = computed(() => {
   return isLoading.value ? 'Loading mobile preview...' : 'No preview loaded.'
 })
 
-function applyTheme(theme: string | null): void {
+function syncDocumentTheme(): void {
   if (typeof document === 'undefined')
     return
 
-  isDark.value = theme === 'dark'
   document.documentElement.classList.toggle('dark', isDark.value)
 }
+
+function applyTheme(theme: unknown): void {
+  if (theme !== 'dark' && theme !== 'light')
+    return
+
+  isDark.value = theme === 'dark'
+  syncDocumentTheme()
+}
+
+// Reapply the local preview theme after VitePress reacts to shared storage.
+watch([data.isDark, isDark], syncDocumentTheme, { flush: 'post' })
 
 async function loadDemo(value: string | null): Promise<void> {
   demoId.value = resolveMobilePreviewId(value ?? '', previewConfig.value.demoRoot)
@@ -83,8 +98,11 @@ function syncFromLocation(): void {
 }
 
 function handleMessage(event: MessageEvent): void {
-  if (event.data?.type !== 'vp-mobile-preview-theme')
+  if (event.origin !== window.location.origin
+    || event.source !== window.parent
+    || event.data?.type !== 'vp-mobile-preview-theme') {
     return
+  }
 
   applyTheme(event.data.value)
 }
@@ -99,6 +117,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('message', handleMessage)
+  document.documentElement.classList.toggle('dark', data.isDark.value)
 })
 </script>
 
