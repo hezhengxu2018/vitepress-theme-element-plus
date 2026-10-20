@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SiteData } from 'vitepress'
 import { useData, useRoute } from 'vitepress'
-import { computed, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { resolveMobilePreviewId } from '../mobile-preview'
 
 const { frontmatter, isDark, site, theme } = useData()
@@ -19,7 +19,6 @@ const demoId = computed(() => {
 const frameWidth = computed(() => `${previewConfig.value.deviceWidth ?? 390}px`)
 const viewportHeight = computed(() => `${previewConfig.value.deviceHeight ?? 760}px`)
 
-const initialTheme = isDark.value ? 'dark' : 'light'
 const previewBaseHref = computed(() => {
   const previewPath = normalizePreviewPath(previewConfig.value.previewPath)
   const search = new URLSearchParams({
@@ -29,9 +28,12 @@ const previewBaseHref = computed(() => {
   return `${resolveLocalePreviewPath(route.path, previewPath, site.value)}?${search.toString()}`
 })
 
-// Keep the iframe URL stable on theme changes so demo state is preserved.
-// The load handler and theme watcher send the current theme via postMessage.
-const frameSrc = computed(() => `${previewBaseHref.value}&theme=${initialTheme}`)
+// Snapshot the current theme for each new demo, not for the layout's lifetime.
+// Theme-only changes use postMessage and must not reload the iframe.
+const frameSrc = ref('')
+watch(previewBaseHref, (href) => {
+  frameSrc.value = `${href}&theme=${isDark.value ? 'dark' : 'light'}`
+}, { immediate: true })
 const previewHref = computed(() => `${previewBaseHref.value}&theme=${isDark.value ? 'dark' : 'light'}`)
 
 const frameStyle = computed(() => ({
@@ -82,6 +84,17 @@ function syncTheme(): void {
 }
 
 watch(isDark, syncTheme)
+
+function handlePreviewReady(event: MessageEvent): void {
+  if (event.origin === window.location.origin
+    && event.source === frameRef.value?.contentWindow
+    && event.data?.type === 'vp-mobile-preview-ready') {
+    syncTheme()
+  }
+}
+
+onMounted(() => window.addEventListener('message', handlePreviewReady))
+onBeforeUnmount(() => window.removeEventListener('message', handlePreviewReady))
 </script>
 
 <template>

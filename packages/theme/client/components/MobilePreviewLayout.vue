@@ -4,7 +4,7 @@ import { useData } from 'vitepress'
 import { computed, inject, markRaw, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
 import { mobilePreviewRegistryKey, resolveMobilePreviewId } from '../mobile-preview'
 
-const { frontmatter, theme } = useData()
+const { frontmatter, isDark, theme } = useData()
 const registry = inject(mobilePreviewRegistryKey)
 const demoId = ref('')
 const errorMessage = ref('')
@@ -23,7 +23,8 @@ function applyTheme(theme: string | null): void {
   if (typeof document === 'undefined')
     return
 
-  document.documentElement.classList.toggle('dark', theme === 'dark')
+  isDark.value = theme === 'dark'
+  document.documentElement.classList.toggle('dark', isDark.value)
 }
 
 async function loadDemo(value: string | null): Promise<void> {
@@ -74,7 +75,10 @@ function syncFromLocation(): void {
   const fallbackDemo = typeof frontmatter.value.mobileDemo === 'string'
     ? frontmatter.value.mobileDemo
     : null
-  applyTheme(search.get('theme'))
+  // Embedded previews get the latest theme from their parent after mounting.
+  // An old URL must not overwrite shared theme storage during navigation.
+  if (window.parent === window)
+    applyTheme(search.get('theme'))
   void loadDemo(search.get('demo') ?? fallbackDemo)
 }
 
@@ -86,8 +90,11 @@ function handleMessage(event: MessageEvent): void {
 }
 
 onMounted(() => {
-  syncFromLocation()
   window.addEventListener('message', handleMessage)
+  syncFromLocation()
+  // A lazy or asynchronously mounted preview can miss the iframe load message.
+  if (window.parent !== window)
+    window.parent.postMessage({ type: 'vp-mobile-preview-ready' }, window.location.origin)
 })
 
 onBeforeUnmount(() => {
