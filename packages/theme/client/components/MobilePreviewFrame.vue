@@ -19,15 +19,20 @@ const demoId = computed(() => {
 const frameWidth = computed(() => `${previewConfig.value.deviceWidth ?? 390}px`)
 const viewportHeight = computed(() => `${previewConfig.value.deviceHeight ?? 760}px`)
 
-const previewHref = computed(() => {
+const initialTheme = isDark.value ? 'dark' : 'light'
+const previewBaseHref = computed(() => {
   const previewPath = normalizePreviewPath(previewConfig.value.previewPath)
   const search = new URLSearchParams({
     demo: demoId.value,
-    theme: isDark.value ? 'dark' : 'light',
   })
 
   return `${resolveLocalePreviewPath(route.path, previewPath, site.value)}?${search.toString()}`
 })
+
+// Keep the iframe URL stable on theme changes so demo state is preserved.
+// The load handler and theme watcher send the current theme via postMessage.
+const frameSrc = computed(() => `${previewBaseHref.value}&theme=${initialTheme}`)
+const previewHref = computed(() => `${previewBaseHref.value}&theme=${isDark.value ? 'dark' : 'light'}`)
 
 const frameStyle = computed(() => ({
   '--vp-mobile-preview-width': frameWidth.value,
@@ -93,7 +98,7 @@ watch(isDark, syncTheme)
       <iframe
         ref="frameRef"
         class="preview-phone__viewport"
-        :src="previewHref"
+        :src="frameSrc"
         title="Mobile demo preview"
         loading="lazy"
         @load="syncTheme"

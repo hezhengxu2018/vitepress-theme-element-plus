@@ -95,3 +95,9 @@ title: Mobile Preview
 layout: mobile-preview
 ---
 ```
+
+### 4. Synchronize light and dark themes
+
+When the documentation theme changes, a message updates `html.dark` inside the iframe without reloading the demo, preserving form input and component state. The Open link includes the current theme so standalone previews use the same appearance.
+
+Component libraries must receive their own theme markers. Element Plus uses `html.dark` directly; Vant needs `.van-theme-dark`, while Antd Mobile needs `html[data-prefers-color-scheme="dark"]`. Sites using these libraries should bridge document theme changes in their theme entry, including overlays mounted on `body`. Importing a library's CSS alone does not synchronize its theme.

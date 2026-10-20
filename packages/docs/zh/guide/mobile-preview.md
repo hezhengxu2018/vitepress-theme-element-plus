@@ -94,3 +94,9 @@ title: Mobile Preview
 layout: mobile-preview
 ---
 ```
+
+### 4、同步明暗主题
+
+文档站切换主题时，通过消息同步 iframe 内的 `html.dark`，不会重新加载 demo，因此表单输入和组件状态会保留。「Open」链接会携带当前主题，独立打开时也会应用相同主题。
+
+组件库需要识别对应的主题标记。Element Plus 可直接使用 `html.dark`；Vant 需要同步 `.van-theme-dark`，Antd Mobile 需要同步 `html[data-prefers-color-scheme="dark"]`。使用这些组件库的站点应在主题入口适配文档根元素的主题变化，并覆盖挂载到 `body` 的弹层。仅加载组件库 CSS 不会自动完成主题同步。
