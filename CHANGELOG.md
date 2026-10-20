@@ -2,6 +2,12 @@
 
 
 
+## [1.4.5](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.4.4...v1.4.5) (2026-10-20)
+
+### Bug Fixes
+
+* 修复切换页面后主题跳变的问题 ([429b079](https://github.com/hezhengxu2018/vitepress-theme-element-plus/commit/429b07989bd21b8662a276063a5eb7f3b890ef3f))
+
 ## [1.4.4](https://github.com/hezhengxu2018/vitepress-theme-element-plus/compare/v1.4.3...v1.4.4) (2026-10-20)
 
 ### Bug Fixes
