@@ -14,7 +14,7 @@ VitePress Theme Element Plus is a reusable Element Plus–inspired VitePress the
 - **First-class demo workflow** – `vitepress-better-demo-plugin` powers `:::demo` containers with live previews, foldable code, copy buttons, and StackBlitz/CodeSandbox links.
 - **Isolated mobile preview** – A standalone preview runtime plus a phone-frame iframe lets you test mobile demos without leaking overlays, `100vh`, or `position: fixed` into the doc page.
 - **Group icon automation** – `vitepress-plugin-group-icons` injects Iconify glyphs into code block headers based on keywords like `pnpm`, `vue`, or `~logos:vitejs~` markers.
-- **Workspace-ready tooling** – Node 24.11.0 + pnpm 10 via Volta, ESLint (`@antfu/eslint-config`), lint-staged, and Husky keep formatting and commit hygiene consistent.
+- **Workspace-ready tooling** – Node 24.15.0 + pnpm 10 via Volta, ESLint (`@antfu/eslint-config`), lint-staged, and Husky keep formatting and commit hygiene consistent.
 
 ## Getting Started
 
@@ -139,6 +139,17 @@ When `demoRoot` is `demo/`, that value resolves to `demo/mobile-preview-demo.vue
 - **Demo containers** – `::: demo` blocks under `packages/docs/demo` show live previews with copy buttons and StackBlitz/CodeSandbox quick links.
 - **Mobile previews** – Doc pages can mount a phone-frame iframe via `mobileDemo` frontmatter, while `themeConfig.mobilePreview.demoRoot` provides the default base path.
 - **Group icons** – `groupIconMdPlugin` + `groupIconVitePlugin` map keywords or `~collection:name~` markers to Iconify glyphs and expose them via `virtual:group-icons.css`.
+
+## Releasing
+
+Releases use release-it 21 and require Node 24.15.0 or a newer compatible version. Start on `main` with a clean working tree, authenticate with npm, and set `GITHUB_TOKEN` with permission to create repository releases.
+
+```bash
+pnpm release --dry-run # Preview without writing versions, committing, or publishing
+pnpm release           # Choose a version interactively and publish
+```
+
+The root command runs in `packages/theme` and publishes only `vitepress-theme-element-plus`. After release-it bumps the theme version, a script synchronizes the root and private docs package versions and updates the lockfile. The release commit includes the root `CHANGELOG.md`, followed by a Git tag and GitHub Release. The theme's `prepublishOnly` script builds its artifacts before publishing.
 
 ## Contributing
 1. Fork and clone the repository.

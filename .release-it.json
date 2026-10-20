@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/release-it@19.2.2/schema/release-it.json",
+  "$schema": "https://unpkg.com/release-it@21/schema/release-it.json",
   "git": {
     "commitMessage": "chore: release v${version}",
     "requireBranch": "main",
@@ -10,23 +10,13 @@
     "release": true
   },
   "npm": {
-    "publish": false
+    "publish": true,
+    "publishPackageManager": "pnpm"
   },
   "plugins": {
-    "@release-it-plugins/workspaces": {
-      "workspaces": [
-        "packages/theme",
-        "packages/docs"
-      ],
-      "publish": true,
-      "skipChecks": true,
-      "additionalManifests": {
-        "versionUpdates": []
-      }
-    },
     "@release-it/conventional-changelog": {
       "preset": "angular",
-      "infile": "CHANGELOG.md",
+      "infile": "../../CHANGELOG.md",
       "header": "# 更新日志\n\n",
       "ignoreRecommendedBump": true,
       "strictSemVer": true,
@@ -34,7 +24,14 @@
     }
   },
   "hooks": {
-    "before:init": ["pnpm run lint"],
+    "before:init": [
+      "pnpm -C ../.. run lint"
+    ],
+    "after:npm:bump": [
+      "node ../../scripts/sync-release-version.mjs",
+      "pnpm -C ../.. install --lockfile-only --ignore-scripts"
+    ],
+    "before:git:beforeRelease": "git -C ../.. add --update -- package.json packages/docs/package.json pnpm-lock.yaml CHANGELOG.md",
     "after:release": "echo 发布完成！"
   }
 }

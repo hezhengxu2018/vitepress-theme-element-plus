@@ -38,7 +38,7 @@
     "build": "tsdown",
     "build:watch": "tsdown --watch",
     "prepublishOnly": "pnpm run build",
-    "release": "pnpm -C ../.. release"
+    "release": "release-it --config ../../.release-it.json"
   },
   "peerDependencies": {
     "vitepress": "^2.0.0-alpha.12"

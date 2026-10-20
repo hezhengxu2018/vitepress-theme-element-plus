@@ -14,7 +14,7 @@ VitePress Theme Element Plus 是一个可复用的 Element Plus 风格 VitePress
 - **一流的 Demo 工作流**：`vitepress-better-demo-plugin` 驱动 `:::demo` 容器，支持实时预览、折叠代码、复制按钮以及 StackBlitz/CodeSandbox 快捷入口。
 - **独立移动端预览**：通过单独的预览运行时页面和 iframe 手机壳展示移动端 Demo，避免弹层、`100vh` 和 `position: fixed` 污染文档页面。
 - **图标自动化**：`vitepress-plugin-group-icons` 基于 `pnpm`、`vue` 或 `~logos:vitejs~` 等关键字自动注入 Iconify 图标，统一代码块视觉。
-- **工作区工具链**：依赖 Node 24.11.0 + pnpm 10（通过 Volta 管理），配合 ESLint（`@antfu/eslint-config`）、lint-staged 与 Husky 保持格式与提交规范。
+- **工作区工具链**：依赖 Node 24.15.0 + pnpm 10（通过 Volta 管理），配合 ESLint（`@antfu/eslint-config`）、lint-staged 与 Husky 保持格式与提交规范。
 
 ## 快速开始
 1. 在目标文档项目中安装依赖：
@@ -138,6 +138,17 @@ mobileDemo: mobile-preview-demo.vue
 - **Demo 容器**：`packages/docs/demo` 下的 `::: demo` 块支持实时预览、复制按钮以及 StackBlitz/CodeSandbox 快捷入口。
 - **移动端预览**：文档页可通过 `mobileDemo` frontmatter 挂载手机壳 iframe，并使用 `themeConfig.mobilePreview.demoRoot` 统一解析 Demo 路径。
 - **图标分组**：`groupIconMdPlugin` + `groupIconVitePlugin` 基于关键字或 `~collection:name~` 自动注入 Iconify 图标并通过 `virtual:group-icons.css` 暴露样式。
+
+## 发布
+
+发布使用 release-it 21，需要 Node 24.15.0 或更高的兼容版本。请在 `main` 分支保持工作区干净，完成 npm 登录，并设置具有仓库发布权限的 `GITHUB_TOKEN`。
+
+```bash
+pnpm release --dry-run # 预览发布流程，不写入版本、提交或发布
+pnpm release           # 交互式选择版本并发布
+```
+
+根目录命令会进入 `packages/theme`，仅发布 `vitepress-theme-element-plus`。release-it 更新主题包版本后，脚本同步根包与私有文档包的版本，并更新锁文件；发布提交包含根目录 `CHANGELOG.md`，随后创建 Git tag 和 GitHub Release。主题包的 `prepublishOnly` 会在发布前构建产物。
 
 ## 贡献指南
 1. Fork 并克隆仓库。

@@ -6,7 +6,7 @@ The repo is a pnpm workspace (`pnpm-workspace.yaml`) with two packages: `package
 
 ## Build, Test, and Development Commands
 
-- `pnpm install` hoists dependencies across the workspace (use Node 24.11.0 / pnpm 10 via Volta).
+- `pnpm install` hoists dependencies across the workspace (use Node 24.15.0 / pnpm 10 via Volta).
 - `pnpm dev` proxies to `pnpm -C packages/docs dev`, launching the docs with hot reload while consuming the linked theme package.
 - `pnpm build` runs `pnpm -r build`, emitting the theme bundle under `packages/theme/dist` and static docs under `.vitepress/dist`.
 - `pnpm build:theme`, `pnpm build:docs`, and `pnpm -C packages/docs preview` let you target specific artifacts; `pnpm -C packages/theme build:watch` speeds up iterative theme work.
