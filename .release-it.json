@@ -11,7 +11,8 @@
   },
   "npm": {
     "publish": true,
-    "publishPackageManager": "pnpm"
+    "publishPackageManager": "pnpm",
+    "publishArgs": ["--no-git-checks"]
   },
   "plugins": {
     "@release-it/conventional-changelog": {
